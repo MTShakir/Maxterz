@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/customSupabaseClient';
 import { motion } from 'framer-motion';
 import { Check, AlertCircle, RefreshCw, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const PackagesPreview = () => {
   const [packages, setPackages] = useState([]);
@@ -139,7 +141,7 @@ const PackagesPreview = () => {
                 </div>
 
                 <Link
-                  to={pkg.cta_href || '/packages'}
+                  href={pkg.cta_href || '/packages'}
                   className={`w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-300 ${
                     isFeatured
                       ? 'bg-white text-[#1044ff] hover:bg-gray-50 shadow-lg'

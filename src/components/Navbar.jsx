@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Code, Palette, Video, Users, Cpu, TrendingUp,
@@ -126,7 +129,7 @@ const Navbar = () => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [headerBottom, setHeaderBottom] = useState(100);
 
-  const location = useLocation();
+  const pathname = usePathname();
   const headerRef = useRef(null);
   const servicesBtnRef = useRef(null);
   const megaPanelRef = useRef(null);
@@ -162,7 +165,7 @@ const Navbar = () => {
   useEffect(() => {
     setMegaMenuOpen(false);
     setMobileMenuOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     const onMouseDown = (e) => {
@@ -187,7 +190,7 @@ const Navbar = () => {
   }, [mobileMenuOpen]);
 
   const isActive = (path) =>
-    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
+    path === '/' ? pathname === '/' : pathname.startsWith(path);
 
   const linkCls = (path) =>
     `px-5 py-2 rounded-full text-[15px] font-bold transition-all duration-300 ${
@@ -218,7 +221,7 @@ const Navbar = () => {
         >
           <div className="flex items-center justify-between">
             <Link
-              to="/"
+              href="/"
               onClick={() => window.scrollTo(0, 0)}
               className="flex items-center gap-2 group relative z-50 mr-8"
             >
@@ -237,7 +240,7 @@ const Navbar = () => {
               className="hidden lg:flex items-center flex-grow justify-center"
             >
               <div className="flex items-center px-1.5 py-1.5 rounded-full border-2 border-[#eb7444] bg-gray-50/50 backdrop-blur-sm">
-                <Link to="/" className={linkCls('/')} onClick={() => window.scrollTo(0, 0)}>
+                <Link href="/" className={linkCls('/')} onClick={() => window.scrollTo(0, 0)}>
                   Home
                 </Link>
 
@@ -259,11 +262,11 @@ const Navbar = () => {
                   />
                 </button>
 
-                <Link to="/packages" className={linkCls('/packages')}>Packages</Link>
-                <Link to="/our-work" className={linkCls('/our-work')}>Our Work</Link>
-                <Link to="/about"    className={linkCls('/about')}>About</Link>
-                <Link to="/shop"     className={linkCls('/shop')}>Shop</Link>
-                <Link to="/insights" className={linkCls('/insights')}>Insights</Link>
+                <Link href="/packages" className={linkCls('/packages')}>Packages</Link>
+                <Link href="/our-work" className={linkCls('/our-work')}>Our Work</Link>
+                <Link href="/about"    className={linkCls('/about')}>About</Link>
+                <Link href="/shop"     className={linkCls('/shop')}>Shop</Link>
+                <Link href="/insights" className={linkCls('/insights')}>Insights</Link>
               </div>
             </nav>
 
@@ -283,7 +286,7 @@ const Navbar = () => {
                 ))}
               </div>
               <Link
-                to="/contact"
+                href="/contact"
                 className="flex items-center gap-2 rounded-full px-6 h-12 text-[15px] font-bold
                            bg-gradient-to-r from-[#eb7444] to-[#e05220] text-white
                            shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40
@@ -378,7 +381,7 @@ const Navbar = () => {
                       {col.subpages.map(({ to, label }) => (
                         <Link
                           key={to}
-                          to={to}
+                          href={to}
                           onClick={closeMega}
                           className="py-[3px] text-[#374151] text-[13.5px] font-semibold
                                      hover:text-[#1044ff] hover:translate-x-0.5
@@ -409,7 +412,7 @@ const Navbar = () => {
 
                   <div className="mt-auto pt-3">
                     <Link
-                      to={col.viewAll.to}
+                      href={col.viewAll.to}
                       onClick={closeMega}
                       className="inline-flex items-center gap-1 text-[13px] font-semibold
                                  text-[#1044ff]
@@ -439,7 +442,7 @@ const Navbar = () => {
             aria-label="Mobile navigation"
           >
             <div className="h-16 px-5 flex items-center justify-between border-b border-gray-100 flex-shrink-0">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                 <img
                   src="https://qcsflpsyzvigswlotepz.supabase.co/storage/v1/object/public/BrandingFiles/Full-Logo.png"
                   alt="MAXTERZ Logo"
@@ -499,7 +502,7 @@ const Navbar = () => {
                           {serviceCategories.map(({ to, label }) => (
                             <Link
                               key={to}
-                              to={to}
+                              href={to}
                               onClick={() => setMobileMenuOpen(false)}
                               className="px-12 py-2.5 text-[17px] font-semibold
                                          text-gray-700 hover:text-[#eb7444] transition-colors"
@@ -508,7 +511,7 @@ const Navbar = () => {
                             </Link>
                           ))}
                           <Link
-                            to="/services"
+                            href="/services"
                             onClick={() => setMobileMenuOpen(false)}
                             className="px-12 py-2.5 mt-1 text-[17px] font-bold
                                        text-[#1044ff] hover:text-[#eb7444] transition-colors"
@@ -520,7 +523,7 @@ const Navbar = () => {
                     </div>
                   ) : (
                     <Link
-                      to={item.path}
+                      href={item.path}
                       onClick={() => setMobileMenuOpen(false)}
                       className={`block px-8 py-3 text-[clamp(26px,6vw,36px)]
                                  font-extrabold tracking-tight transition-colors ${
@@ -559,7 +562,7 @@ const Navbar = () => {
                 ))}
               </div>
               <Link
-                to="/contact"
+                href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block w-full text-center rounded-full py-4 text-[16px] font-bold text-white
                            bg-gradient-to-r from-[#eb7444] to-[#e05220]

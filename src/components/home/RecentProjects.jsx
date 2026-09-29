@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -48,7 +50,7 @@ const RecentProjects = () => {
              viewport={{ once: true }}
           >
             <Button asChild variant="outline" className="hidden md:flex rounded-full">
-              <Link to="/portfolio">View All Projects</Link>
+              <Link href="/portfolio">View All Projects</Link>
             </Button>
           </motion.div>
         </div>
@@ -63,7 +65,7 @@ const RecentProjects = () => {
               transition={{ delay: index * 0.1 }}
               className="group cursor-pointer bg-white rounded-[2.5rem] p-4 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-white hover:border-[#1044ff]"
             >
-              <Link to={`/portfolio/${project.id}`}>
+              <Link href={`/portfolio/${project.id}`}>
                 <div className="relative overflow-hidden rounded-[2rem] mb-4 aspect-[4/3]">
                   <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={project.title} src="https://images.unsplash.com/photo-1572177812156-58036aae439c" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0020bf]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
@@ -87,7 +89,7 @@ const RecentProjects = () => {
         
         <div className="mt-8 md:hidden text-center">
           <Button asChild variant="outline" className="rounded-full w-full">
-            <Link to="/portfolio">View All Projects</Link>
+            <Link href="/portfolio">View All Projects</Link>
           </Button>
         </div>
       </div>

@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -34,7 +36,7 @@ const CTASection = () => {
                 size="lg"
                 className="bg-white text-[#eb7444] hover:bg-gray-100 rounded-full px-8 h-14 text-lg font-bold shadow-lg transition-transform hover:-translate-y-1"
               >
-                <Link to="/contact">
+                <Link href="/contact">
                   Get Started
                   <ArrowRight className="ml-2" size={20} />
                 </Link>
@@ -45,7 +47,7 @@ const CTASection = () => {
                 variant="outline"
                 className="border-2 border-white text-white bg-transparent hover:bg-white/10 rounded-full px-8 h-14 text-lg transition-transform hover:-translate-y-1"
               >
-                <Link to="/services">
+                <Link href="/services">
                   Explore Services
                 </Link>
               </Button>

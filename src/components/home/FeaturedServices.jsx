@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Palette, Video, Code, Users, Cpu, TrendingUp, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -93,7 +95,7 @@ const FeaturedServices = () => {
               whileHover={{ y: -8 }}
               className="group relative h-full min-h-[350px] sm:min-h-[550px] shadow-sm hover:shadow-xl transition-all duration-300 rounded-[1.5rem] md:rounded-[2.5rem]"
             >
-              <Link to={service.link} className="block h-full">
+              <Link href={service.link} className="block h-full">
                 <div className="h-full bg-gradient-to-br from-[#1044ff] to-[#0020bf] p-[18px] sm:p-8 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden flex flex-col border-2 border-white">
                   {/* Decorative Circle */}
                   <div className="absolute -top-10 -right-10 w-32 h-32 md:w-40 md:h-40 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
@@ -144,7 +146,7 @@ const FeaturedServices = () => {
             variant="outline"
             className="rounded-full px-8 py-5 md:px-10 md:py-6 text-base md:text-lg border-2 border-[#1044ff] text-[#1044ff] hover:bg-[#1044ff] hover:text-white transition-all duration-300"
           >
-            <Link to="/services/web-development">
+            <Link href="/services/web-development">
               View All Services
             </Link>
           </Button>

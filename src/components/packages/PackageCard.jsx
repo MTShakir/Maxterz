@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const PackageCard = ({
   name,
@@ -63,7 +65,7 @@ const PackageCard = ({
       </div>
 
       <Link
-        to={cta_href}
+        href={cta_href}
         className={`w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-300 ${
           is_featured
             ? 'bg-white text-[#1044ff] hover:bg-gray-50 shadow-lg'

@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Lightbulb, Users, ArrowRight, Waypoints, Focus, Quote } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const OneHubStatement = () => {
   const containerVariants = {
@@ -88,8 +90,8 @@ const OneHubStatement = () => {
         </motion.div>
 
         <motion.div variants={itemVariants} className="mt-12">
-          <Link 
-            to="/about" 
+          <Link
+            href="/about"
             className="inline-flex items-center gap-2 text-[#1044ff] font-bold text-[15px] hover:text-[#0020bf] transition-colors group"
           >
             Learn more about our approach

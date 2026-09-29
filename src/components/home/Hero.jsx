@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Star, MousePointer2, ChevronLeft, ChevronRight, Calendar, Mail, Rocket, CheckCircle2, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -158,7 +160,7 @@ const Hero = () => {
                         </a>
 
                         <Link
-                          to="/contact"
+                          href="/contact"
                           onClick={handleLinkClick}
                           className="flex items-center p-4 rounded-xl border-2 border-orange-100 bg-orange-50 hover:bg-orange-100 hover:border-orange-300 transition-all group"
                         >
@@ -181,7 +183,7 @@ const Hero = () => {
               </Dialog.Root>
 
               <Button asChild variant="outline" size="lg" className="rounded-2xl h-14 px-8 text-lg border-2 border-[#1044ff] text-[#1044ff] hover:bg-[#1044ff] hover:text-white">
-                <Link to="/our-work" onClick={handleLinkClick}>
+                <Link href="/our-work" onClick={handleLinkClick}>
                   <Rocket className="mr-2 w-5 h-5" />
                   See Our Work
                 </Link>
@@ -248,7 +250,7 @@ const Hero = () => {
 
                   {/* Floating Badge (Now a Link) */}
                   <Link
-                    to="/portfolio"
+                    href="/portfolio"
                     onClick={handleLinkClick}
                     className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 border-2 border-[#1044ff] z-10 hover:scale-105 transition-transform duration-300 cursor-pointer"
                   >

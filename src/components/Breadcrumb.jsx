@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const routeLabels = {
   'services': 'Services',
@@ -32,8 +35,8 @@ const formatLabel = (segment) => {
 };
 
 const Breadcrumb = () => {
-  const location = useLocation();
-  const pathnames = location.pathname.split('/').filter(x => x);
+  const pathname = usePathname();
+  const pathnames = pathname.split('/').filter(x => x);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -73,8 +76,8 @@ const Breadcrumb = () => {
             itemType="https://schema.org/ListItem"
             className="flex items-center"
           >
-            <Link 
-              to="/" 
+            <Link
+              href="/"
               itemProp="item"
               className="text-gray-500 hover:text-[#1044ff] transition-colors"
             >
@@ -106,8 +109,8 @@ const Breadcrumb = () => {
                     {label}
                   </span>
                 ) : (
-                  <Link 
-                    to={to} 
+                  <Link
+                    href={to}
                     itemProp="item"
                     className="text-gray-500 hover:text-[#1044ff] transition-colors"
                   >

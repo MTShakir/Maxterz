@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/customSupabaseClient';
 import { motion } from 'framer-motion';
 import { ArrowRight, AlertCircle, RefreshCw, Camera } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const CaseStudies = () => {
   const [studies, setStudies] = useState([]);
@@ -86,7 +88,7 @@ const CaseStudies = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <Link to="/our-work" className="inline-flex items-center gap-2 text-[#1044ff] font-bold hover:text-[#eb7444] transition-colors">
+            <Link href="/our-work" className="inline-flex items-center gap-2 text-[#1044ff] font-bold hover:text-[#eb7444] transition-colors">
               View All Work <ArrowRight size={20} />
             </Link>
           </motion.div>
@@ -171,7 +173,7 @@ const CaseStudies = () => {
 
                   <div className="flex justify-between items-center mt-auto">
                     <Link
-                      to={study.cta_href || '/our-work'}
+                      href={study.cta_href || '/our-work'}
                       className="text-[#1044ff] text-[13px] font-bold hover:text-[#eb7444] transition-colors"
                     >
                       View Case Study

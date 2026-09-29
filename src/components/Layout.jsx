@@ -1,13 +1,15 @@
+'use client';
+
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import Breadcrumb from '@/components/Breadcrumb';
 
 const Layout = ({ children }) => {
-  const location = useLocation();
-  const showBreadcrumb = location.pathname !== '/';
+  const pathname = usePathname();
+  const showBreadcrumb = pathname !== '/';
 
   return (
     <div className="min-h-screen bg-[#fafafa] selection:bg-orange-500/30 selection:text-orange-900">

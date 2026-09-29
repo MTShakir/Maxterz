@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -73,7 +75,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-16 relative z-10">
           
           <motion.div variants={itemVariants} className="lg:col-span-4">
-            <Link to="/" onClick={handleLinkClick} className="inline-block mb-6 group">
+            <Link href="/" onClick={handleLinkClick} className="inline-block mb-6 group">
               <div className="relative h-20 w-80">
                  <img
                     src="https://qcsflpsyzvigswlotepz.supabase.co/storage/v1/object/public/BrandingFiles/MaxtrerzLogoFW.png"
@@ -122,9 +124,9 @@ const Footer = () => {
             <span className="font-bold text-lg mb-6 text-white tracking-wide block">Explore</span>
             <nav className="flex flex-col gap-3">
               {['Home', 'Services', 'Portfolio', 'About Us', 'Blogs'].map((item) => (
-                <Link 
-                  key={item} 
-                  to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`} 
+                <Link
+                  key={item}
+                  href={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`}
                   onClick={handleLinkClick}
                   className="text-blue-100 hover:text-white transition-colors text-sm hover:translate-x-1 duration-200 inline-flex items-center group"
                 >
@@ -139,7 +141,7 @@ const Footer = () => {
             <span className="font-bold text-lg mb-6 text-white tracking-wide block">Services</span>
             <nav className="flex flex-col gap-3">
               {serviceLinks.map((service) => (
-                <Link key={service.name} to={service.path} onClick={handleLinkClick} className="text-blue-100 hover:text-white transition-colors text-sm hover:translate-x-1 duration-200 flex items-center justify-between group w-fit">
+                <Link key={service.name} href={service.path} onClick={handleLinkClick} className="text-blue-100 hover:text-white transition-colors text-sm hover:translate-x-1 duration-200 flex items-center justify-between group w-fit">
                   {service.name}
                   <ArrowUpRight size={12} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity -translate-y-1 group-hover:translate-y-0" />
                 </Link>
@@ -195,10 +197,10 @@ const Footer = () => {
             © {new Date().getFullYear()} MAXTERZ LTD. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link to="/privacy-policy" onClick={handleLinkClick} className="text-blue-100/60 hover:text-white transition-colors text-xs font-medium">
+            <Link href="/privacy-policy" onClick={handleLinkClick} className="text-blue-100/60 hover:text-white transition-colors text-xs font-medium">
               Privacy Policy
             </Link>
-            <Link to="/terms-conditions" onClick={handleLinkClick} className="text-blue-100/60 hover:text-white transition-colors text-xs font-medium">
+            <Link href="/terms-conditions" onClick={handleLinkClick} className="text-blue-100/60 hover:text-white transition-colors text-xs font-medium">
               Terms & Conditions
             </Link>
           </div>
