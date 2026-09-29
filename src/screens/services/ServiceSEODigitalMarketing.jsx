@@ -166,7 +166,7 @@ const cellAnimMap = {
   ),
   keyword: (
     <svg viewBox="0 0 80 80" fill="none">
-      <rect x="4"  y="6"  width="72" height="22" rx="11" fill="#1044ff" opacity="0.10" stroke="#1044ff" strokeWidth="1.5" opacity2="0.20" />
+      <rect x="4"  y="6"  width="72" height="22" rx="11" fill="#1044ff" opacity="0.10" stroke="#1044ff" strokeWidth="1.5" />
       <circle cx="62" cy="17" r="6"  stroke="#1044ff" strokeWidth="2"   opacity="0.32" />
       <line   x1="66" y1="21" x2="72" y2="27" stroke="#1044ff" strokeWidth="2" strokeLinecap="round" opacity="0.32" />
       <rect   x="14" y="12" width="2"  height="10" rx="1" fill="#1044ff" opacity="0.50" style={{ animation: 'seo-blink 1s ease-in-out infinite' }} />
