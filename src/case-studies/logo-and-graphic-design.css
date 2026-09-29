@@ -1,41 +1,45 @@
-@font-face{font-family:cs-logo-and-graphic-design-ff1;src:url('/case-study-assets/logo-and-graphic-design/asset-1.woff')format("woff");}
-.cs-logo-and-graphic-design .pf{position:relative;background-color:#fff;overflow:hidden;margin:0;border:0}
+@font-face{font-family:cs-logo-and-graphic-design-ff1;src:url('/case-study-assets/logo-and-graphic-design/font-1.woff')format("woff");}
+.cs-logo-and-graphic-design .pf{position:relative;overflow:hidden;margin:0;border:0}
 .cs-logo-and-graphic-design .pc{position:absolute;border:0;padding:0;margin:0;top:0;left:0;width:100%;height:100%;overflow:hidden;display:block;transform-origin:0 0}
-.cs-logo-and-graphic-design .bi{position:absolute;border:0;margin:0;user-select:none;-webkit-user-select:none}
-.cs-logo-and-graphic-design .t{position:absolute;white-space:pre;font-size:1px;transform-origin:0 100%;unicode-bidi:bidi-override}
+.cs-logo-and-graphic-design .bs{position:absolute;left:0;width:100%;background-repeat:no-repeat;background-size:100% 100%;user-select:none;-webkit-user-select:none;pointer-events:none}
+.cs-logo-and-graphic-design .t{position:absolute;white-space:pre;font-size:0.05648cqw;transform-origin:0 100%;unicode-bidi:bidi-override}
 .cs-logo-and-graphic-design .t:after{content:''}
 .cs-logo-and-graphic-design .t:before{content:'';display:inline-block}
 .cs-logo-and-graphic-design .t span{position:relative;unicode-bidi:bidi-override}
 .cs-logo-and-graphic-design ._{display:inline-block;color:transparent;z-index:-1}
+.cs-logo-and-graphic-design h2,.cs-logo-and-graphic-design p{display:contents;margin:0;padding:0;font:inherit}
+.cs-logo-and-graphic-design p.cs-extra{display:block;position:absolute;text-align:center;font-weight:500}
 .cs-logo-and-graphic-design .ff0{font-family:sans-serif;visibility:hidden;}
 .cs-logo-and-graphic-design .ff1{font-family:cs-logo-and-graphic-design-ff1;line-height:0.853000;font-style:normal;font-weight:normal;visibility:visible;}
 .cs-logo-and-graphic-design .m1{transform:matrix(0.322164,0.191926,-0.191926,0.322164,0,0);-ms-transform:matrix(0.322164,0.191926,-0.191926,0.322164,0,0);-webkit-transform:matrix(0.322164,0.191926,-0.191926,0.322164,0,0);}
 .cs-logo-and-graphic-design .m0{transform:matrix(0.375000,0.000000,0.000000,0.375000,0,0);-ms-transform:matrix(0.375000,0.000000,0.000000,0.375000,0,0);-webkit-transform:matrix(0.375000,0.000000,0.000000,0.375000,0,0);}
-.cs-logo-and-graphic-design .v0{vertical-align:0.000000px;}
-.cs-logo-and-graphic-design .ls0{letter-spacing:0.000000px;}
+.cs-logo-and-graphic-design .v0{vertical-align:0cqw;}
+.cs-logo-and-graphic-design .ls0{letter-spacing:0cqw;}
 .cs-logo-and-graphic-design .sc_{text-shadow:none;}
 .cs-logo-and-graphic-design .sc0{text-shadow:-0.015em 0 transparent,0 0.015em transparent,0.015em 0 transparent,0 -0.015em  transparent;}
-@media screen and (-webkit-min-device-pixel-ratio:0){.cs-logo-and-graphic-design .sc_{-webkit-text-stroke:0px transparent;}
+@media screen and (-webkit-min-device-pixel-ratio:0){.cs-logo-and-graphic-design .sc_{-webkit-text-stroke:0cqw transparent;}
 .cs-logo-and-graphic-design .sc0{-webkit-text-stroke:0.015em transparent;text-shadow:none;}}
-.cs-logo-and-graphic-design .ws0{word-spacing:0.000000px;}
-.cs-logo-and-graphic-design ._3{margin-left:-29.808888px;}
-.cs-logo-and-graphic-design ._2{margin-left:-25.400808px;}
-.cs-logo-and-graphic-design ._0{margin-left:-24.382704px;}
-.cs-logo-and-graphic-design ._4{margin-left:-23.028760px;}
-.cs-logo-and-graphic-design ._1{margin-left:-16.243464px;}
+.cs-logo-and-graphic-design .ws0{word-spacing:0cqw;}
+.cs-logo-and-graphic-design ._3{margin-left:-1.68348cqw;}
+.cs-logo-and-graphic-design ._2{margin-left:-1.43453cqw;}
+.cs-logo-and-graphic-design ._0{margin-left:-1.37703cqw;}
+.cs-logo-and-graphic-design ._4{margin-left:-1.30057cqw;}
+.cs-logo-and-graphic-design ._1{margin-left:-0.91736cqw;}
 .cs-logo-and-graphic-design .fc1{color:rgb(242,204,167);}
 .cs-logo-and-graphic-design .fc0{color:rgb(248,161,48);}
-.cs-logo-and-graphic-design .fs0{font-size:339.132000px;}
-.cs-logo-and-graphic-design .fs1{font-size:1513.861982px;}
-.cs-logo-and-graphic-design .y0{bottom:0.000000px;}
-.cs-logo-and-graphic-design .y2{bottom:3947.283000px;}
-.cs-logo-and-graphic-design .y1{bottom:4373.083650px;}
-.cs-logo-and-graphic-design .h2{height:270.627336px;}
-.cs-logo-and-graphic-design .h3{height:1208.061862px;}
-.cs-logo-and-graphic-design .h0{height:5758.191150px;}
-.cs-logo-and-graphic-design .h1{height:5758.500000px;}
-.cs-logo-and-graphic-design .w0{width:1770.671700px;}
-.cs-logo-and-graphic-design .w1{width:1770.750000px;}
-.cs-logo-and-graphic-design .x0{left:0.000000px;}
-.cs-logo-and-graphic-design .x1{left:474.793800px;}
-.cs-logo-and-graphic-design .x2{left:1217.988150px;}
+.cs-logo-and-graphic-design .fs0{font-size:19.15273cqw;}
+.cs-logo-and-graphic-design .fs1{font-size:85.49648cqw;}
+.cs-logo-and-graphic-design .y0{bottom:0cqw;}
+.cs-logo-and-graphic-design .y2{bottom:222.92574cqw;}
+.cs-logo-and-graphic-design .y1{bottom:246.97315cqw;}
+.cs-logo-and-graphic-design .h2{height:15.28388cqw;}
+.cs-logo-and-graphic-design .h3{height:68.22619cqw;}
+.cs-logo-and-graphic-design .h0{height:325.19812cqw;}
+.cs-logo-and-graphic-design .h1{height:325.21557cqw;}
+.cs-logo-and-graphic-design .w0{width:100cqw;}
+.cs-logo-and-graphic-design .w1{width:100.00442cqw;}
+.cs-logo-and-graphic-design .x0{left:0cqw;}
+.cs-logo-and-graphic-design .x1{left:26.81433cqw;}
+.cs-logo-and-graphic-design .x2{left:68.78679cqw;}
+
+.cs-logo-and-graphic-design .pf{background-color:#ffffff}

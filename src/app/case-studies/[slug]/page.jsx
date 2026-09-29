@@ -1,3 +1,4 @@
+import process from 'node:process';
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
@@ -56,7 +57,7 @@ export default async function CaseStudyPage({ params }) {
       <section className="px-4 pb-16">
         <div className="container mx-auto max-w-5xl">
           <div className="overflow-hidden">
-            <ScaledPage html={html} width={study.width} height={study.height} className={`cs-${slug}`} />
+            <ScaledPage html={html} className={`cs-${slug}`} />
           </div>
         </div>
       </section>
