@@ -7,14 +7,12 @@ import { ArrowUpRight, Filter, Loader2, CheckCircle, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/customSupabaseClient';
 import Breadcrumb from '@/components/Breadcrumb';
+import { caseStudies } from '@/case-studies';
 
 const OurWorkPage = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [projects, setProjects] = useState([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
-
-  const [caseStudies, setCaseStudies] = useState([]);
-  const [loadingCaseStudies, setLoadingCaseStudies] = useState(true);
 
   const filters = [
     'All',
@@ -43,32 +41,7 @@ const OurWorkPage = () => {
       }
     };
 
-    const fetchCaseStudies = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('case_studies')
-          .select('*')
-          .eq('is_featured', true)
-          .order('display_order', { ascending: true });
-
-        if (error) throw error;
-
-        // Parse services string array if needed, supabase might return it already parsed depending on column type
-        const formattedData = (data || []).map(item => ({
-          ...item,
-          services: typeof item.services === 'string' ? JSON.parse(item.services) : item.services
-        }));
-
-        setCaseStudies(formattedData);
-      } catch (error) {
-        console.error('Error fetching case studies:', error);
-      } finally {
-        setLoadingCaseStudies(false);
-      }
-    };
-
     fetchProjects();
-    fetchCaseStudies();
   }, []);
 
   const filteredProjects =
@@ -138,95 +111,53 @@ const OurWorkPage = () => {
               Real Projects. Real Results.
             </h2>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
-              Three of our most complete client engagements showing the full scope of what Maxterz delivers.
+              Four of our most complete client engagements showing the full scope of what Maxterz delivers.
             </p>
           </motion.div>
 
-          {loadingCaseStudies ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="w-10 h-10 animate-spin text-[#1044ff]" />
-            </div>
-          ) : caseStudies.length === 0 ? (
-            <div className="text-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
-              <p className="text-xl text-gray-500 font-medium">No featured case studies yet.</p>
-            </div>
-          ) : (
-            <div className="space-y-12 md:space-y-16">
-              {caseStudies.map((study, index) => (
-                <motion.div
-                  key={study.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center bg-gray-50/50 p-4 md:p-8 rounded-[2rem] border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-500"
+          <div className="space-y-12 md:space-y-16">
+            {caseStudies.map((study, index) => (
+              <motion.div
+                key={study.slug}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center bg-gray-50/50 p-4 md:p-8 rounded-[2rem] border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-500"
+              >
+                <Link
+                  href={`/case-studies/${study.slug}`}
+                  aria-label={`${study.title} case study`}
+                  className="group w-full md:w-1/2 rounded-[1.5rem] overflow-hidden aspect-[4/3] md:aspect-auto md:h-[400px] flex-shrink-0 relative bg-gradient-to-br from-[#1044ff] to-[#0020bf] flex items-center justify-center"
                 >
-                  {/* Image Area */}
-                  <div className="w-full md:w-1/2 rounded-[1.5rem] overflow-hidden bg-gray-100 aspect-[4/3] md:aspect-auto md:h-[400px] flex-shrink-0 relative">
-                    {study.image_url ? (
-                      <img
-                        src={study.image_url}
-                        alt={study.title || "Case study"}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center p-8 text-center bg-gray-100 border-2 border-dashed border-gray-300 rounded-[1.5rem]" data-placeholder="true">
-                        <span className="text-gray-400 font-medium text-sm">
-                          [Upload case study image to Supabase to display here]
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content Area */}
-                  <div className="w-full md:w-1/2 flex flex-col items-start py-4">
-                    {study.category_tag && (
-                      <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-[#1044ff] text-xs font-bold uppercase tracking-widest mb-5 border border-blue-100">
-                        {study.category_tag}
-                      </span>
-                    )}
-
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight leading-tight">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle,white_1px,transparent_1px)] bg-[size:16px_16px] opacity-10"></div>
+                  <div className="relative z-10 text-center px-8">
+                    <span className="text-white/60 text-xs font-bold uppercase tracking-widest">{study.category}</span>
+                    <p className="text-white text-4xl lg:text-5xl font-extrabold tracking-tight mt-3 group-hover:scale-105 transition-transform duration-500">
                       {study.title}
-                    </h3>
-
-                    <p className="text-gray-600 text-base lg:text-lg mb-6 leading-relaxed font-light">
-                      {study.description}
                     </p>
-
-                    {study.services && Array.isArray(study.services) && study.services.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-8">
-                        {study.services.map((service, idx) => (
-                          <span key={idx} className="bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 shadow-sm">
-                            {service}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {study.key_result && (
-                      <div className="bg-gradient-to-r from-blue-50 to-white border-l-4 border-[#1044ff] p-5 rounded-r-xl mb-8 w-full shadow-sm">
-                        <p className="text-[#1044ff] font-bold text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                          <CheckCircle size={14} /> Key Result
-                        </p>
-                        <p className="text-gray-900 font-semibold text-sm md:text-base">
-                          {study.key_result}
-                        </p>
-                      </div>
-                    )}
-
-                    {study.cta_href && (
-                      <Button asChild className="rounded-full bg-[#1044ff] hover:bg-[#0020bf] text-white px-8 h-12 shadow-lg shadow-blue-500/20">
-                        <Link href={study.cta_href}>
-                          View Case Study <ArrowUpRight className="ml-2 w-4 h-4" />
-                        </Link>
-                      </Button>
-                    )}
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
+                </Link>
+
+                <div className="w-full md:w-1/2 flex flex-col items-start py-4">
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-[#1044ff] text-xs font-bold uppercase tracking-widest mb-5 border border-blue-100">
+                    {study.category}
+                  </span>
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight leading-tight">
+                    {study.title}
+                  </h3>
+                  <p className="text-gray-600 text-base lg:text-lg mb-8 leading-relaxed font-light">
+                    {study.description}
+                  </p>
+                  <Button asChild className="rounded-full bg-[#1044ff] hover:bg-[#0020bf] text-white px-8 h-12 shadow-lg shadow-blue-500/20">
+                    <Link href={`/case-studies/${study.slug}`}>
+                      View Case Study <ArrowUpRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
