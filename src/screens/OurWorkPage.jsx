@@ -3,16 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Filter, Loader2, CheckCircle, Star } from 'lucide-react';
+import { ArrowUpRight, Loader2, CheckCircle, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/customSupabaseClient';
-import Breadcrumb from '@/components/Breadcrumb';
 import { caseStudies } from '@/case-studies';
+
+const INITIAL_COUNT = 6;
 
 const OurWorkPage = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [projects, setProjects] = useState([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   const filters = [
     'All',
@@ -48,260 +50,161 @@ const OurWorkPage = () => {
     activeFilter === 'All'
       ? projects
       : projects.filter((project) => project.category === activeFilter);
+  const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_COUNT);
 
   return (
     <>
-      {/* SECTION 1 - PAGE HEADER */}
-      <section className="pt-8 pb-16 px-4 bg-gray-50/50 relative overflow-hidden">
-        <div className="container mx-auto mt-12 md:mt-16 relative z-10">
+      {/* HEADER */}
+      <section className="pt-8 pb-10 px-4">
+        <div className="container mx-auto mt-12 md:mt-16">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto"
+            transition={{ duration: 0.5 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-6"
           >
-            <span className="badge-standard-light">
-              OUR WORK
-            </span>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 tracking-tight">
-              Selected <span className="bg-gradient-to-r from-[#1044ff] to-[#0020bf] bg-clip-text text-transparent">Masterpieces</span>
-            </h1>
-            <p className="text-xl text-gray-600 font-light leading-relaxed mb-10 max-w-2xl mx-auto">
-              Creative vision meeting technical precision. Projects and case studies delivered for clients across the UK and worldwide.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
-                className="flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm border border-gray-100"
-              >
-                <CheckCircle className="text-[#1044ff] w-5 h-5" />
-                <span className="font-bold text-sm text-gray-800 tracking-tight">11,600+ Projects Delivered</span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
-                className="flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm border border-gray-100"
-              >
-                <Star className="text-[#eb7444] w-5 h-5 fill-current" />
-                <span className="font-bold text-sm text-gray-800 tracking-tight">4.9 Stars from 7,100+ Reviews</span>
-              </motion.div>
+            <div>
+              <span className="badge-standard-light">OUR WORK</span>
+              <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight">
+                Selected{' '}
+                <span className="bg-gradient-to-r from-[#1044ff] to-[#0020bf] bg-clip-text text-transparent">
+                  Masterpieces
+                </span>
+              </h1>
+              <p className="text-lg text-gray-500 font-light mt-4 max-w-xl">
+                Creative vision meeting technical precision, delivered for clients across the UK and worldwide.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 text-sm font-semibold text-gray-800">
+              <span className="flex items-center gap-2">
+                <CheckCircle className="text-[#1044ff] w-4 h-4" /> 11,600+ Projects Delivered
+              </span>
+              <span className="flex items-center gap-2">
+                <Star className="text-[#eb7444] w-4 h-4 fill-current" /> 4.9 Stars from 7,100+ Reviews
+              </span>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* SECTION 2 - FEATURED CASE STUDIES */}
-      <section className="py-24 px-4 bg-white">
+      {/* CASE STUDIES */}
+      <section className="pb-14 px-4">
         <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="badge-standard-light">
-              CASE STUDIES
-            </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
-              Real Projects. Real Results.
-            </h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
-              Four of our most complete client engagements showing the full scope of what Maxterz delivers.
-            </p>
-          </motion.div>
-
-          <div className="space-y-12 md:space-y-16">
+          <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-5">
+            Case Studies · Real Projects. Real Results.
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {caseStudies.map((study, index) => (
               <motion.div
                 key={study.slug}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center bg-gray-50/50 p-4 md:p-8 rounded-[2rem] border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-500"
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ delay: index * 0.07, duration: 0.4 }}
               >
                 <Link
                   href={`/case-studies/${study.slug}`}
                   aria-label={`${study.title} case study`}
-                  className="group w-full md:w-1/2 rounded-[1.5rem] overflow-hidden aspect-[4/3] md:aspect-auto md:h-[400px] flex-shrink-0 relative bg-gradient-to-br from-[#1044ff] to-[#0020bf] flex items-center justify-center"
+                  className="group relative flex flex-col justify-between h-64 p-7 rounded-[2rem] overflow-hidden bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
                 >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle,white_1px,transparent_1px)] bg-[size:16px_16px] opacity-10"></div>
-                  <div className="relative z-10 text-center px-8">
-                    <span className="text-white/60 text-xs font-bold uppercase tracking-widest">{study.category}</span>
-                    <p className="text-white text-4xl lg:text-5xl font-extrabold tracking-tight mt-3 group-hover:scale-105 transition-transform duration-500">
-                      {study.title}
-                    </p>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle,white_1px,transparent_1px)] bg-[size:16px_16px] opacity-10" />
+                  <div className="relative flex items-start justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-white/70">{study.category}</span>
+                    <span className="w-10 h-10 rounded-full bg-white/15 group-hover:bg-white group-hover:text-[#1044ff] flex items-center justify-center transition-colors">
+                      <ArrowUpRight size={18} />
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight leading-tight mb-2">{study.title}</h3>
+                    <p className="text-sm text-white/75 font-light line-clamp-2">{study.description}</p>
+                    <span className="sr-only">View Case Study</span>
                   </div>
                 </Link>
-
-                <div className="w-full md:w-1/2 flex flex-col items-start py-4">
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-[#1044ff] text-xs font-bold uppercase tracking-widest mb-5 border border-blue-100">
-                    {study.category}
-                  </span>
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight leading-tight">
-                    {study.title}
-                  </h3>
-                  <p className="text-gray-600 text-base lg:text-lg mb-8 leading-relaxed font-light">
-                    {study.description}
-                  </p>
-                  <Button asChild className="rounded-full bg-[#1044ff] hover:bg-[#0020bf] text-white px-8 h-12 shadow-lg shadow-blue-500/20">
-                    <Link href={`/case-studies/${study.slug}`}>
-                      View Case Study <ArrowUpRight className="ml-2 w-4 h-4" />
-                    </Link>
-                  </Button>
-                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 3 - PORTFOLIO GRID */}
-      <section className="py-24 px-4 bg-gray-50/50 border-t border-gray-100">
+      {/* PORTFOLIO ARCHIVE */}
+      <section className="py-14 px-4 bg-gray-50/60 border-t border-gray-100">
         <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="badge-standard-light">
-              PORTFOLIO ARCHIVE
-            </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
-              More of Our Work
-            </h2>
-          </motion.div>
-
-          {/* Filters */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-3 mb-16"
-          >
-            <div className="flex items-center gap-2 mr-4 text-gray-400 font-medium uppercase tracking-widest text-xs">
-              <Filter size={14} /> Filter by:
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 mb-8">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">More of Our Work</h2>
+            <div className="flex flex-wrap gap-2">
+              {filters.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => {
+                    setActiveFilter(filter);
+                    setShowAll(false);
+                  }}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold border transition-colors ${
+                    activeFilter === filter
+                      ? 'bg-[#1044ff] border-[#1044ff] text-white'
+                      : 'bg-white border-gray-200 text-gray-600 hover:border-[#1044ff] hover:text-[#1044ff]'
+                  }`}
+                >
+                  {filter}
+                </button>
+              ))}
             </div>
-            {filters.map((filter) => (
-              <motion.button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-6 py-3 rounded-full font-bold text-sm transition-all border shadow-sm ${
-                  activeFilter === filter
-                    ? 'bg-gradient-to-r from-[#eb7444] to-[#e05220] border-orange-500 text-white shadow-orange-500/20'
-                    : 'bg-gradient-to-r from-[#1044ff] to-[#0020bf] border-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/20'
-                }`}
-              >
-                {filter}
-              </motion.button>
-            ))}
-          </motion.div>
+          </div>
 
-          {/* Grid */}
           {loadingProjects ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="w-10 h-10 animate-spin text-[#1044ff]" />
+            <div className="flex justify-center py-16">
+              <Loader2 className="w-8 h-8 animate-spin text-[#1044ff]" />
             </div>
           ) : (
-            <motion.div
-              layout
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
-            >
+            <motion.div layout className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               <AnimatePresence mode="popLayout">
-                {filteredProjects.length > 0 ? (
-                  filteredProjects.map((project) => (
+                {visibleProjects.length > 0 ? (
+                  visibleProjects.map((project) => (
                     <motion.div
                       key={project.id}
                       layout
-                      initial={{ opacity: 0, scale: 0.9 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.3 }}
-                      className="group cursor-pointer bg-white rounded-[2.5rem] p-3 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-[#1044ff]"
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.25 }}
                     >
-                      <Link
-                        href={`/our-work/${project.id}`}
-                        className="block h-full flex flex-col"
-                      >
-                        <div className="relative overflow-hidden rounded-[2rem] aspect-[4/3] mb-4 bg-gray-100">
+                      <Link href={`/our-work/${project.id}`} className="group block">
+                        <div className="relative overflow-hidden rounded-2xl aspect-[4/3] bg-gray-100">
                           <img
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             alt={project.title}
                             src={project.main_image}
+                            loading="lazy"
                           />
-                          <div className="absolute inset-0 bg-blue-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
-                            <motion.div
-                              initial={{ scale: 0.5, opacity: 0 }}
-                              whileHover={{ scale: 1.1 }}
-                              className="w-16 h-16 bg-white rounded-full flex items-center justify-center"
-                            >
-                              <ArrowUpRight size={32} className="text-[#1044ff]" />
-                            </motion.div>
-                          </div>
-                        </div>
-
-                        <div className="px-3 pb-3 flex-grow flex flex-col">
-                          <div className="mb-3 flex flex-wrap gap-2">
-                            <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-[#eb7444] to-[#e05220] text-white text-[10px] font-bold uppercase tracking-wider shadow-sm shadow-orange-500/20">
+                          <div className="absolute inset-x-0 bottom-0 p-4 pt-12 bg-gradient-to-t from-black/70 to-transparent">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-orange-300">
                               {project.category}
                             </span>
+                            <h3 className="text-white font-bold text-base md:text-lg leading-tight">{project.title}</h3>
                           </div>
-
-                          <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-[#1044ff] transition-colors leading-tight">
-                            {project.title}
-                          </h3>
-                          <p className="text-gray-500 font-medium text-sm line-clamp-2 leading-relaxed">
-                            {project.short_description}
-                          </p>
-
-                          {project.tags && project.tags.length > 0 && (
-                            <div className="mt-4 flex flex-wrap gap-1">
-                              {project.tags.slice(0, 3).map((tag, idx) => (
-                                <span
-                                  key={idx}
-                                  className="text-[10px] text-gray-400 font-semibold bg-gray-50 px-2 py-1 rounded-md border border-gray-100"
-                                >
-                                  #{tag}
-                                </span>
-                              ))}
-                            </div>
-                          )}
                         </div>
                       </Link>
                     </motion.div>
                   ))
                 ) : (
-                  <div className="col-span-full text-center py-20 text-gray-500">
-                    <p className="text-xl">No projects found in this category yet.</p>
+                  <div className="col-span-full text-center py-16 text-gray-500">
+                    No projects found in this category yet.
                   </div>
                 )}
               </AnimatePresence>
             </motion.div>
           )}
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <Button
-              asChild
-              size="lg"
-              className="h-14 px-10 text-lg rounded-full shadow-xl shadow-blue-500/20 hover:scale-105 transition-all"
-            >
+          <div className="flex flex-wrap justify-center gap-3 mt-10">
+            {filteredProjects.length > INITIAL_COUNT && (
+              <Button variant="outline" className="rounded-full px-8 h-11" onClick={() => setShowAll((v) => !v)}>
+                {showAll ? 'Show less' : `View all ${filteredProjects.length} projects`}
+              </Button>
+            )}
+            <Button asChild className="rounded-full px-8 h-11 bg-[#1044ff] hover:bg-[#0020bf]">
               <Link href="/contact">Start Your Project</Link>
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
     </>

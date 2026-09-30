@@ -60,147 +60,132 @@ const Footer = () => {
     window.scrollTo(0, 0);
   };
 
+  const exploreLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+    { name: 'Portfolio', path: '/our-work' },
+    { name: 'About Us', path: '/about' },
+    { name: 'Blogs', path: '/insights' },
+  ];
+
+  const colTitle = 'text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50 mb-6 block';
+  const linkCls = 'text-sm text-white/80 hover:text-white transition-colors inline-flex items-center group w-fit';
+
+  const contactItems = [
+    { label: 'Office', Icon: MapPin, href: 'https://maps.google.com/?q=128+City+Road,+London+EC1V+2NX,+United+Kingdom', external: true, text: <>128 City Road, London<br />EC1V 2NX, United Kingdom</> },
+    { label: 'Email Us', Icon: Mail, href: 'mailto:info@maxterz.co.uk', text: 'info@maxterz.co.uk' },
+    { label: 'Call Us', Icon: Phone, href: 'tel:+447375874706', text: '+44 7375 874706' },
+  ];
+
   return (
     <footer className="mt-20 px-4 pb-4">
-      <motion.div 
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
-        className="container mx-auto rounded-[3rem] bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white pt-20 pb-10 px-8 md:px-16 shadow-2xl relative overflow-hidden"
+        className="container mx-auto rounded-[2.5rem] bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white pt-14 pb-8 px-8 md:px-16 shadow-2xl relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[100px] pointer-events-none translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-500/10 rounded-full blur-[80px] pointer-events-none -translate-x-1/2 translate-y-1/2" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[110px] pointer-events-none translate-x-1/2 -translate-y-1/2" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-16 relative z-10">
-          
-          <motion.div variants={itemVariants} className="lg:col-span-4">
-            <Link href="/" onClick={handleLinkClick} className="inline-block mb-6 group">
-              <div className="relative h-20 w-80">
-                 <img
-                    src="https://qcsflpsyzvigswlotepz.supabase.co/storage/v1/object/public/BrandingFiles/MaxtrerzLogoFW.png"
-                    alt="MAXTERZ Logo"
-                    loading="lazy"
-                    className="h-full w-full object-contain object-left group-hover:scale-105 transition-transform duration-300"
-                 />
-              </div>
+        <motion.div variants={itemVariants} className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8 pb-12 border-b border-white/15">
+          <div className="max-w-md">
+            <Link href="/" onClick={handleLinkClick} className="inline-block mb-5 group">
+              <img
+                src="https://qcsflpsyzvigswlotepz.supabase.co/storage/v1/object/public/BrandingFiles/MaxtrerzLogoFW.png"
+                alt="MAXTERZ Logo"
+                loading="lazy"
+                className="h-14 w-auto object-contain object-left group-hover:opacity-90 transition-opacity"
+              />
             </Link>
-            <p className="text-blue-100 text-base leading-relaxed mb-8 max-w-sm font-light">
+            <p className="text-white/70 text-sm leading-relaxed font-light">
               We are a premium creative studio engineering digital awe. We transform bold visions into market-dominating realities.
             </p>
-            <div className="flex gap-3 mb-8">
-              {socialLinks.map((social, index) => (
-                <motion.a 
-                  key={index} 
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/20 text-white hover:bg-[#eb7444] hover:border-[#eb7444] transition-all"
-                  aria-label={social.name}
-                >
-                  <social.Icon size={18} className="w-[18px] h-[18px]" />
-                </motion.a>
-              ))}
-            </div>
-            
-            <div className="flex flex-col gap-4">
-                <Button asChild className="w-full sm:w-auto justify-start bg-[#25D366] hover:bg-[#128C7E] text-white border-2 border-white rounded-xl">
-                    <a href="https://wa.me/447375874706" target="_blank" rel="noopener noreferrer">
-                        <WhatsAppIcon size={20} className="mr-2 fill-current" />
-                        Contact on WhatsApp
-                    </a>
-                </Button>
-                <Button asChild className="w-full sm:w-auto justify-start bg-gradient-to-r from-[#eb7444] to-[#e05220] text-white hover:opacity-90 border-2 border-white rounded-xl">
-                    <a href="https://calendly.com/maxterz-info/30min" target="_blank" rel="noopener noreferrer">
-                        <Calendar size={20} className="mr-2" />
-                        Book free Consultation
-                    </a>
-                </Button>
-            </div>
-          </motion.div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button asChild className="h-12 px-6 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30">
+              <a href="https://wa.me/447375874706" target="_blank" rel="noopener noreferrer">
+                <WhatsAppIcon size={18} className="mr-2" />
+                Contact on WhatsApp
+              </a>
+            </Button>
+            <Button asChild className="h-12 px-6 rounded-full bg-gradient-to-r from-[#eb7444] to-[#e05220] text-white hover:opacity-90 shadow-lg shadow-orange-900/20">
+              <a href="https://calendly.com/maxterz-info/30min" target="_blank" rel="noopener noreferrer">
+                <Calendar size={18} className="mr-2" />
+                Book free Consultation
+              </a>
+            </Button>
+          </div>
+        </motion.div>
 
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-10 py-12 relative z-10">
           <motion.div variants={itemVariants} className="lg:col-span-2">
-            <span className="font-bold text-lg mb-6 text-white tracking-wide block">Explore</span>
+            <span className={colTitle}>Explore</span>
             <nav className="flex flex-col gap-3">
-              {['Home', 'Services', 'Portfolio', 'About Us', 'Blogs'].map((item) => (
-                <Link
-                  key={item}
-                  href={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`}
-                  onClick={handleLinkClick}
-                  className="text-blue-100 hover:text-white transition-colors text-sm hover:translate-x-1 duration-200 inline-flex items-center group"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-orange-500 opacity-0 group-hover:opacity-100 mr-2 transition-opacity" />
-                  {item}
+              {exploreLinks.map((item) => (
+                <Link key={item.name} href={item.path} onClick={handleLinkClick} className={linkCls}>
+                  {item.name}
                 </Link>
               ))}
             </nav>
           </motion.div>
 
           <motion.div variants={itemVariants} className="lg:col-span-3">
-            <span className="font-bold text-lg mb-6 text-white tracking-wide block">Services</span>
+            <span className={colTitle}>Services</span>
             <nav className="flex flex-col gap-3">
               {serviceLinks.map((service) => (
-                <Link key={service.name} href={service.path} onClick={handleLinkClick} className="text-blue-100 hover:text-white transition-colors text-sm hover:translate-x-1 duration-200 flex items-center justify-between group w-fit">
+                <Link key={service.name} href={service.path} onClick={handleLinkClick} className={linkCls}>
                   {service.name}
-                  <ArrowUpRight size={12} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity -translate-y-1 group-hover:translate-y-0" />
+                  <ArrowUpRight size={12} className="ml-1.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
               ))}
             </nav>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="lg:col-span-3">
-            <span className="font-bold text-lg mb-6 text-white tracking-wide block">Contact</span>
+          <motion.div variants={itemVariants} className="col-span-2 lg:col-span-4 lg:col-start-9">
+            <span className={colTitle}>Contact</span>
             <div className="flex flex-col gap-5">
-               <a href="https://maps.google.com/?q=128+City+Road,+London+EC1V+2NX,+United+Kingdom" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group hover:bg-white/5 p-2 rounded-2xl transition-colors -ml-2">
-                 <div className="p-3 rounded-xl bg-white/10 border border-white/20 group-hover:bg-white/20 transition-colors">
-                   <MapPin size={20} className="text-orange-400" />
-                 </div>
-                 <div>
-                   <span className="text-xs text-blue-200 uppercase tracking-wider font-bold block mb-1">Office</span>
-                   <p className="text-white/90 text-sm leading-relaxed">
-                    128 City Road, London<br />
-                    EC1V 2NX, United Kingdom
-                   </p>
-                 </div>
-               </a>
-
-               <a href="mailto:info@maxterz.co.uk" className="flex items-center gap-4 group hover:bg-white/5 p-2 rounded-2xl transition-colors -ml-2">
-                 <div className="p-3 rounded-xl bg-white/10 border border-white/20 group-hover:bg-white/20 transition-colors">
-                   <Mail size={20} className="text-orange-400" />
-                 </div>
-                 <div>
-                   <span className="text-xs text-blue-200 uppercase tracking-wider font-bold block mb-1">Email Us</span>
-                   <span className="text-white/90 group-hover:text-white transition-colors text-sm font-medium">
-                     info@maxterz.co.uk
-                   </span>
-                 </div>
-               </a>
-
-               <a href="tel:+447375874706" className="flex items-center gap-4 group hover:bg-white/5 p-2 rounded-2xl transition-colors -ml-2">
-                 <div className="p-3 rounded-xl bg-white/10 border border-white/20 group-hover:bg-white/20 transition-colors">
-                   <Phone size={20} className="text-orange-400" />
-                 </div>
-                 <div>
-                   <span className="text-xs text-blue-200 uppercase tracking-wider font-bold block mb-1">Call Us</span>
-                   <span className="text-white/90 group-hover:text-white transition-colors text-sm font-medium">
-                     +44 7375 874706
-                   </span>
-                 </div>
-               </a>
+              {contactItems.map(({ label, Icon, href, external, text }) => (
+                <a
+                  key={label}
+                  href={href}
+                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="flex items-start gap-4 group"
+                >
+                  <Icon size={18} className="text-orange-300 mt-1 shrink-0" />
+                  <div>
+                    <span className="text-[11px] text-white/50 uppercase tracking-widest font-semibold block mb-1">{label}</span>
+                    <span className="text-sm text-white/90 group-hover:text-white transition-colors leading-relaxed">{text}</span>
+                  </div>
+                </a>
+              ))}
             </div>
           </motion.div>
         </div>
 
-        <motion.div variants={itemVariants} className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
-          <p className="text-blue-100/60 text-xs font-medium text-center md:text-left">
+        <motion.div variants={itemVariants} className="border-t border-white/15 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+          <p className="text-white/50 text-xs text-center md:text-left">
             © {new Date().getFullYear()} MAXTERZ LTD. All rights reserved.
           </p>
+          <div className="flex items-center gap-1">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                className="w-9 h-9 flex items-center justify-center rounded-full text-white/70 hover:text-white hover:bg-white/15 transition-all"
+              >
+                <social.Icon size={16} className="w-4 h-4" />
+              </a>
+            ))}
+          </div>
           <div className="flex gap-6">
-            <Link href="/privacy-policy" onClick={handleLinkClick} className="text-blue-100/60 hover:text-white transition-colors text-xs font-medium">
+            <Link href="/privacy-policy" onClick={handleLinkClick} className="text-white/50 hover:text-white transition-colors text-xs">
               Privacy Policy
             </Link>
-            <Link href="/terms-conditions" onClick={handleLinkClick} className="text-blue-100/60 hover:text-white transition-colors text-xs font-medium">
+            <Link href="/terms-conditions" onClick={handleLinkClick} className="text-white/50 hover:text-white transition-colors text-xs">
               Terms & Conditions
             </Link>
           </div>
