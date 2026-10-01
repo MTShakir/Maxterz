@@ -4,6 +4,20 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 2 Oct 2026 | Phase 0 | Audit and plan (Claude Code, launch branch)
+- Created `launch` branch from main. All sprint work happens here.
+- Committed docs/ and CLAUDE.md to main: 20 files, 4,449 insertions. Pulled remote changes to Footer.jsx and OurWorkPage.jsx before pushing.
+- Read all 7 docs files + codebase audit: 27 existing routes mapped, 15 new routes identified, all client-side data-fetch patterns catalogued.
+- Confirmed Next.js 15.5.26, React 18.3.x, JavaScript, ESLint 9, npm.
+- Confirmed all Part 5 issues (C1–C12) still present. Found 14 additional issues (N1–N14): lang en not en-GB, no metadataBase, GA4 without consent, broken redirect for /services/video-editing and /blogs/:id, missing /about-us and /shop redirects, no security headers, no host redirects.
+- Supabase: existing pricing table names (packages_one_time, brandingDesignPackages, etc.) do not match the planned schema (price_items, packages, package_items). Full replacement in Phase 4.
+- Identified that the Maxterz Supabase project is not accessible via MCP in this session (only Doovor project is). Talha must connect it or use the dashboard for migrations.
+- seo-services/page.jsx metadata added earlier this session has wrong title/description vs brief 8.3 and contains an em dash. Claude Code fixes it in Phase 1.
+- Output: `docs/launch/phase-0-report.md` (full findings + file-level phase plan), `docs/launch/CHANGELOG.md` (this), `docs/launch/TODO-talha.md` (updated).
+- Files touched: docs/launch/phase-0-report.md, docs/launch/CHANGELOG.md, docs/launch/TODO-talha.md
+
+---
+
 ## 1 Oct 2026 | Setup | Prices and homepage copy locked (Claude, strategy workspace)
 - Price book v3 locked by Talha (D25). Services: logo £195 / £395 / £795, brand identity £995 / £1,995, websites from £1,295 and £1,995, social media management from £395 a month, thumbnails and short edits £50 or 30 for £1,195. Packages: Starter £795, Launch £1,995 (founding £1,495), Scale £4,995. Plans: Design £495 (with video £895), Visibility £795, Partner £1,995. Care Plus £145.
 - `docs/website/data/pricing.json` added: 57 price items and 7 packages, values verified.

@@ -40,3 +40,8 @@ Claude Code adds items here during the build. Tick them off and add a note on wh
 - [ ] Google Search Console Domain property for maxterz.com (verified by DNS TXT record) and maxterz.co.uk
 - [ ] ICO data protection fee paid (registration number for the privacy policy)
 - [ ] Director identity verified with Companies House (before 13 Nov 2026)
+
+## Phase 0 additions (2 Oct 2026)
+- [ ] **Supabase MCP access:** the Maxterz Supabase project (qcsflpsyzvigswlotepz) is NOT connected to the Claude Code MCP session. Only the Doovor project is accessible. Phase 3 and 4 migrations will need the Supabase dashboard unless you reconnect the MCP. Check your MCP server config and confirm access before Phase 3.
+- [ ] **Old maxterz.com indexed URLs:** the old single-page thumbnail site was live on maxterz.com before the new site. Open Google Search Console (the old property for maxterz.com), go to the Pages report, and send Claude Code any indexed paths. Redirect rules will be added so that search equity is not lost at launch.
+- [ ] **Headshot to public folder:** before Phase 5, copy `docs/assets/founder/muhammad-talha-shakir-800.webp` (and the 400px version) to `public/images/team/`. Claude Code will use them on the About page and in schema.
