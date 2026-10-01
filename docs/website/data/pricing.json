@@ -1,0 +1,1502 @@
+{
+  "version": "3.0",
+  "locked_on": "2026-10-01",
+  "locked_by": "Talha",
+  "currency": "GBP",
+  "vat_note": "No VAT is added.",
+  "how_to_use": [
+    "Claude Code seeds the Supabase pricing tables from this file with an idempotent upsert script (key: id).",
+    "After launch, Supabase is the live source. Talha edits prices in the table; the site updates through on-demand revalidation, with no code change or redeploy.",
+    "Package and plan values and savings are calculated from items x quantity. expected_value_gbp is for the unit test only.",
+    "Keep this file in sync when prices change, or treat Supabase as the source and export from it."
+  ],
+  "price_items": [
+    {
+      "id": "landing-basic",
+      "category": "web",
+      "service_page": "/services/web-development/business-website-design",
+      "name": "Landing page",
+      "tier_label": "Basic",
+      "model": "from",
+      "price_gbp": 495,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "1 page, up to 5 sections",
+        "Contact form",
+        "Mobile-first build",
+        "Basic SEO set-up"
+      ],
+      "timeline": "5 to 7 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "landing-conversion",
+      "category": "web",
+      "service_page": "/services/web-development/business-website-design",
+      "name": "Landing page with copy and tracking",
+      "tier_label": "Conversion",
+      "model": "from",
+      "price_gbp": 995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Up to 8 sections",
+        "Conversion copywriting",
+        "Analytics and conversion tracking",
+        "CRM or email connection"
+      ],
+      "timeline": "7 to 10 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "website-5",
+      "category": "web",
+      "service_page": "/services/web-development/business-website-design",
+      "name": "Website, up to 5 pages",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 1295,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Custom design",
+        "CMS so you can edit content",
+        "SEO foundations",
+        "Forms and tracking",
+        "2 revision rounds"
+      ],
+      "timeline": "2 to 3 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "website-10",
+      "category": "web",
+      "service_page": "/services/web-development/business-website-design",
+      "name": "Website, up to 10 pages",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 1995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Custom design",
+        "CMS and blog",
+        "SEO foundations",
+        "Forms and tracking",
+        "2 revision rounds"
+      ],
+      "timeline": "3 to 4 weeks",
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "website-25",
+      "category": "web",
+      "service_page": "/services/web-development/business-website-design",
+      "name": "Website, up to 25 pages",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 3995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Design system",
+        "CMS and blog",
+        "Integrations",
+        "Content migration",
+        "SEO foundations"
+      ],
+      "timeline": "5 to 7 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "shopify-store",
+      "category": "web",
+      "service_page": "/services/web-development/ecommerce-website-design",
+      "name": "Shopify store set-up",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 1495,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Theme customisation",
+        "Up to 50 products",
+        "Payments and shipping",
+        "Essential apps",
+        "Training"
+      ],
+      "timeline": "2 to 3 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "custom-store",
+      "category": "web",
+      "service_page": "/services/web-development/ecommerce-website-design",
+      "name": "Custom online store",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 3995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Custom design and build",
+        "Up to 100 products",
+        "Payments, shipping and tracking",
+        "Training"
+      ],
+      "timeline": "4 to 6 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "copywriting",
+      "category": "web",
+      "service_page": "/services/web-development/business-website-design",
+      "name": "Website copywriting",
+      "tier_label": null,
+      "model": "per-unit",
+      "price_gbp": 75,
+      "unit": "per page",
+      "setup_fee_gbp": null,
+      "includes": [
+        "SEO-led copy written with you on a short call"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "app-design",
+      "category": "web",
+      "service_page": "/services/web-development/app-design",
+      "name": "App design (UI/UX)",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 2995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "User flows and wireframes",
+        "Up to 15 screens",
+        "Clickable prototype",
+        "Design system"
+      ],
+      "timeline": "3 to 4 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "custom-software",
+      "category": "web",
+      "service_page": "/services/web-development/mobile-app-development",
+      "name": "Custom software, apps and SaaS",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 9995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Discovery call and scope",
+        "Fixed quote per phase",
+        "Mobile apps, web apps, SaaS and internal tools"
+      ],
+      "timeline": "6 to 16 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "logo-essential",
+      "category": "branding",
+      "service_page": "/services/branding-design/logo-design",
+      "name": "Logo design",
+      "tier_label": "Essential",
+      "model": "tier",
+      "price_gbp": 195,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "2 concepts",
+        "2 revision rounds",
+        "Colour and mono versions",
+        "PNG, SVG and PDF files"
+      ],
+      "timeline": "5 working days",
+      "popular": false,
+      "self_serve": true,
+      "stripe_link_env": "NEXT_PUBLIC_STRIPE_LINK_LOGO_DESIGN"
+    },
+    {
+      "id": "logo-professional",
+      "category": "branding",
+      "service_page": "/services/branding-design/logo-design",
+      "name": "Logo design",
+      "tier_label": "Professional",
+      "model": "tier",
+      "price_gbp": 395,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "4 concepts",
+        "3 revision rounds",
+        "Full file suite (AI, EPS, SVG, PNG, PDF)",
+        "Icon mark",
+        "Social profile versions"
+      ],
+      "timeline": "7 working days",
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "logo-signature",
+      "category": "branding",
+      "service_page": "/services/branding-design/logo-design",
+      "name": "Logo design",
+      "tier_label": "Signature",
+      "model": "tier",
+      "price_gbp": 795,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Research and moodboard",
+        "6 concepts",
+        "4 revision rounds",
+        "Primary and secondary logo, icon",
+        "Mini brand guide",
+        "Business card design"
+      ],
+      "timeline": "10 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "brand-core",
+      "category": "branding",
+      "service_page": "/services/branding-design/brand-identity-design",
+      "name": "Brand identity",
+      "tier_label": "Core",
+      "model": "tier",
+      "price_gbp": 995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Professional logo",
+        "Colour palette and typography",
+        "Brand guidelines (15+ pages)",
+        "Business card and email signature",
+        "Social profile kit"
+      ],
+      "timeline": "2 to 3 weeks",
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "brand-complete",
+      "category": "branding",
+      "service_page": "/services/branding-design/brand-identity-design",
+      "name": "Brand identity",
+      "tier_label": "Complete",
+      "model": "tier",
+      "price_gbp": 1995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Signature logo",
+        "Brand strategy session",
+        "Tone of voice",
+        "Extended guidelines (30+ pages)",
+        "Stationery set",
+        "10 social templates",
+        "Presentation template"
+      ],
+      "timeline": "4 to 5 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "brand-guidelines",
+      "category": "branding",
+      "service_page": "/services/branding-design/brand-identity-design",
+      "name": "Brand guidelines for an existing logo",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 495,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Logo rules",
+        "Colours and typography",
+        "Imagery and examples"
+      ],
+      "timeline": "1 to 2 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "business-card",
+      "category": "branding",
+      "service_page": "/services/branding-design",
+      "name": "Business card design",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 95,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Front and back",
+        "Print-ready files"
+      ],
+      "timeline": "3 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "stationery-set",
+      "category": "branding",
+      "service_page": "/services/branding-design",
+      "name": "Stationery set",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 245,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Business card",
+        "Letterhead",
+        "Compliment slip",
+        "Email signature"
+      ],
+      "timeline": "1 week",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "social-setup",
+      "category": "branding",
+      "service_page": "/services/branding-design/social-media-design",
+      "name": "Social account set-up (3 platforms)",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 145,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Profile images and covers",
+        "Bios and links",
+        "Set up and branded"
+      ],
+      "timeline": "3 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "social-templates",
+      "category": "branding",
+      "service_page": "/services/branding-design/social-media-design",
+      "name": "Social templates pack",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 195,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "10 editable post and story templates"
+      ],
+      "timeline": "5 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "social-post",
+      "category": "branding",
+      "service_page": "/services/branding-design/social-media-design",
+      "name": "Social media post design",
+      "tier_label": null,
+      "model": "per-unit",
+      "price_gbp": 30,
+      "unit": "per post",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Static post or carousel, on brand"
+      ],
+      "timeline": "2 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "social-design-monthly",
+      "category": "branding",
+      "service_page": "/services/branding-design/social-media-design",
+      "name": "Monthly social design",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 295,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "12 designed posts or carousels",
+        "2 revision rounds each"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "thumbnail-single",
+      "category": "branding",
+      "service_page": "/services/branding-design/thumbnail-design",
+      "name": "Thumbnail design: try one",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 50,
+      "unit": "per thumbnail",
+      "setup_fee_gbp": null,
+      "includes": [
+        "1 custom YouTube thumbnail"
+      ],
+      "timeline": "1 to 2 working days",
+      "popular": false,
+      "self_serve": true,
+      "stripe_link_env": "NEXT_PUBLIC_STRIPE_LINK_THUMBNAIL"
+    },
+    {
+      "id": "thumbnail-pack-30",
+      "category": "branding",
+      "service_page": "/services/branding-design/thumbnail-design",
+      "name": "Thumbnail pack",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 1195,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "30 thumbnails",
+        "Use within 60 days"
+      ],
+      "timeline": null,
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "thumbnail-monthly",
+      "category": "branding",
+      "service_page": "/services/branding-design/thumbnail-design",
+      "name": "Thumbnail monthly plan",
+      "tier_label": null,
+      "model": "quote",
+      "price_gbp": null,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Tailored monthly volume",
+        "3-month minimum"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null,
+      "note": "Custom quote. Contact us."
+    },
+    {
+      "id": "logo-animation-essential",
+      "category": "video",
+      "service_page": "/services/video-animation/logo-animation",
+      "name": "Logo animation",
+      "tier_label": "Essential",
+      "model": "tier",
+      "price_gbp": 295,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "2D reveal, 5 to 7 seconds",
+        "Music and sound",
+        "MP4 and transparent MOV",
+        "2 revision rounds"
+      ],
+      "timeline": "3 working days",
+      "popular": false,
+      "self_serve": true,
+      "stripe_link_env": "NEXT_PUBLIC_STRIPE_LINK_LOGO_ANIMATION"
+    },
+    {
+      "id": "logo-animation-professional",
+      "category": "video",
+      "service_page": "/services/video-animation/logo-animation",
+      "name": "Logo animation",
+      "tier_label": "Professional",
+      "model": "tier",
+      "price_gbp": 595,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Custom 2D concept and storyboard",
+        "8 to 12 seconds",
+        "Intro and outro versions",
+        "Sound design",
+        "Lottie file for the web"
+      ],
+      "timeline": "5 working days",
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "logo-animation-premium",
+      "category": "video",
+      "service_page": "/services/video-animation/logo-animation",
+      "name": "Logo animation",
+      "tier_label": "Premium 3D",
+      "model": "tier",
+      "price_gbp": 1195,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "3D or complex animation",
+        "10 to 15 seconds",
+        "Style frames",
+        "Custom sound",
+        "Social cut-downs"
+      ],
+      "timeline": "7 to 10 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "motion-15",
+      "category": "video",
+      "service_page": "/services/video-animation/motion-graphics",
+      "name": "Motion graphics ad",
+      "tier_label": "15 seconds",
+      "model": "tier",
+      "price_gbp": 595,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "15 seconds",
+        "Storyboard and motion design",
+        "Licensed music",
+        "2 revision rounds"
+      ],
+      "timeline": "5 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "motion-30",
+      "category": "video",
+      "service_page": "/services/video-animation/motion-graphics",
+      "name": "Motion graphics ad",
+      "tier_label": "30 seconds",
+      "model": "tier",
+      "price_gbp": 995,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "30 seconds",
+        "Storyboard and motion design",
+        "Licensed music",
+        "2 social cut-downs"
+      ],
+      "timeline": "7 to 10 working days",
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "motion-60",
+      "category": "video",
+      "service_page": "/services/video-animation/motion-graphics",
+      "name": "Motion graphics video",
+      "tier_label": "60 seconds",
+      "model": "tier",
+      "price_gbp": 1795,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "60 seconds",
+        "Storyboard and motion design",
+        "Licensed music",
+        "3 aspect ratios"
+      ],
+      "timeline": "2 to 3 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "explainer-60",
+      "category": "video",
+      "service_page": "/services/video-animation/explainer-videos",
+      "name": "Explainer video",
+      "tier_label": "60 seconds",
+      "model": "tier",
+      "price_gbp": 2495,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "60 seconds",
+        "Script and storyboard",
+        "Illustration and animation",
+        "Professional voiceover and music",
+        "3 revision rounds"
+      ],
+      "timeline": "3 to 4 weeks",
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "explainer-90",
+      "category": "video",
+      "service_page": "/services/video-animation/explainer-videos",
+      "name": "Explainer video",
+      "tier_label": "90 seconds",
+      "model": "tier",
+      "price_gbp": 3495,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "90 seconds",
+        "Everything in the 60-second video"
+      ],
+      "timeline": "4 to 5 weeks",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "voiceover",
+      "category": "video",
+      "service_page": "/services/video-animation",
+      "name": "Voiceover add-on",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 150,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Professional voice artist, UK or US accent"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "short-edit-single",
+      "category": "video",
+      "service_page": "/services/video-animation/video-editing",
+      "name": "Short-form edit: try one",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 50,
+      "unit": "per video",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Reel, Short, TikTok or talking-head video up to 90 seconds",
+        "Captions, music and motion text"
+      ],
+      "timeline": "2 working days",
+      "popular": false,
+      "self_serve": true,
+      "stripe_link_env": "NEXT_PUBLIC_STRIPE_LINK_SHORT_EDIT"
+    },
+    {
+      "id": "short-edit-pack-30",
+      "category": "video",
+      "service_page": "/services/video-animation/video-editing",
+      "name": "Short-form edit pack",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 1195,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "30 short-form edits",
+        "Use within 60 days"
+      ],
+      "timeline": null,
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "short-edit-monthly",
+      "category": "video",
+      "service_page": "/services/video-animation/video-editing",
+      "name": "Short-form monthly plan",
+      "tier_label": null,
+      "model": "quote",
+      "price_gbp": null,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Tailored monthly volume",
+        "3-month minimum"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null,
+      "note": "Custom quote. Contact us."
+    },
+    {
+      "id": "long-form-edit",
+      "category": "video",
+      "service_page": "/services/video-animation/video-editing",
+      "name": "Long-form edit (up to 15 minutes)",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 150,
+      "unit": "per video",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Cuts and b-roll",
+        "Captions and graphics"
+      ],
+      "timeline": "3 to 5 working days",
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "smm-starter",
+      "category": "social",
+      "service_page": "/services/social-media-management",
+      "name": "Social media management",
+      "tier_label": "Starter",
+      "model": "monthly",
+      "price_gbp": 395,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "2 platforms",
+        "12 posts including 2 reels",
+        "Scheduling",
+        "Replies Monday to Friday",
+        "Monthly report"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "smm-growth",
+      "category": "social",
+      "service_page": "/services/social-media-management",
+      "name": "Social media management",
+      "tier_label": "Growth",
+      "model": "monthly",
+      "price_gbp": 695,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "3 platforms",
+        "16 posts including 4 reels",
+        "Stories",
+        "Community management",
+        "Monthly report and call"
+      ],
+      "timeline": null,
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "smm-premium",
+      "category": "social",
+      "service_page": "/services/social-media-management",
+      "name": "Social media management",
+      "tier_label": "Premium",
+      "model": "monthly",
+      "price_gbp": 1295,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "4 platforms",
+        "24 posts including 8 reels",
+        "Daily engagement",
+        "Paid social management (ad spend up to £1,500, paid by you)",
+        "Monthly strategy call"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "seo-audit",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/seo-services",
+      "name": "SEO audit",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 595,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Technical, on-page and local audit",
+        "Prioritised fix list",
+        "Walkthrough video"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "seo-foundation",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/seo-services",
+      "name": "SEO Foundation",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 1495,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Keyword research",
+        "On-page SEO for up to 25 pages",
+        "Technical fixes and schema",
+        "Search Console and GA4 set-up"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "local-seo",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/local-seo",
+      "name": "Local SEO",
+      "tier_label": "Local",
+      "model": "monthly",
+      "price_gbp": 595,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Google Business Profile optimisation",
+        "Local pages and citations",
+        "Review growth",
+        "Monthly report"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "seo-growth",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/seo-services",
+      "name": "SEO",
+      "tier_label": "Growth",
+      "model": "monthly",
+      "price_gbp": 1195,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Technical and on-page SEO",
+        "2 SEO blog posts",
+        "Link building",
+        "Local SEO",
+        "Monthly report and call"
+      ],
+      "timeline": null,
+      "popular": true,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "seo-authority",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/seo-services",
+      "name": "SEO",
+      "tier_label": "Authority",
+      "model": "monthly",
+      "price_gbp": 1995,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "National SEO",
+        "4 SEO blog posts",
+        "Digital PR and links",
+        "Conversion improvements",
+        "Monthly strategy call"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "gbp-setup",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/local-seo",
+      "name": "Google Business Profile set-up",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 195,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Full set-up or clean-up",
+        "Categories, services and photos",
+        "First posts"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "gbp-management",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/local-seo",
+      "name": "Google Business Profile management",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 145,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "4 posts a month",
+        "Review requests and replies",
+        "Q&A and photo updates",
+        "Monthly insights"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "blog-post",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing/seo-services",
+      "name": "SEO blog post (1,000 to 1,500 words)",
+      "tier_label": null,
+      "model": "per-unit",
+      "price_gbp": 175,
+      "unit": "per post",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Keyword research",
+        "Writing and on-page SEO",
+        "Featured image"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "ads-management",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing",
+      "name": "Paid ads management (Google or Meta)",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 495,
+      "unit": "per month",
+      "setup_fee_gbp": 395,
+      "includes": [
+        "Campaign build",
+        "Creative briefs",
+        "Weekly optimisation",
+        "Monthly report"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null,
+      "note": "£495 a month or 15% of ad spend, whichever is higher. Set-up £395 per platform. Ad spend paid by the client."
+    },
+    {
+      "id": "lead-funnel",
+      "category": "seo",
+      "service_page": "/services/seo-digital-marketing",
+      "name": "Lead funnel set-up",
+      "tier_label": null,
+      "model": "fixed",
+      "price_gbp": 1495,
+      "unit": "one-off",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Lead magnet design",
+        "Landing page",
+        "3-email welcome sequence",
+        "CRM connection"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "ai-chat-agent",
+      "category": "ai",
+      "service_page": "/services/ai-automation/ai-chat-agents",
+      "name": "AI chat agent (website or WhatsApp)",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 149,
+      "unit": "per month",
+      "setup_fee_gbp": 795,
+      "includes": [
+        "Trained on your services and FAQs",
+        "Lead capture",
+        "Hand-over to a person"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "ai-receptionist",
+      "category": "ai",
+      "service_page": "/services/ai-automation/ai-receptionist",
+      "name": "AI receptionist",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 199,
+      "unit": "per month",
+      "setup_fee_gbp": 995,
+      "includes": [
+        "Answers calls 24/7",
+        "Books jobs, texts back missed callers",
+        "Call summaries",
+        "300 minutes included, extra at cost"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null,
+      "note": "Upsell. Sold once Maxterz runs its own (D23)."
+    },
+    {
+      "id": "workflow-automation",
+      "category": "ai",
+      "service_page": "/services/ai-automation",
+      "name": "Workflow automation",
+      "tier_label": null,
+      "model": "from",
+      "price_gbp": 495,
+      "unit": "per workflow",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Zapier, Make or n8n",
+        "Forms to CRM, invoicing, follow-ups, reporting"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "website-care",
+      "category": "care",
+      "service_page": "/packages",
+      "name": "Website Care",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 95,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Hosting and security",
+        "Updates and daily backups",
+        "Uptime monitoring",
+        "30 minutes of small edits"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "design-sub",
+      "category": "subscription",
+      "service_page": "/packages",
+      "name": "Design Subscription",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 495,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Unlimited requests and revisions, one active request at a time",
+        "Most requests in 1 to 2 working days",
+        "Social, ads, print, presentations, brand assets"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    },
+    {
+      "id": "design-video-sub",
+      "category": "subscription",
+      "service_page": "/packages",
+      "name": "Design + Video Subscription",
+      "tier_label": null,
+      "model": "monthly",
+      "price_gbp": 895,
+      "unit": "per month",
+      "setup_fee_gbp": null,
+      "includes": [
+        "Two active requests",
+        "Adds short-form edits and motion graphics up to 30 seconds"
+      ],
+      "timeline": null,
+      "popular": false,
+      "self_serve": false,
+      "stripe_link_env": null
+    }
+  ],
+  "packages": [
+    {
+      "id": "starter-kit",
+      "type": "one-time",
+      "name": "Starter Kit",
+      "price_gbp": 795,
+      "founding_price_gbp": null,
+      "founding_enabled": false,
+      "founding_slots": null,
+      "ideal_for": "New businesses that need to look professional fast",
+      "items": [
+        {
+          "price_item_id": "logo-professional",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "landing-basic",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "gbp-setup",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "social-setup",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "business-card",
+          "quantity": 1
+        }
+      ],
+      "includes_copy": [
+        "Professional logo",
+        "1-page website",
+        "Google Business Profile set-up",
+        "3 social accounts set up",
+        "Business card design"
+      ],
+      "timeline": "10 to 14 working days",
+      "payment_terms": "50% to start, 50% before launch",
+      "minimum_term": null,
+      "notice": null,
+      "popular": false,
+      "includes_care_plus": true,
+      "expected_value_gbp": 1325
+    },
+    {
+      "id": "launch-kit",
+      "type": "one-time",
+      "name": "Launch Kit",
+      "price_gbp": 1995,
+      "founding_price_gbp": 1495,
+      "founding_enabled": true,
+      "founding_slots": 5,
+      "ideal_for": "New and rebranding businesses that want to look established and get found",
+      "items": [
+        {
+          "price_item_id": "brand-core",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "website-10",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "gbp-setup",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "social-setup",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "social-post",
+          "quantity": 5
+        }
+      ],
+      "includes_copy": [
+        "Brand identity (Core)",
+        "Website up to 10 pages",
+        "Google Business Profile set-up",
+        "3 social accounts set up",
+        "5 launch post designs"
+      ],
+      "timeline": "21 working days",
+      "payment_terms": "50% to start, 50% before launch",
+      "minimum_term": null,
+      "notice": null,
+      "popular": true,
+      "includes_care_plus": true,
+      "expected_value_gbp": 3480
+    },
+    {
+      "id": "scale-kit",
+      "type": "one-time",
+      "name": "Scale Kit",
+      "price_gbp": 4995,
+      "founding_price_gbp": null,
+      "founding_enabled": false,
+      "founding_slots": null,
+      "ideal_for": "Established businesses ready to grow",
+      "items": [
+        {
+          "price_item_id": "brand-core",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "gbp-setup",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "social-setup",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "social-post",
+          "quantity": 5
+        },
+        {
+          "price_item_id": "website-25",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "copywriting",
+          "quantity": 10
+        },
+        {
+          "price_item_id": "seo-foundation",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "blog-post",
+          "quantity": 4
+        },
+        {
+          "price_item_id": "motion-30",
+          "quantity": 1
+        }
+      ],
+      "includes_copy": [
+        "Everything in the Launch Kit",
+        "Website up to 25 pages, or a custom online store",
+        "Copywriting for 10 key pages",
+        "SEO Foundation",
+        "4 SEO blog posts",
+        "30-second motion graphics ad"
+      ],
+      "timeline": "5 to 7 weeks",
+      "payment_terms": "40% to start, 30% at design sign-off, 30% before launch",
+      "minimum_term": null,
+      "notice": null,
+      "popular": false,
+      "includes_care_plus": true,
+      "expected_value_gbp": 9420
+    },
+    {
+      "id": "care-plus",
+      "type": "care",
+      "name": "Care Plus",
+      "price_gbp": 145,
+      "founding_price_gbp": null,
+      "founding_enabled": false,
+      "founding_slots": null,
+      "ideal_for": "Every website Maxterz builds",
+      "items": [
+        {
+          "price_item_id": "website-care",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "gbp-management",
+          "quantity": 1
+        }
+      ],
+      "includes_copy": [
+        "Website Care",
+        "Google Business Profile management",
+        "1 hour of small edits",
+        "Monthly report"
+      ],
+      "timeline": null,
+      "payment_terms": null,
+      "minimum_term": "3 months with a package, then rolling",
+      "notice": "30 days",
+      "popular": false,
+      "includes_care_plus": false,
+      "expected_value_gbp": 240
+    },
+    {
+      "id": "design-subscription",
+      "type": "monthly",
+      "name": "Design Subscription",
+      "price_gbp": 495,
+      "founding_price_gbp": null,
+      "founding_enabled": false,
+      "founding_slots": null,
+      "ideal_for": "Businesses and marketing teams with steady design needs",
+      "items": [],
+      "includes_copy": [
+        "Unlimited requests and revisions, one active request at a time",
+        "Most requests in 1 to 2 working days",
+        "Design + Video version: £895 a month, two active requests"
+      ],
+      "timeline": null,
+      "payment_terms": null,
+      "minimum_term": null,
+      "notice": "30 days",
+      "popular": false,
+      "includes_care_plus": false,
+      "expected_value_gbp": null
+    },
+    {
+      "id": "visibility-plan",
+      "type": "monthly",
+      "name": "Visibility Plan",
+      "price_gbp": 795,
+      "founding_price_gbp": null,
+      "founding_enabled": false,
+      "founding_slots": null,
+      "ideal_for": "Local businesses that want more calls and enquiries",
+      "items": [
+        {
+          "price_item_id": "local-seo",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "gbp-management",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "smm-starter",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "blog-post",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "website-care",
+          "quantity": 1
+        }
+      ],
+      "includes_copy": [
+        "Local SEO",
+        "Google Business Profile management",
+        "Social media on 2 platforms, 12 posts",
+        "1 SEO blog post",
+        "Website Care",
+        "Monthly report and call"
+      ],
+      "timeline": null,
+      "payment_terms": null,
+      "minimum_term": "3 months, then rolling",
+      "notice": "30 days",
+      "popular": true,
+      "includes_care_plus": false,
+      "expected_value_gbp": 1405
+    },
+    {
+      "id": "partner-plan",
+      "type": "monthly",
+      "name": "Partner Plan",
+      "price_gbp": 1995,
+      "founding_price_gbp": null,
+      "founding_enabled": false,
+      "founding_slots": null,
+      "ideal_for": "Growing businesses that want an outsourced digital team",
+      "items": [
+        {
+          "price_item_id": "seo-growth",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "smm-growth",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "ads-management",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "design-video-sub",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "website-care",
+          "quantity": 1
+        },
+        {
+          "price_item_id": "gbp-management",
+          "quantity": 1
+        }
+      ],
+      "includes_copy": [
+        "SEO Growth",
+        "Social media on 3 platforms, 16 posts",
+        "Google and Meta ads management (ad spend up to £3,000, paid by you)",
+        "Design + Video subscription",
+        "Website Care and Google profile management",
+        "Fortnightly strategy call with Talha"
+      ],
+      "timeline": null,
+      "payment_terms": null,
+      "minimum_term": "3 months, then rolling",
+      "notice": "30 days",
+      "popular": false,
+      "includes_care_plus": false,
+      "expected_value_gbp": 3520
+    }
+  ],
+  "annual_prepay": "Pay 12 months upfront on any monthly plan and get 2 months free."
+}
