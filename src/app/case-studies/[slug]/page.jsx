@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import ScaledPage from '@/components/case-study/ScaledPage';
 import { caseStudies, getCaseStudy } from '@/case-studies';
+import { buildMetadata } from '@/lib/routes';
 
 import '@/case-studies/mm-window-cleaning.css';
 import '@/case-studies/bwld.css';
@@ -22,10 +23,11 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const study = getCaseStudy(slug);
   if (!study) return {};
-  return {
+  return buildMetadata({
+    path: `/case-studies/${slug}`,
     title: `${study.title} Case Study | Maxterz`,
     description: study.description,
-  };
+  });
 }
 
 export default async function CaseStudyPage({ params }) {

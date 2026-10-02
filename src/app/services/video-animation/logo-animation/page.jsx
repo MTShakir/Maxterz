@@ -1,9 +1,7 @@
 import LogoAnimation from '@/screens/services/sub/LogoAnimation';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Logo Animation Services | Maxterz UK',
-  description: 'Bespoke logo animations for intros, outros, overlays, and social. Maxterz delivers motion identity that makes your brand impossible to forget.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/video-animation/logo-animation'));
 
 export default function LogoAnimationPage() {
   return <LogoAnimation />;

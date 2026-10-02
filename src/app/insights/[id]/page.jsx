@@ -1,9 +1,14 @@
 import BlogDetail from '@/screens/BlogDetail';
+import { buildMetadata } from '@/lib/routes';
 
-export const metadata = {
-  title: 'The Future of Brand Identity Design in 2025 - MAXTERZ Blog',
-  description: 'Brand identity design continues to evolve at a rapid pace, shaped by technological advancements, changing consumer behaviors, and emerging aesthetic trends',
-};
+// /insights/:id numeric placeholder posts redirect to /insights in Phase 2.
+// Noindex these pages until then.
+export const metadata = buildMetadata({
+  path: '/insights',
+  title: 'Insights | Maxterz',
+  description: 'Practical guides on websites, branding, SEO and AI automation for business owners.',
+  noindex: true,
+});
 
 export default function BlogDetailPage() {
   return <BlogDetail />;

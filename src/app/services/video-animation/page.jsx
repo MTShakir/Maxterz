@@ -1,9 +1,7 @@
 import ServiceVideoAnimation from '@/screens/services/ServiceVideoAnimation';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Video & Animation Services | Maxterz UK Digital Agency',
-  description: 'Logo animations, explainer videos, SaaS demos, podcast edits, reels, and short-form content. Maxterz delivers cinematic video production that converts.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/video-animation'));
 
 export default function VideoAnimationPage() {
   return <ServiceVideoAnimation />;

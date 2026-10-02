@@ -1,9 +1,7 @@
 import EcommerceWebsiteDesign from '@/screens/services/sub/EcommerceWebsiteDesign';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Ecommerce Website Design for Growing Businesses | Maxterz',
-  description: 'Custom ecommerce websites built to convert browsers into buyers. Mobile-optimised, fast-loading, with seamless checkout. 4.9 stars from 7,100 verified reviews.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/web-development/ecommerce-website-design'));
 
 export default function EcommerceWebsiteDesignPage() {
   return <EcommerceWebsiteDesign />;

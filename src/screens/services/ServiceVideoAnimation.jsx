@@ -384,12 +384,10 @@ const ServiceVideoAnimation = () => {
               </div>
 
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05]">
-                {/* Line 1 — always static, never shifts */}
-                <span className="block">Motion Is Not a Medium.</span>
-                {/* Line 2 — always static */}
-                <span className="block text-[#1044ff]">It Is Your</span>
-                {/* Line 3 — min-h reserves one line so nothing above ever moves */}
-                <span className="block text-[#1044ff] min-h-[1.1em]">
+                <span className="sr-only">Video, Motion Graphics and Animation</span>
+                <span className="block" aria-hidden="true">Motion Is Not a Medium.</span>
+                <span className="block text-[#1044ff]" aria-hidden="true">It Is Your</span>
+                <span className="block text-[#1044ff] min-h-[1.1em]" aria-hidden="true">
                   <TypeWriter />
                 </span>
               </h1>

@@ -1,9 +1,7 @@
 import ServiceAIAutomation from '@/screens/services/ServiceAIAutomation';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'AI and Automation Services | Maxterz',
-  description: 'Maxterz builds AI chatbots, workflow automation, and custom software that save your team hours every week. Get a free consultation and see what AI can do for your business.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/ai-automation'));
 
 export default function AIAutomationPage() {
   return <ServiceAIAutomation />;

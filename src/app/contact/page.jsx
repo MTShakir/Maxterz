@@ -1,9 +1,7 @@
 import Contact from '@/screens/Contact';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Contact Us - Get Your Free Quote | MAXTERZ',
-  description: 'Start your project with MAXTERZ today.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/contact'));
 
 export default function ContactPage() {
   return <Contact />;

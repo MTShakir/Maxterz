@@ -4,6 +4,28 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 2 Oct 2026 | Phase 1 | Technical SEO foundation (Claude Code, launch branch)
+
+Build: ✓ npm run build green (33/33 static pages). Lint: ✓ exit 0.
+
+**New files**
+- `src/lib/site.js`: SITE constant — single source of truth for all site facts
+- `src/lib/routes.js`: ROUTES array (36 entries) + `buildMetadata` helper — every page title, description, canonical and OG from one place
+- `src/lib/schema.js`: JsonLd component + 6 builder functions (site, webPage, service, breadcrumb, FAQ, founder)
+- `src/app/robots.js`: allows `/`, disallows `/api/`, blocks all on preview, links to sitemap
+- `src/app/sitemap.js`: builds sitemap.xml from ROUTES (36 URLs)
+
+**Updated files**
+- `src/app/layout.jsx`: lang `en-GB`, metadataBase `https://maxterz.com`, Organization + WebSite JSON-LD, Google Consent Mode v2 defaults (deny all before Phase 3 banner), Supabase CDN icon removed
+- `src/app/not-found.jsx`: own metadata with noindex, H1 "We cannot find that page", links to /services, /our-work, /packages, /contact
+- All 23 existing static `page.jsx` files: replaced old metadata with `buildMetadata(ROUTES.find(...))` — unique titles, correct canonicals, OG, Twitter, robots
+- `src/app/case-studies/[slug]/page.jsx`: `generateMetadata` uses `buildMetadata`
+- `src/app/our-work/[id]/page.jsx`, `src/app/insights/[id]/page.jsx`: noindex added (Phase 2 cleans up)
+- `next.config.mjs`: `images.formats: ['image/avif', 'image/webp']`, security headers (HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options), preview noindex header; fixed `/services/video-editing` redirect destination and `/blogs/:id` redirect destination
+- 5 broken service H1s fixed (sr-only keyword text + aria-hidden on animation spans): ServiceBrandingDesign, ServiceVideoAnimation, ServiceSocialMediaManagement, ServiceAIAutomation, ServiceSEODigitalMarketing
+
+---
+
 ## 2 Oct 2026 | Setup | Indexed URLs and Supabase access (Claude, strategy workspace)
 - Supabase: the Maxterz project is connected as the MCP server `supabase-maxterz`. CLAUDE.md now says to use only that server in this repo, never the Doovor project.
 - The 9 indexed maxterz.co.uk URLs from Search Console are saved with their final destinations in `docs/website/data/old-indexed-urls.md`.

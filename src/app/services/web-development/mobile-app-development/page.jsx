@@ -1,9 +1,7 @@
 import MobileAppDevelopment from '@/screens/services/sub/MobileAppDevelopment';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Mobile App Development for Businesses | Maxterz',
-  description: 'Custom mobile apps for iOS and Android. Built around your workflows, your customers, and your growth goals. 4.9 stars from 7,100 verified reviews.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/web-development/mobile-app-development'));
 
 export default function MobileAppDevelopmentPage() {
   return <MobileAppDevelopment />;

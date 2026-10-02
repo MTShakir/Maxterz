@@ -1,9 +1,7 @@
 import PrivacyPolicy from '@/screens/PrivacyPolicy';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Privacy Policy - MAXTERZ',
-  description: 'Read MAXTERZ privacy policy to understand how we collect, use, and protect your personal information.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/privacy-policy'));
 
 export default function PrivacyPolicyPage() {
   return <PrivacyPolicy />;

@@ -1,9 +1,7 @@
 import Blogs from '@/screens/Blogs';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Creative Insights - Blog | MAXTERZ',
-  description: 'Expert insights on design, tech, and creative trends.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/insights'));
 
 export default function InsightsPage() {
   return <Blogs />;

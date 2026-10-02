@@ -1,9 +1,7 @@
 import ThumbnailDesign from '@/screens/services/sub/ThumbnailDesign';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Thumbnail Design and Graphic Design Services | Maxterz',
-  description: 'Professional YouTube thumbnail design that increases CTR and drives views. Scroll-stopping visuals for YouTube, podcasts, courses, and social platforms.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/branding-design/thumbnail-design'));
 
 export default function ThumbnailDesignPage() {
   return <ThumbnailDesign />;

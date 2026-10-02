@@ -1,9 +1,7 @@
 import ServiceSEODigitalMarketing from '@/screens/services/ServiceSEODigitalMarketing';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'SEO and Digital Marketing | Maxterz',
-  description: 'Maxterz delivers SEO, paid advertising, technical audits, and keyword research that move your business to page one and keep it there. Get a free quote today.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/seo-digital-marketing'));
 
 export default function SEODigitalMarketingPage() {
   return <ServiceSEODigitalMarketing />;

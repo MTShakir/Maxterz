@@ -1,9 +1,7 @@
 import OurWorkPage from '@/screens/OurWorkPage';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Our Work | Maxterz | UK Digital Agency Portfolio',
-  description: 'Browse the Maxterz project portfolio: websites, branding, animations, social media, AI automation, and SEO work for clients across the UK and worldwide.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/our-work'));
 
 export default function Page() {
   return <OurWorkPage />;

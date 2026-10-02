@@ -1,9 +1,7 @@
 import LogoDesign from '@/screens/services/sub/LogoDesign';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Logo Design and Brand Identity Services | Maxterz',
-  description: 'Professional logo design and brand identity systems. Wordmarks, lettermarks, colour palettes, typography, and brand guidelines built for recognition and longevity.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/branding-design/logo-design'));
 
 export default function LogoDesignPage() {
   return <LogoDesign />;

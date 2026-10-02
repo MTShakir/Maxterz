@@ -1,9 +1,7 @@
 import PackagesPage from '@/screens/PackagesPage';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Packages & Pricing | Maxterz',
-  description: 'Clear pricing for digital services. Explore one-time project fees and monthly retainers from Maxterz.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/packages'));
 
 export default function Page() {
   return <PackagesPage />;

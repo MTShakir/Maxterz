@@ -273,9 +273,10 @@ const ServiceSEODigitalMarketing = () => {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }}>
               <span className="badge-standard-light mb-8">SEO AND DIGITAL MARKETING</span>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05]">
-                <span className="block">Get Found.</span>
-                <span className="block">Get Clicked.</span>
-                <span className="block text-[#1044ff] min-h-[1.1em]"><TypeWriter /></span>
+                <span className="sr-only">SEO and Digital Marketing That Brings Enquiries</span>
+                <span className="block" aria-hidden="true">Get Found.</span>
+                <span className="block" aria-hidden="true">Get Clicked.</span>
+                <span className="block text-[#1044ff] min-h-[1.1em]" aria-hidden="true"><TypeWriter /></span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
                 SEO strategies, paid advertising, and technical optimisation that move your business to page one and compound in value every single month.

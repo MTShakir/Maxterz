@@ -1,9 +1,7 @@
 import BusinessWebsiteDesign from '@/screens/services/sub/BusinessWebsiteDesign';
+import { buildMetadata, ROUTES } from '@/lib/routes';
 
-export const metadata = {
-  title: 'Business Website Design for Growing Businesses | Maxterz',
-  description: 'Professional business websites built to convert visitors into paying clients. SEO-ready, mobile-first, fast-loading. 4.9 stars from 7,100 verified reviews.',
-};
+export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/web-development/business-website-design'));
 
 export default function BusinessWebsiteDesignPage() {
   return <BusinessWebsiteDesign />;
