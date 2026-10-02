@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Code, Palette, Video, Users, Cpu, TrendingUp,
-  ChevronDown, Menu, X, Facebook, Instagram, Linkedin, ArrowRight
+  ChevronDown, Menu, X, Facebook, Instagram, Linkedin,
 } from 'lucide-react';
 
 // ─── Custom SVG Icons ─────────────────────────────────────────────────────────
@@ -24,100 +24,97 @@ const TikTokIcon = ({ className }) => (
 
 // ─── Static Data ──────────────────────────────────────────────────────────────
 const socialLinks = [
-  { href: 'https://www.facebook.com/maxterzhub',        Icon: Facebook,   label: 'Facebook'  },
-  { href: 'https://www.instagram.com/maxterzhub/',      Icon: Instagram,  label: 'Instagram' },
-  { href: 'https://www.linkedin.com/company/maxterzhub/', Icon: Linkedin, label: 'LinkedIn'  },
-  { href: 'https://x.com/MaxterzHUB',                   Icon: XIcon,      label: 'X'         },
-  { href: 'https://www.tiktok.com/@maxterzhub',         Icon: TikTokIcon, label: 'TikTok'    },
+  { href: 'https://www.facebook.com/maxterzhub',          Icon: Facebook,   label: 'Facebook'  },
+  { href: 'https://www.instagram.com/maxterzhub/',        Icon: Instagram,  label: 'Instagram' },
+  { href: 'https://www.linkedin.com/company/maxterzhub/', Icon: Linkedin,   label: 'LinkedIn'  },
+  { href: 'https://x.com/MaxterzHUB',                     Icon: XIcon,      label: 'X'         },
+  { href: 'https://www.tiktok.com/@maxterzhub',           Icon: TikTokIcon, label: 'TikTok'    },
 ];
 
 const serviceCategories = [
-  { to: '/services/web-development',         label: 'Web & App Development'    },
-  { to: '/services/branding-design',         label: 'Branding & Design'        },
-  { to: '/services/video-animation',         label: 'Video & Animation'        },
-  { to: '/services/social-media-management', label: 'Social Media Management'  },
-  { to: '/services/ai-automation',           label: 'AI & Automation'          },
-  { to: '/services/seo-digital-marketing',   label: 'SEO & Digital Marketing'  },
+  { to: '/services/web-development',         label: 'Web and App Development'    },
+  { to: '/services/branding-design',         label: 'Branding and Design'        },
+  { to: '/services/video-animation',         label: 'Video and Animation'        },
+  { to: '/services/social-media-management', label: 'Social Media Management'    },
+  { to: '/services/ai-automation',           label: 'AI and Automation'          },
+  { to: '/services/seo-digital-marketing',   label: 'SEO and Digital Marketing'  },
 ];
 
 const megaCols = [
   {
     Icon: Code,
-    label: 'Web & App Development',
+    label: 'Web and App Development',
     subpages: [
-      { to: '/services/web-development/business-website-design', label: 'Business Website Design'  },
+      { to: '/services/web-development/business-website-design', label: 'Business Website Design'   },
       { to: '/services/web-development/ecommerce-website-design', label: 'Ecommerce Website Design' },
-      { to: '/services/web-development/mobile-app-development',  label: 'Mobile App Development'   },
+      { to: '/services/web-development/mobile-app-development',  label: 'Mobile App Development'    },
+      { to: '/services/web-development/app-design',              label: 'App and UI/UX Design'       },
     ],
-    anchors: [
-      { href: '/services/web-development#uiux-design', label: 'UI/UX Design' },
-    ],
-    viewAll: { to: '/services/web-development', label: 'View All Web Services' },
+    anchors: [],
+    viewAll: { to: '/services/web-development', label: 'View all web services' },
     borderRight: true, borderTop: false,
   },
   {
     Icon: Palette,
-    label: 'Branding & Design',
+    label: 'Branding and Design',
     subpages: [
-      { to: '/services/branding-design/logo-design',      label: 'Logo Design & Branding' },
-      { to: '/services/branding-design/thumbnail-design', label: 'Thumbnail Design'       },
+      { to: '/services/branding-design/logo-design',            label: 'Logo Design'            },
+      { to: '/services/branding-design/brand-identity-design',  label: 'Brand Identity Design'  },
+      { to: '/services/branding-design/social-media-design',    label: 'Social Media Design'    },
+      { to: '/services/branding-design/thumbnail-design',       label: 'Thumbnail Design'        },
     ],
-    anchors: [
-      { href: '/services/branding-design#graphic-print-design', label: 'Graphic & Print Design' },
-      { href: '/services/branding-design#social-media-visuals', label: 'Social Media Visuals'   },
-    ],
-    viewAll: { to: '/services/branding-design', label: 'View All Design Services' },
+    anchors: [],
+    viewAll: { to: '/services/branding-design', label: 'View all design services' },
     borderRight: true, borderTop: false,
   },
   {
     Icon: Video,
-    label: 'Video & Animation',
+    label: 'Video and Animation',
     subpages: [
       { to: '/services/video-animation/logo-animation',   label: 'Logo Animation'         },
-      { to: '/services/video-animation/explainer-videos', label: 'Explainer & SaaS Videos'},
+      { to: '/services/video-animation/explainer-videos', label: 'Explainer Videos'        },
+      { to: '/services/video-animation/motion-graphics',  label: 'Motion Graphics'         },
+      { to: '/services/video-animation/video-editing',    label: 'Video Editing and Reels' },
     ],
-    anchors: [
-      { href: '/services/video-animation#video-editing',   label: 'Video Editing & Reels' },
-      { href: '/services/video-animation#motion-graphics', label: 'Motion Graphics'       },
-    ],
-    viewAll: { to: '/services/video-animation', label: 'View All Video Services' },
+    anchors: [],
+    viewAll: { to: '/services/video-animation', label: 'View all video services' },
     borderRight: false, borderTop: false,
   },
   {
     Icon: Users,
     label: 'Social Media Management',
-    description: 'Strategy, content, reels, community management; handled end to end.',
+    description: 'Strategy, content, reels and community management, handled end to end.',
     subpages: [],
     anchors: [],
-    viewAll: { to: '/services/social-media-management', label: 'View All SMM Services' },
+    viewAll: { to: '/services/social-media-management', label: 'View social media services' },
     borderRight: true, borderTop: true,
   },
   {
     Icon: Cpu,
-    label: 'AI & Automation',
-    subpages: [],
-    anchors: [
-      { href: '/services/ai-automation#AI-Chatbot', label: 'AI Chatbot Development' },
-      { href: '/services/ai-automation#Workflow-Automation', label: 'Workflow Automation'    },
-      { href: '/services/ai-automation#Custom-Software', label: 'Custom Software'        },
-      { href: '/services/ai-automation#AI-Consulting', label: 'AI Consulting'          },
+    label: 'AI and Automation',
+    subpages: [
+      { to: '/services/ai-automation/ai-receptionist', label: 'AI Receptionist'                   },
+      { to: '/services/ai-automation/ai-chat-agents',  label: 'AI Chat Agents (WhatsApp and SMS)' },
     ],
-    viewAll: { to: '/services/ai-automation', label: 'View All AI Services' },
+    anchors: [
+      { href: '/services/ai-automation#workflow-automation', label: 'Workflow Automation' },
+      { href: '/services/ai-automation#ai-consulting',       label: 'AI Consulting'       },
+    ],
+    viewAll: { to: '/services/ai-automation', label: 'View all AI services' },
     borderRight: true, borderTop: true,
   },
   {
     Icon: TrendingUp,
-    label: 'SEO & Digital Marketing',
+    label: 'SEO and Digital Marketing',
     subpages: [
-      //{ to: '/services/seo-digital-marketing/seo-services', label: 'SEO Services' },
+      { to: '/services/seo-digital-marketing/seo-services', label: 'SEO Services'  },
+      { to: '/services/seo-digital-marketing/local-seo',    label: 'Local SEO'     },
     ],
     anchors: [
-      { href: '/services/seo-digital-marketing#seo-services',     label: 'SEO Services'           },
-      { href: '/services/seo-digital-marketing#paid-advertising', label: 'Paid Advertising'       },
-      { href: '/services/seo-digital-marketing#technical-seo',    label: 'Technical SEO & Audits' },
-      { href: '/services/seo-digital-marketing#keyword-research', label: 'Keyword Research'       },
+      { href: '/services/seo-digital-marketing#paid-advertising', label: 'Paid Advertising' },
+      { href: '/services/seo-digital-marketing#technical-seo',    label: 'Technical SEO'    },
     ],
-    viewAll: { to: '/services/seo-digital-marketing', label: 'View All Marketing Services' },
+    viewAll: { to: '/services/seo-digital-marketing', label: 'View all marketing services' },
     borderRight: false, borderTop: true,
   },
 ];
@@ -157,9 +154,7 @@ const Navbar = () => {
   }, [isScrolled]);
 
   useEffect(() => {
-    if (megaMenuOpen) {
-      updateHeaderBottom();
-    }
+    if (megaMenuOpen) updateHeaderBottom();
   }, [megaMenuOpen]);
 
   useEffect(() => {
@@ -264,11 +259,10 @@ const Navbar = () => {
                   />
                 </button>
 
-                <Link href="/packages" className={linkCls('/packages')}>Packages</Link>
+                <Link href="/packages" className={linkCls('/packages')}>Pricing</Link>
                 <Link href="/our-work" className={linkCls('/our-work')}>Our Work</Link>
                 <Link href="/about"    className={linkCls('/about')}>About</Link>
-                <Link href="/shop"     className={linkCls('/shop')}>Shop</Link>
-                <Link href="/insights" className={linkCls('/insights')}>Insights</Link>
+                <Link href="/contact"  className={linkCls('/contact')}>Contact</Link>
               </div>
             </nav>
 
@@ -288,14 +282,13 @@ const Navbar = () => {
                 ))}
               </div>
               <Link
-                href="/contact"
+                href="/book"
                 className="flex items-center gap-2 rounded-full px-6 h-12 text-[15px] font-bold
                            bg-gradient-to-r from-[#eb7444] to-[#e05220] text-white
                            shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40
                            hover:scale-105 transition-all duration-300 border border-orange-400/20"
               >
-                Contact US
-                <ArrowRight className="w-4 h-4" />
+                Book a free call
               </Link>
             </div>
 
@@ -361,7 +354,7 @@ const Navbar = () => {
                       style={{
                         width: '36px',
                         height: '36px',
-                        background:'#1044FF',
+                        background: '#1044FF',
                         borderRadius: '8px',
                       }}
                     >
@@ -417,12 +410,10 @@ const Navbar = () => {
                       href={col.viewAll.to}
                       onClick={closeMega}
                       className="inline-flex items-center gap-1 text-[13px] font-semibold
-                                 text-[#1044ff]
-                                 hover:text-[#e7581e]
-                                 transition-colors duration-150"
+                                 text-[#1044ff] hover:text-[#e7581e] transition-colors duration-150"
                     >
                       {col.viewAll.label}
-                      <span className="text-[11px]">→</span>
+                      <span className="text-[11px]">&#8594;</span>
                     </Link>
                   </div>
                 </div>
@@ -446,9 +437,11 @@ const Navbar = () => {
             <div className="h-16 px-5 flex items-center justify-between border-b border-gray-100 flex-shrink-0">
               <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                 <img
-                  src="https://qcsflpsyzvigswlotepz.supabase.co/storage/v1/object/public/BrandingFiles/Full-Logo.png"
-                  alt="MAXTERZ Logo"
-                  className="h-8 object-contain"
+                  src="/images/maxterz-logo-horizontal.svg"
+                  alt="Maxterz"
+                  width="176"
+                  height="40"
+                  className="h-8 w-auto object-contain"
                 />
               </Link>
               <button
@@ -464,11 +457,10 @@ const Navbar = () => {
               {[
                 { path: '/',         label: 'Home'     },
                 { type: 'services',  label: 'Services' },
-                { path: '/packages', label: 'Packages' },
+                { path: '/packages', label: 'Pricing'  },
                 { path: '/our-work', label: 'Our Work' },
                 { path: '/about',    label: 'About'    },
-                { path: '/shop',     label: 'Shop'     },
-                { path: '/insights', label: 'Insights' },
+                { path: '/contact',  label: 'Contact'  },
               ].map((item, idx) => (
                 <motion.div
                   key={item.label}
@@ -518,7 +510,7 @@ const Navbar = () => {
                             className="px-12 py-2.5 mt-1 text-[17px] font-bold
                                        text-[#1044ff] hover:text-[#eb7444] transition-colors"
                           >
-                            View All Services →
+                            View all services &#8594;
                           </Link>
                         </div>
                       </div>
@@ -564,13 +556,13 @@ const Navbar = () => {
                 ))}
               </div>
               <Link
-                href="/contact"
+                href="/book"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block w-full text-center rounded-full py-4 text-[16px] font-bold text-white
                            bg-gradient-to-r from-[#eb7444] to-[#e05220]
                            hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300"
               >
-                Contact US
+                Book a free call
               </Link>
             </motion.div>
           </motion.div>

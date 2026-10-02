@@ -29,28 +29,72 @@ const nextConfig = {
   },
 
   async redirects() {
-    return [
-      // Services hub redirect — keep until Phase 2 creates the hub page
-      { source: '/services', destination: '/services/web-development', permanent: true },
+    const SITE = 'https://maxterz.com';
 
-      // Old individual service paths
-      { source: '/services/websites', destination: '/services/web-development', permanent: true },
-      { source: '/services/branding', destination: '/services/branding-design', permanent: true },
-      { source: '/services/animations', destination: '/services/video-animation', permanent: true },
-      { source: '/services/design', destination: '/services/branding-design', permanent: true },
-      { source: '/services/ai-tech', destination: '/services/ai-automation', permanent: true },
-
-      // Fixed: was /services/video-animation (wrong) — now correct destination
-      { source: '/services/video-editing', destination: '/services/video-animation/video-editing', permanent: true },
-
-      // Portfolio rename
-      { source: '/portfolio', destination: '/our-work', permanent: true },
-      { source: '/portfolio/:id', destination: '/our-work', permanent: true },
-
-      // Blogs rename — Fixed: /blogs/:id was going to /insights/:id (placeholder posts), now /insights
-      { source: '/blogs', destination: '/insights', permanent: true },
-      { source: '/blogs/:id', destination: '/insights', permanent: true },
+    // Path rules shared across host rules and the direct rule set.
+    // Each entry: [source, relative-destination].
+    // Used twice: once per proxy host (absolute destination) and once directly.
+    const pathRules = [
+      ['/portfolio',     '/our-work'],
+      ['/portfolio/:id', '/our-work'],
+      ['/about-us',      '/about'],
+      ['/blogs',         '/insights'],
+      ['/blogs/:id',     '/insights'],
+      ['/services/design',        '/services/branding-design'],
+      ['/services/branding',      '/services/branding-design'],
+      ['/services/animations',    '/services/video-animation'],
+      ['/services/websites',      '/services/web-development'],
+      ['/services/video-editing', '/services/video-animation/video-editing'],
+      ['/services/ai-tech',       '/services/ai-automation'],
+      ['/shop',          '/packages'],
+      ['/insights/:id',  '/insights'],
     ];
+
+    // Hosts that mirror maxterz.com content — redirect every path to maxterz.com.
+    // Specific path rules first (one hop to final URL), then catch-all.
+    const proxyHosts = [
+      'maxterz.co.uk',
+      'www.maxterz.co.uk',
+      'www.maxterz.com',
+      'maxterz.vercel.app',
+    ];
+
+    // maxterzhub.co.uk — old WordPress site, specific paths first then root catch-all.
+    const maxterzhubHosts = ['maxterzhub.co.uk', 'www.maxterzhub.co.uk'];
+    const maxterzhubPaths = [
+      ['/services/digital-marketing',               `${SITE}/services/seo-digital-marketing`],
+      ['/services/search-engine-optimization-seo',  `${SITE}/services/seo-digital-marketing`],
+      ['/services/programing-and-tech',             `${SITE}/services/web-development`],
+      ['/services/video-editing',                   `${SITE}/services/video-animation/video-editing`],
+      ['/services/short-video-ads-2',               `${SITE}/services/video-animation/motion-graphics`],
+      ['/portfolio',                                `${SITE}/our-work`],
+    ];
+
+    /** @type {import('next').Redirect[]} */
+    const rules = [];
+
+    // 1. maxterzhub.co.uk — specific paths, then root catch-all
+    for (const host of maxterzhubHosts) {
+      for (const [source, destination] of maxterzhubPaths) {
+        rules.push({ source, destination, permanent: true, has: [{ type: 'host', value: host }] });
+      }
+      rules.push({ source: '/:path*', destination: `${SITE}/`, permanent: true, has: [{ type: 'host', value: host }] });
+    }
+
+    // 2. Proxy hosts — specific path rules (one hop to final URL), then catch-all
+    for (const host of proxyHosts) {
+      for (const [source, dest] of pathRules) {
+        rules.push({ source, destination: `${SITE}${dest}`, permanent: true, has: [{ type: 'host', value: host }] });
+      }
+      rules.push({ source: '/:path*', destination: `${SITE}/:path*`, permanent: true, has: [{ type: 'host', value: host }] });
+    }
+
+    // 3. Direct path rules on maxterz.com
+    for (const [source, destination] of pathRules) {
+      rules.push({ source, destination, permanent: true });
+    }
+
+    return rules;
   },
 };
 

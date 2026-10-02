@@ -4,6 +4,43 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 2 Oct 2026 | Phase 2 | Navigation, redirects, footer and new routes (Claude Code, launch branch)
+
+**Redirects (next.config.mjs — complete rewrite):**
+- Structure: maxterzhub.co.uk specific paths then catch-all; proxy hosts (maxterz.co.uk, www.maxterz.co.uk, www.maxterz.com, maxterz.vercel.app) path rules then catch-all; direct path rules on maxterz.com.
+- Removed `/services → /services/web-development` (replaced by real hub page).
+- Added `/shop → /packages`, `/about-us → /about`, `/insights/:id → /insights`.
+- All 9 maxterz.co.uk indexed URLs tested with next start + Host header: all return 308 to correct destination, final pages return 200.
+
+**Routes (routes.js):** `/thank-you` added with `inSitemap: false`, `noindex: true`.
+
+**Navbar (Navbar.jsx — full rewrite):**
+- Removed Shop and Insights nav items; added Contact.
+- Renamed "Packages" to "Pricing" (href stays `/packages`).
+- CTA changed to "Book a free call" → `/book`.
+- Mega menu: all 6 categories now list subpages as real links including app-design, brand-identity-design, social-media-design, motion-graphics, video-editing, ai-receptionist, ai-chat-agents, local-seo, seo-services.
+- Mobile logo fixed from Supabase CDN to `/images/maxterz-logo-horizontal.svg`.
+
+**Footer (Footer.jsx — full rewrite):**
+- 5-column layout: Brand, Services, Popular, Company, Talk to Us.
+- Service links updated to correct final URLs.
+- Description copy updated (no banned words; factual).
+- Calendly button replaced with internal `/book` link.
+- Cookie Policy added to legal bar.
+- WhatsApp button kept.
+
+**Breadcrumb (Breadcrumb.jsx):** routeLabels updated with all 15 new routes; Shop removed; ampersands replaced with "and".
+
+**New pages (15 scaffold page.jsx files created — all server components):**
+`/services`, `/services/web-development/app-design`, `/services/branding-design/brand-identity-design`, `/services/branding-design/social-media-design`, `/services/video-animation/motion-graphics`, `/services/video-animation/video-editing`, `/services/ai-automation/ai-receptionist`, `/services/ai-automation/ai-chat-agents`, `/services/seo-digital-marketing/local-seo`, `/reviews`, `/book`, `/free-website-audit`, `/thank-you`, `/cookie-policy`, `/packages/launch-kit`.
+
+**Deleted:** `src/app/shop/page.jsx` (path now redirects to /packages).
+
+**Files touched:**
+`next.config.mjs`, `src/lib/routes.js`, `src/components/Navbar.jsx`, `src/components/Footer.jsx`, `src/components/Breadcrumb.jsx`, `src/app/services/page.jsx`, `src/app/services/web-development/app-design/page.jsx`, `src/app/services/branding-design/brand-identity-design/page.jsx`, `src/app/services/branding-design/social-media-design/page.jsx`, `src/app/services/video-animation/motion-graphics/page.jsx`, `src/app/services/video-animation/video-editing/page.jsx`, `src/app/services/ai-automation/ai-receptionist/page.jsx`, `src/app/services/ai-automation/ai-chat-agents/page.jsx`, `src/app/services/seo-digital-marketing/local-seo/page.jsx`, `src/app/reviews/page.jsx`, `src/app/book/page.jsx`, `src/app/free-website-audit/page.jsx`, `src/app/thank-you/page.jsx`, `src/app/cookie-policy/page.jsx`, `src/app/packages/launch-kit/page.jsx`, `docs/launch/phase-2-report.md`, `docs/launch/CHANGELOG.md`.
+
+---
+
 ## 2 Oct 2026 | Phase 1 gaps + Logo | Gap fixes and brand assets (Claude Code, launch branch)
 
 **Phase 1 gap fixes identified in Talha's review:**

@@ -491,6 +491,17 @@ export const ROUTES = [
     updatedAt: '2026-10-02',
   },
   {
+    path: '/thank-you',
+    title: 'Thank You | Maxterz',
+    description: 'Thank you for getting in touch. We will come back to you within one working day.',
+    h1: 'Thank You',
+    primaryKeyword: 'thank you',
+    breadcrumbLabel: 'Thank You',
+    inSitemap: false,
+    schema: ['WebPage'],
+    updatedAt: '2026-10-02',
+  },
+  {
     path: '/cookie-policy',
     title: 'Cookie Policy: Cookies We Use and Why | Maxterz',
     description: 'Every cookie and storage item used on the Maxterz website, what it does, how long it lasts and how to change your cookie settings at any time.',
