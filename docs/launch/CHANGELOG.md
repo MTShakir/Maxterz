@@ -4,6 +4,32 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 2 Oct 2026 | Phase 1 gaps + Logo | Gap fixes and brand assets (Claude Code, launch branch)
+
+**Phase 1 gap fixes identified in Talha's review:**
+
+- **H1 fix (5 pages):** `ServiceBrandingDesign.jsx`, `ServiceVideoAnimation.jsx`, `ServiceSocialMediaManagement.jsx`, `ServiceAIAutomation.jsx`, `ServiceSEODigitalMarketing.jsx` — eyebrow badge promoted to real `<h1>` with `primaryKeyword` text; creative headline demoted to `<p>`. Same visual output, honest semantic HTML.
+- **Page schema:** `src/lib/schema.js` — added `buildBreadcrumbItems()`, `buildPageSchema()`, `PageSchema` server component; added Founder Person node to `buildSiteSchema()`. All 22 static `page.jsx` files now render `<PageSchema path="..." />` (WebPage + BreadcrumbList + optional Service JSON-LD).
+- **OG image:** `src/app/opengraph-image.jsx` created (next/og, 1200x630, primary gradient, Maxterz icon + wordmark). `buildMetadata` updated: hardcoded `/images/og-default.jpg` removed; Next.js auto-detects the route image. Per-page image override kept when caller passes `image`.
+- **Sitemap:** `/insights` set `inSitemap: false` in ROUTES until first post is published.
+- **Phase 1 report:** gap summary table appended; Vercel preview link TODO noted.
+
+**Logo assets (Talha delivered `docs/assets/logo/`):**
+
+- `public/images/maxterz-logo-horizontal.svg` — header logo
+- `public/images/maxterz-logo-horizontal-dark.svg` — footer logo (dark sections)
+- `public/images/maxterz-icon.svg` — icon copy for public use + OG image
+- `src/app/icon.svg` — Next.js browser tab icon (auto-served as `/icon.svg`)
+- `src/app/apple-icon.png` — 180x180 white-background Apple touch icon
+- `public/logo-512.png` — 512x512 for Organization schema logo
+- `public/icons/icon-192.png`, `public/icons/icon-512.png` — PWA manifest icons
+- `src/app/layout.jsx`: `icons` updated to reference `icon.svg` and `apple-icon.png`
+- `src/components/Navbar.jsx`: Supabase CDN `<img>` replaced with `/images/maxterz-logo-horizontal.svg`, alt "Maxterz"
+- `src/components/Footer.jsx`: Supabase CDN `<img>` replaced with `/images/maxterz-logo-horizontal-dark.svg`, alt "Maxterz"; email corrected to info@maxterz.com
+- `docs/launch/TODO-talha.md`: logo SVG item ticked off
+
+---
+
 ## 2 Oct 2026 | Phase 1 | Technical SEO foundation (Claude Code, launch branch)
 
 Build: ✓ npm run build green (33/33 static pages). Lint: ✓ exit 0.

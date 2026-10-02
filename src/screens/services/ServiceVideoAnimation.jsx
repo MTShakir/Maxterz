@@ -377,20 +377,19 @@ const ServiceVideoAnimation = () => {
         <div className="flex-1 w-full flex flex-col justify-center items-center px-4">
           <div className="container mx-auto relative z-10 text-center max-w-5xl mt-12 w-full">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }}>
-              {/* REC badge */}
-              <div className="inline-flex items-center gap-2 bg-red-50 border border-red-100 rounded-full px-4 py-2 mb-8">
+              {/* REC badge — real H1 with primary keyword */}
+              <h1 className="inline-flex items-center gap-2 bg-red-50 border border-red-100 rounded-full px-4 py-2 mb-8">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm shadow-red-500/40" style={{ animation: 'va-rec 1.2s ease-in-out infinite' }} />
-                <span className="text-xs font-bold text-red-600 tracking-[0.2em] uppercase">Video &amp; Animation</span>
-              </div>
+                <span className="text-xs font-bold text-red-600 tracking-[0.2em] uppercase">Motion Graphics and Animation Agency</span>
+              </h1>
 
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05]">
-                <span className="sr-only">Video, Motion Graphics and Animation</span>
-                <span className="block" aria-hidden="true">Motion Is Not a Medium.</span>
-                <span className="block text-[#1044ff]" aria-hidden="true">It Is Your</span>
-                <span className="block text-[#1044ff] min-h-[1.1em]" aria-hidden="true">
+              <p className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05]">
+                <span className="block">Motion Is Not a Medium.</span>
+                <span className="block text-[#1044ff]">It Is Your</span>
+                <span className="block text-[#1044ff] min-h-[1.1em]">
                   <TypeWriter />
                 </span>
-              </h1>
+              </p>
               <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
                 Logo animations, explainer videos, cinematic promos, and short-form content engineered for a single outcome: growth.
               </p>

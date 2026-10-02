@@ -24,7 +24,7 @@ Claude Code adds items here during the build. Tick them off and add a note on wh
 - [x] Portfolio list with links: `02-business-profile.md`, section 3a (1 Oct)
 - [ ] 5 video testimonials (BWLD, MM Window Cleaning, Quick Action Sudan, Mikey Official, Awais Creations) plus each client's written OK. Placeholders until then
 - [ ] Doovor: 3 to 5 screenshots and a one-paragraph summary
-- [ ] Logo as SVG (plus a 512x512 PNG)
+- [x] Logo as SVG (plus a 512x512 PNG): delivered in `docs/assets/logo/`. SVGs copied to `public/images/`. Icon at `src/app/icon.svg`, `public/logo-512.png`, `public/icons/` (192 and 512 png), `src/app/apple-icon.png`. (2 Oct)
 - [ ] Best portfolio images and videos per service, compressed
 - [ ] Logo animation showreel (MP4, under 2MB for the loop) and a poster image
 - [ ] eSIMfo: the 2 ad videos (or links) for the portfolio card

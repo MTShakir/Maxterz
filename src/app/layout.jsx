@@ -27,7 +27,8 @@ export const metadata = {
     'max-snippet': -1,
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/icon.svg',
+    apple: '/apple-icon.png',
   },
   ...(process.env.GOOGLE_SITE_VERIFICATION
     ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }

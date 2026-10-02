@@ -73,7 +73,7 @@ const Footer = () => {
 
   const contactItems = [
     { label: 'Office', Icon: MapPin, href: 'https://maps.google.com/?q=128+City+Road,+London+EC1V+2NX,+United+Kingdom', external: true, text: <>128 City Road, London<br />EC1V 2NX, United Kingdom</> },
-    { label: 'Email Us', Icon: Mail, href: 'mailto:info@maxterz.co.uk', text: 'info@maxterz.co.uk' },
+    { label: 'Email Us', Icon: Mail, href: 'mailto:info@maxterz.com', text: 'info@maxterz.com' },
     { label: 'Call Us', Icon: Phone, href: 'tel:+447375874706', text: '+44 7375 874706' },
   ];
 
@@ -92,10 +92,12 @@ const Footer = () => {
           <div className="max-w-md">
             <Link href="/" onClick={handleLinkClick} className="inline-block mb-5 group">
               <img
-                src="https://qcsflpsyzvigswlotepz.supabase.co/storage/v1/object/public/BrandingFiles/MaxtrerzLogoFW.png"
-                alt="MAXTERZ Logo"
+                src="/images/maxterz-logo-horizontal-dark.svg"
+                alt="Maxterz"
+                width="176"
+                height="40"
                 loading="lazy"
-                className="h-14 w-auto object-contain object-left group-hover:opacity-90 transition-opacity"
+                className="h-10 w-auto object-contain object-left group-hover:opacity-90 transition-opacity"
               />
             </Link>
             <p className="text-white/70 text-sm leading-relaxed font-light">

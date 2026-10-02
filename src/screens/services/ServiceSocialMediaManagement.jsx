@@ -281,13 +281,12 @@ const ServiceSocialMediaManagement = () => {
         <div className="flex-1 w-full flex flex-col justify-center items-center px-4">
           <div className="container mx-auto relative z-10 text-center max-w-5xl mt-12 w-full">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }}>
-              <span className="badge-standard-light mb-8">SOCIAL MEDIA MANAGEMENT</span>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05]">
-                <span className="sr-only">Social Media Management That Brings Enquiries</span>
-                <span className="block" aria-hidden="true">Your Social Media.</span>
-                <span className="block" aria-hidden="true">Built for</span>
-                <span className="block text-[#1044ff] min-h-[1.1em]" aria-hidden="true"><TypeWriter /></span>
-              </h1>
+              <h1 className="badge-standard-light mb-8">Social Media Management Agency</h1>
+              <p className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05]">
+                <span className="block">Your Social Media.</span>
+                <span className="block">Built for</span>
+                <span className="block text-[#1044ff] min-h-[1.1em]"><TypeWriter /></span>
+              </p>
               <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
                 We plan, create, schedule, and manage your entire social presence. You focus on the business. We make sure the world knows about it.
               </p>

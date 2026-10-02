@@ -104,3 +104,19 @@ All marketing routes are static (○) or SSG (●). No unexpected dynamic routes
 - [x] GA4 fires with consent mode defaults denied (full gating in Phase 3)
 - [x] /blogs/:id fixed to redirect to /insights (was wrongly going to /insights/:id)
 - [x] /services/video-editing fixed to redirect to correct destination
+
+---
+
+## Post-review gap fixes (applied before Phase 2 commit)
+
+The following Phase 1 gaps were identified in Talha's review and fixed before the Phase 2 commit. They are logged in the CHANGELOG under Phase 1 gap fixes and in `phase-2-report.md`.
+
+| Gap | Fix |
+|---|---|
+| H1s on 5 service category pages used sr-only hidden text | Eyebrow badge promoted to `<h1>` with `primaryKeyword` text; creative headline demoted to `<p>` |
+| Page schema not rendered on any page | Added `PageSchema` server component to `schema.js`; renders WebPage + BreadcrumbList + Service JSON-LD on all 22 static page.jsx files |
+| Founder Person node missing from site-wide graph | Added to `buildSiteSchema()` with `@id`, name, jobTitle, worksFor, sameAs |
+| OG image fallback referenced `/images/og-default.jpg` (non-existent) | Created `src/app/opengraph-image.jsx` (next/og, 1200x630); removed hardcoded images from `buildMetadata` |
+| Favicon used Supabase CDN temporary icon | Logo SVGs delivered by Talha: `icon.svg`, `apple-icon.png`, manifest icons, `logo-512.png` all set |
+| /insights in sitemap with no posts | `inSitemap: false` in ROUTES; sitemap updated |
+| Vercel preview link missing from this report | **TODO:** add the Vercel preview URL here after pushing Phase 2. Run `vercel ls` or check Vercel dashboard. |

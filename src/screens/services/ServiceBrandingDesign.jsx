@@ -236,12 +236,11 @@ const ServiceBrandingDesign = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-              <span className="badge-standard-light mb-8">BRANDING AND DESIGN</span>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05] text-balance">
-                <span className="sr-only">Logo Design and Branding That Makes You Look Established</span>
-                <span aria-hidden="true">Your Brand Is a Feeling{' '}</span>
-                <span className="text-[#1044ff]" aria-hidden="true">Before It Is a Design.</span>
-              </h1>
+              <h1 className="badge-standard-light mb-8">Logo Design and Branding Agency</h1>
+              <p className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.05] text-balance">
+                <span>Your Brand Is a Feeling{' '}</span>
+                <span className="text-[#1044ff]">Before It Is a Design.</span>
+              </p>
               <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
                 From identity systems and print collateral to scroll-stopping visuals, we design brands that people remember, trust, and choose over competitors.
               </p>

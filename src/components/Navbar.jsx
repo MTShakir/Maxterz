@@ -225,10 +225,12 @@ const Navbar = () => {
               onClick={() => window.scrollTo(0, 0)}
               className="flex items-center gap-2 group relative z-50 mr-8"
             >
-              <div className="relative h-14 w-52">
+              <div className="relative h-10 w-44">
                 <img
-                  src="https://qcsflpsyzvigswlotepz.supabase.co/storage/v1/object/public/BrandingFiles/Full-Logo.png"
-                  alt="MAXTERZ Logo"
+                  src="/images/maxterz-logo-horizontal.svg"
+                  alt="Maxterz"
+                  width="176"
+                  height="40"
                   className="h-full w-full object-contain object-left group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
