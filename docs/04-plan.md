@@ -71,7 +71,7 @@ Claude Code does the build. You gather the assets it needs in parallel. Each pha
 
 ### Week 2 (8 to 14 Oct): foundations for leads
 - [ ] Google Search Console and Bing Webmaster: sitemap submitted, pages indexing
-- [ ] Search Console Change of Address: maxterz.co.uk to maxterz.com (both properties verified, 301s live)
+- [ ] Search Console Change of Address: maxterz.co.uk to maxterz.com (both properties verified, 301s live). Then URL Inspection on the 9 old indexed URLs (`website/data/old-indexed-urls.md`)
 - [ ] Google Business Profile as a service-area business. Ask 10 past direct clients for Google reviews
 - [ ] Update every profile with the same name, description, logo and link (Fiverr, Instagram, LinkedIn, Facebook, X, TikTok, Behance)
 - [ ] Fiverr: switch to agency account, raise lowest tier prices, add a premium tier to each gig

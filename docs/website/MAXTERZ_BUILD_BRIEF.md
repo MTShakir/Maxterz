@@ -1,6 +1,6 @@
 # MAXTERZ BUILD BRIEF: Website Finalisation for Conversion and SEO
 
-Version 1.3, 1 October 2026 (prices locked: price book v3; homepage copy locked; prices live in Supabase)
+Version 1.4, 2 October 2026 (prices locked: price book v3; homepage copy locked; prices live in Supabase; indexed URLs mapped)
 Owner: Talha, founder of Maxterz
 Executor: Claude Code, working in the Maxterz Next.js repository (GitHub MTShakir/Maxterz)
 
@@ -268,10 +268,12 @@ Confirm each item in Phase 0 and fix it in the phase shown.
 | From | To |
 |---|---|
 | /portfolio | /our-work |
+| /portfolio/:id | /our-work |
 | /about-us | /about |
 | /blogs | /insights |
 | /blogs/:id | /insights (replace the existing rule that sends it to /insights/:id) |
 | /services/design | /services/branding-design |
+| /services/branding | /services/branding-design (indexed on maxterz.co.uk, keep the existing rule) |
 | /services/animations | /services/video-animation |
 | /services/websites | /services/web-development |
 | /services/video-editing | /services/video-animation/video-editing |
@@ -299,7 +301,9 @@ Next.js runs `next.config` redirects before middleware, so host rules live in `n
 
 2. maxterz.co.uk, www.maxterz.co.uk, www.maxterz.com and maxterz.vercel.app: `source: "/:path*"` to `https://maxterz.com/:path*`, permanent. Path-to-path matters: it carries any authority maxterz.co.uk has earned and lets Search Console's Change of Address tool validate.
 
-3. Old URLs from the previous single-page site on maxterz.com: ask Talha for any indexed paths (Search Console, Pages report) and add path rules for them. `/portfolio` is already covered.
+   One hop, not two: before that catch-all, add a rule for each of these hosts for every path rule in the table above, pointing straight to the final absolute URL (for example maxterz.co.uk/blogs to https://maxterz.com/insights). Generate them in code from the same array as the path rules, so the lists can never drift. Details and the test list: `DOCS/website/data/old-indexed-urls.md`.
+
+3. Indexed URLs (Search Console, 2 Oct 2026): `DOCS/website/data/old-indexed-urls.md` lists the 9 indexed maxterz.co.uk URLs, their final destinations and the test to run. The old maxterz.com was a single page at /, covered by the new homepage.
 
 Old WordPress URLs end in a slash. Next.js first strips the slash, then the host rule fires. Two hops is acceptable for legacy URLs; do not add custom trailing-slash handling.
 
@@ -861,6 +865,7 @@ Each phase ends with: build and lint green; relevant checks run; commit with the
 ### Phase 2. Navigation, redirects and routes
 - Header with mega menu, mobile menu, footer with legal bar, global breadcrumbs.
 - All redirects in 6.3: host rules first, then path rules, plus the preview noindex header. Remove the /services redirect and create the /services hub.
+- Test every URL in `DOCS/website/data/old-indexed-urls.md`: one permanent redirect straight to its final URL, which returns 200. Put the result table in the phase report.
 - Scaffold every new route from 6.2 with metadata, H1 and placeholder-free structure (sections can be minimal until Phase 4 and 5, but no lorem ipsum ever ships).
 - Remove /shop and the "coming soon" code.
 - Fix every internal link to its final URL.

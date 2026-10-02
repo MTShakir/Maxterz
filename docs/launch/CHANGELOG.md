@@ -4,6 +4,14 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 2 Oct 2026 | Setup | Indexed URLs and Supabase access (Claude, strategy workspace)
+- Supabase: the Maxterz project is connected as the MCP server `supabase-maxterz`. CLAUDE.md now says to use only that server in this repo, never the Doovor project.
+- The 9 indexed maxterz.co.uk URLs from Search Console are saved with their final destinations in `docs/website/data/old-indexed-urls.md`.
+- Brief v1.4, section 6.3: added /services/branding and /portfolio/:id, one-hop host rules built from the path rule array, and a redirect test in Phase 2.
+- Files touched: CLAUDE.md, docs/website/MAXTERZ_BUILD_BRIEF.md, docs/website/data/old-indexed-urls.md, docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md, docs/00-START-HERE.md, docs/04-plan.md
+
+---
+
 ## 2 Oct 2026 | Phase 0 | Audit and plan (Claude Code, launch branch)
 - Created `launch` branch from main. All sprint work happens here.
 - Committed docs/ and CLAUDE.md to main: 20 files, 4,449 insertions. Pulled remote changes to Footer.jsx and OurWorkPage.jsx before pushing.

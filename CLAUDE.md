@@ -33,6 +33,11 @@ Claude Code loads this file at the start of every session. It lives at the repo 
 - Never hard-code a price in a component. Package values and savings are calculated from their items, never typed by hand.
 - Price edits in Supabase must go live with no code change or redeploy (on-demand revalidation, tag `pricing`).
 
+## Supabase
+- The Maxterz project (ref `qcsflpsyzvigswlotepz`) is connected as the MCP server `supabase-maxterz`. In this repo use only that server.
+- Never run anything against the Doovor project or any other Supabase project.
+- Show the SQL for every migration and wait for Talha's "apply" before running it.
+
 ## Locked copy
 - The homepage hero and the 5-vs-1 section use the exact words in brief section 7.2 (D28). Change layout, never the words.
 

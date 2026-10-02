@@ -1,6 +1,6 @@
 # Maxterz Docs: Start Here
 
-Last updated: 1 October 2026
+Last updated: 2 October 2026
 
 This folder is the single source of truth for building Maxterz. You, Claude and Claude Code all read and write here. If it is not in this folder, it is not decided.
 
@@ -28,6 +28,7 @@ This folder is the single source of truth for building Maxterz. You, Claude and 
 | `launch/launch-checklist.md` | Created in Phase 6: what is left before go-live | Launch day |
 | `website/data/fiverr-reviews.json` | 33 curated Fiverr reviews, ready to seed the site | Reviews, home and service pages |
 | `website/data/pricing-research-2026-10.md` | UK market price research with sources | When prices are questioned |
+| `website/data/old-indexed-urls.md` | Old URLs Google has indexed and where each one redirects | Phase 2 and launch day |
 | `assets/` | Inbox for your files (headshot, logos, videos). Claude Code moves optimised copies into the site | Drop new assets here |
 
 ---
@@ -46,10 +47,9 @@ This folder is the single source of truth for building Maxterz. You, Claude and 
 
 ## Do this today
 
-1. Answer the 4 open questions at the bottom of `03-decisions.md`.
-2. Open Claude Code in the Maxterz folder and paste the Kickoff prompt from `website/02-claude-code-prompts.md`. It commits the docs, creates the `launch` branch and runs Phase 0.
-3. Read `launch/phase-0-report.md` and answer its questions.
-4. Start collecting the assets listed in `launch/TODO-talha.md`.
+1. Paste the "continue with Phase 1" message into Claude Code. Read each `launch/phase-N-report.md` before you say "continue".
+2. Clear `launch/TODO-talha.md`, starting with the info@maxterz.com mailbox, Resend and Vercel Pro.
+3. Answer the open questions at the bottom of `03-decisions.md`.
 
 ---
 
