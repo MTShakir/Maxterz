@@ -183,6 +183,19 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 ## D29. Prices live in Supabase (Decided, 1 Oct 2026)
 - **Decision:** all prices, packages and plans live in Supabase pricing tables, seeded from `pricing.json`. Talha edits prices in Supabase; a database webhook triggers on-demand revalidation, so changes are live in seconds with no code change or redeploy.
 
+
+## D30. Keep the existing page designs (Locked by Talha, 2 Oct 2026)
+- **Decision:** pages that are already built keep their layout, section order, visual style and components. Claude Code improves them in place for conversion and SEO. It never redesigns them.
+- **What changes on existing pages:**
+  1. Server-rendered content. Supabase reads move out of client components into the page (server) and pass down as props. Animations stay in client components.
+  2. Prices. Each service page shows its own prices from the Supabase pricing tables (D29): tier cards if the service has tiers, one "from" line if not. The existing packages section keeps its design; only its data source changes. The old per-service tables (LogoDesignPackages and the rest) leave the code, not the database.
+  3. Proof. Each service page shows the case study and portfolio projects for that exact service, not the whole category. No match: fall back to the category. Still none: hide the section.
+  4. Hero. Add the "from" price line and the Book a free call button if missing. Every CTA points to /book.
+  5. Copy, FAQ and schema fixes under the copy rules.
+- **New pages:** the 9 service pages scaffolded in Phase 2 are built by copying the nearest existing service screen, so the site reads as one system. Examples: brand identity from logo design, video editing from thumbnail design (same pricing block), app design from mobile app development.
+- **Brief 7.4 and 7.5** become a checklist of what each page must contain, not a section order. Missing items fit into the existing layout.
+- **Why:** the design is done and Talha likes it. A rebuild costs days and adds risk before launch. The gains now come from prices, proof and speed.
+
 ## D26. Git workflow (Decided, 1 Oct 2026)
 - **Decision:** Claude Code commits `docs/` and `CLAUDE.md` to main once, then creates a `launch` branch. All sprint work happens on `launch`, with a commit after each phase. Each push gives a Vercel preview link for review. `launch` merges into main on launch day.
 - **Why:** main stays deployable at all times, and every phase can be reviewed or rolled back.

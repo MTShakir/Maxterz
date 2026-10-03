@@ -95,7 +95,7 @@ All 9 old indexed URLs resolve in one hop to the correct final URL. Final page r
 
 ## Vercel preview
 
-TODO: add Vercel preview URL once pushed to origin/launch and Vercel deploys.
+https://maxterz-gr6izb6fw-maxterz.vercel.app/
 
 ---
 

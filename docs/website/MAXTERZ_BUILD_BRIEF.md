@@ -1,6 +1,6 @@
 # MAXTERZ BUILD BRIEF: Website Finalisation for Conversion and SEO
 
-Version 1.4, 2 October 2026 (prices locked: price book v3; homepage copy locked; prices live in Supabase; indexed URLs mapped)
+Version 1.5, 2 October 2026 (prices locked: price book v3; homepage copy locked; prices live in Supabase; indexed URLs mapped; existing designs kept, D30)
 Owner: Talha, founder of Maxterz
 Executor: Claude Code, working in the Maxterz Next.js repository (GitHub MTShakir/Maxterz)
 
@@ -393,6 +393,8 @@ Section order:
 - Schema: WebPage + ItemList of the 6 hubs (ListItem with position, url and name).
 
 ### 7.4 Category hub template (6 pages)
+**D30:** on pages that already exist, 7.4 and 7.5 are a content checklist, not a section order. Keep the existing layout and fit missing items into it.
+
 1. Hero: H1 with the category keyword, subheading on outcome and audience, primary and secondary CTA, ProofBar.
 2. Service cards: every service page in the category with a 1-line description and link. This is the key internal link block.
 3. "We also deliver": capabilities without their own page (for web: custom software, CRM, SaaS, PWAs, API integrations; for video: video editing, reels; for SEO: technical SEO audits, paid ads; for AI: workflow automation).
@@ -884,6 +886,9 @@ Each phase ends with: build and lint green; relevant checks run; commit with the
 - Write copy that follows Part 4, uses only Part 3 facts, and answers real buyer questions. Every FAQ answer is specific.
 - Service, FAQPage, OfferCatalog and ItemList schema.
 - Reviews and portfolio pulled per service from Supabase. If the testimonials table is still empty, hide the review sections and log it in TODO-talha.
+- Follow D30: keep every existing design. Move Supabase reads to the server. Swap the old per-service package tables for the new pricing tables in the existing packages sections.
+- Build the 9 service pages scaffolded in Phase 2 from the nearest existing service screen in `src/screens/services/sub/`. List which template each page used in the report.
+- Per-service proof: additive migration adding `service_slugs text[] not null default '{}'` to `portfolio_projects` and `case_studies` (show the SQL, wait for "apply"). Propose tags for every existing row as a table in the report. After Talha approves, write the tags. Each page filters by its own slug, then falls back to its category, then hides the section.
 - Commit: `feat(pages): home, services, category hubs, service pages, packages`
 
 ### Phase 5. Trust pages
@@ -896,7 +901,7 @@ Each phase ends with: build and lint green; relevant checks run; commit with the
 - Lighthouse mobile on the 5 key pages. Fix to budget.
 - Accessibility pass with axe (via Playwright or the browser extension).
 - Test on a 375px wide viewport and on desktop: header, menus, forms, banner, action bar.
-- Content pass: search the codebase and Supabase content for em dashes (U+2014), en dashes (U+2013), arrows (U+2190 to U+21FF), emojis, "lorem", "TODO" (in rendered copy), "MAXTERZ" outside legal text, "4.8", "98%", "350+", "500+". Fix all.
+- Content pass: search the codebase and Supabase content for em dashes (U+2014), en dashes (U+2013), arrows (U+2190 to U+21FF, including HTML entities such as &#8592; and &rarr;), emojis, "lorem", "TODO" (in rendered copy), "MAXTERZ" outside legal text, "4.8", "98%", "350+", "500+". Fix all.
 - Regenerate llms.txt.
 - Write `DOCS/launch/launch-checklist.md` from Part 12 with anything still open.
 - Commit: `chore(launch): QA, performance, accessibility, audit script`

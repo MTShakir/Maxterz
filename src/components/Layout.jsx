@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
 import Breadcrumb from '@/components/Breadcrumb';
+import MobileActionBar from '@/components/MobileActionBar';
 
 const Layout = ({ children }) => {
   const pathname = usePathname();
@@ -22,6 +23,7 @@ const Layout = ({ children }) => {
       </div>
       <Footer />
       <FloatingButtons />
+      <MobileActionBar />
     </div>
   );
 };

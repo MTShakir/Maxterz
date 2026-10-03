@@ -124,7 +124,6 @@ const Footer = () => (
             {[
               { label: 'About',               path: '/about'           },
               { label: 'Contact',             path: '/contact'         },
-              { label: 'Insights',            path: '/insights'        },
               { label: 'Privacy Policy',      path: '/privacy-policy'  },
               { label: 'Terms',               path: '/terms-conditions'},
               { label: 'Cookie Policy',       path: '/cookie-policy'   },
@@ -198,6 +197,13 @@ const Footer = () => (
           <Link href="/privacy-policy"   onClick={scrollTop} className="text-white/45 hover:text-white transition-colors text-xs">Privacy</Link>
           <Link href="/terms-conditions" onClick={scrollTop} className="text-white/45 hover:text-white transition-colors text-xs">Terms</Link>
           <Link href="/cookie-policy"    onClick={scrollTop} className="text-white/45 hover:text-white transition-colors text-xs">Cookies</Link>
+          <button
+            type="button"
+            onClick={() => typeof window !== 'undefined' && window.dispatchEvent(new CustomEvent('openCookieSettings'))}
+            className="text-white/45 hover:text-white transition-colors text-xs bg-transparent border-0 p-0 cursor-pointer"
+          >
+            Cookie settings
+          </button>
         </div>
       </div>
     </motion.div>

@@ -4,6 +4,38 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 3 Oct 2026 | Phase 3 | Conversion and tracking (Claude Code, launch branch)
+
+**New global components:** CTASection (server), ProofBar (server), MobileActionBar (client, mobile-only fixed bar), CookieBanner (GA4 Consent Mode v2, mx_consent cookie, Clarity integration).
+
+**Lead capture API (`/api/leads`):** Zod validation, honeypot, save-first-then-email pattern. Supabase service role used server-side only. Resend alert email optional. Returns 503 gracefully if service role key absent. Attribution fields (UTM, gclid, fbclid, page_path, referrer) stored on every lead.
+
+**On-demand revalidation (`/api/revalidate`):** tags pricing, testimonials, work. Protected by x-revalidate-secret header.
+
+**Contact form rewrite (D30 — same visual design):** Removed Formspree. Added company, website_url, budget, timeline fields. Services list updated. Email fixed to SITE.email. Fires GA4 `generate_lead`. Redirects to /thank-you?type=contact.
+
+**Free website audit form:** New AuditForm.jsx client component. Fields: name, email, website_url, business_type, main_goal, consent. Fires GA4 `generate_lead`. Redirects to /thank-you?type=audit.
+
+**Book a call page:** Two-column layout. Calendly inline widget (CalendlyEmbed.jsx) with UTM passthrough. Fires GA4 `book_call` on event scheduled, redirects to /thank-you?type=call.
+
+**Analytics (layout.jsx):** Consent Mode v2 defaults (all denied). Attribution capture script (sessionStorage.mx_attribution). Global CTA/WhatsApp/phone/email click tracking.
+
+**Database migrations:** `leads_add_attribution_columns` (10 columns inc. status), `testimonials_phase3_columns` (8 columns + unique constraint).
+
+**Pre-phase fixes:** Insights noindex, Insights removed from footer, Blogs empty state, favicon.ico generated (32px+48px from maxterz-icon-1024.png).
+
+Files touched: src/app/api/leads/route.js, src/app/api/revalidate/route.js, src/app/book/page.jsx, src/app/book/CalendlyEmbed.jsx, src/app/free-website-audit/page.jsx, src/app/free-website-audit/AuditForm.jsx, src/app/insights/page.jsx, src/app/layout.jsx, src/app/favicon.ico, src/components/CTASection.jsx, src/components/CookieBanner.jsx, src/components/Footer.jsx, src/components/Layout.jsx, src/components/MobileActionBar.jsx, src/components/ProofBar.jsx, src/lib/supabaseServer.js, src/screens/Blogs.jsx, src/screens/Contact.jsx, tools/seed-testimonials.js, docs/launch/phase-3-report.md
+
+---
+
+## 2 Oct 2026 | Setup | Existing designs kept (Claude, strategy workspace)
+- D30 locked by Talha: built pages keep their layout and style. Improvements happen in place: server-rendered data, per-service prices and proof, CTA and copy fixes. The 9 scaffolded service pages copy the nearest existing service screen.
+- Brief v1.5: D30 note on 7.4 and 7.5, three Phase 4 tasks (keep designs, build scaffolds from templates, per-service proof tags), arrow entities added to the Phase 6 content pass.
+- CLAUDE.md: new "Existing page designs" rule.
+- Files touched: CLAUDE.md, docs/03-decisions.md, docs/website/MAXTERZ_BUILD_BRIEF.md, docs/launch/CHANGELOG.md
+
+---
+
 ## 2 Oct 2026 | Phase 2 | Navigation, redirects, footer and new routes (Claude Code, launch branch)
 
 **Redirects (next.config.mjs — complete rewrite):**

@@ -41,6 +41,10 @@ Claude Code loads this file at the start of every session. It lives at the repo 
 ## Locked copy
 - The homepage hero and the 5-vs-1 section use the exact words in brief section 7.2 (D28). Change layout, never the words.
 
+## Existing page designs (D30)
+- Pages already built keep their layout, section order and style. Improve them in place: server-rendered data, per-service prices from Supabase, per-service case study and portfolio, CTA and copy fixes. Never redesign them.
+- New service pages copy the nearest existing screen in `src/screens/services/sub/`.
+
 ## Writing to DOCS
 - Free to write: anything in `DOCS/launch/`, and ticking tasks in `DOCS/04-plan.md`.
 - Append only, with status **Proposed**: new decisions at the end of `DOCS/03-decisions.md`.
