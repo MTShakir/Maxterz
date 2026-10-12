@@ -1,61 +1,58 @@
 /**
- * Idempotent seed script: inserts all Fiverr reviews from
+ * Idempotent seed script: loads the curated Fiverr reviews from
  * docs/website/data/fiverr-reviews.json into the Supabase testimonials table.
  *
- * Uses upsert on (author_name, source, quote) to stay idempotent.
- * Run: node tools/seed-testimonials.js
+ * Upserts on (author_name, platform, quote), so running it twice changes nothing.
+ * Seeded reviews are published; the old placeholder rows stay hidden (D36).
+ * Run: npm run seed:reviews
  *
- * Requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local
+ * Requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY in .env.local
  */
+import { readFileSync } from 'node:fs';
+import nextEnv from '@next/env';
+import { createClient } from '@supabase/supabase-js';
 
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
+nextEnv.loadEnvConfig(process.cwd(), false, { info() {}, error: console.error });
 
-const { createClient } = require('@supabase/supabase-js');
-
-const url  = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key  = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const key = process.env.SUPABASE_SECRET_KEY;
 
 if (!url || !key) {
-  console.error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local');
+  console.error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SECRET_KEY in .env.local');
   process.exit(1);
 }
 
-const supabase = createClient(url, key);
-const data     = require('../docs/website/data/fiverr-reviews.json');
+const supabase = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
+const data = JSON.parse(readFileSync(new URL('../docs/website/data/fiverr-reviews.json', import.meta.url), 'utf8'));
 
-async function main() {
-  const rows = data.reviews.map(r => ({
-    author_name:     r.author_name,
-    location:        r.author_country,
-    platform:        r.source,
-    rating:          Math.round(r.rating),
-    quote:           r.quote,
-    is_featured:     r.is_featured,
-    avatar_initials: r.author_name.slice(0, 2).toUpperCase(),
-    display_order:   0,
-    service_slug:    r.service_slug   ?? null,
-    period_label:    r.period_label   ?? null,
-    delivery_time:   r.delivery_time  ?? null,
-    is_excerpt:      r.is_excerpt     ?? false,
-  }));
+const rows = data.reviews.map((r, index) => ({
+  author_name:     r.author_name,
+  location:        r.author_country,
+  platform:        r.source,
+  rating:          Math.round(r.rating),
+  quote:           r.quote,
+  is_featured:     r.is_featured,
+  avatar_initials: r.author_name.slice(0, 2).toUpperCase(),
+  display_order:   index + 1,
+  service_slug:    r.service_slug   ?? null,
+  period_label:    r.period_label   ?? null,
+  delivery_time:   r.delivery_time  ?? null,
+  is_excerpt:      r.is_excerpt     ?? false,
+  is_published:    true,
+}));
 
-  // Upsert on (author_name, platform, quote) — existing unique index expected.
-  // If upsert fails due to missing unique constraint, run as plain inserts.
-  const { error, count } = await supabase
-    .from('testimonials')
-    .upsert(rows, {
-      onConflict: 'author_name,platform,quote',
-      ignoreDuplicates: true,
-      count: 'exact',
-    });
+const { error } = await supabase
+  .from('testimonials')
+  .upsert(rows, { onConflict: 'author_name,platform,quote' });
 
-  if (error) {
-    console.error('Upsert error:', error);
-    process.exit(1);
-  }
-
-  console.log(`Done. ${count ?? rows.length} rows processed (duplicates ignored).`);
+if (error) {
+  console.error('Upsert error:', error.message);
+  process.exit(1);
 }
 
-main();
+const { count } = await supabase
+  .from('testimonials')
+  .select('id', { count: 'exact', head: true })
+  .eq('is_published', true);
+
+console.log(`Done. ${rows.length} reviews upserted. ${count} published in total.`);

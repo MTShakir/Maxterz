@@ -29,8 +29,9 @@ export default function AuditForm() {
     e.preventDefault();
 
     // Minimum fill time (3 seconds) to catch bots
-    if (Date.now() - startTime.current < 3000) {
-      setError('Please take a moment to fill the form.');
+    const elapsed = Date.now() - startTime.current;
+    if (elapsed < 3000) {
+      setError('Please take a moment to check your details, then send again.');
       return;
     }
 
@@ -50,6 +51,7 @@ export default function AuditForm() {
       main_goal:        fd.get('main_goal'),
       consent_followup: fd.get('consent_followup') === 'on',
       _hp:              fd.get('_hp') || '',
+      _elapsed:         elapsed,
       page_path:        window.location.pathname,
       referrer:         document.referrer,
       ...attribution,

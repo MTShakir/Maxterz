@@ -7,7 +7,10 @@
     "dev": "next dev -p 3000",
     "build": "node tools/generate-llms.js || true && next build",
     "start": "next start -p 3000",
-    "lint": "eslint . --quiet"
+    "lint": "eslint . --quiet",
+    "test:pricing": "node --test tools/pricing.test.mjs",
+    "seed:pricing": "node tools/seed-pricing.mjs",
+    "seed:reviews": "node tools/seed-testimonials.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.3.1",

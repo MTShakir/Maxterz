@@ -47,6 +47,7 @@ export const SITE = {
   },
   thumblabUrl: 'https://thumblab.maxterz.com',
   vatRegistered: false,
+  icoNumber: 'ZC165156', // Information Commissioner's Office registration (4 Oct 2026)
   socialLinks: [
     'https://www.instagram.com/maxterzhub/',
     'https://www.facebook.com/maxterzhub',

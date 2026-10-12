@@ -52,7 +52,11 @@ const Contact = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (Date.now() - startTime.current < 3000) return;
+    const elapsed = Date.now() - startTime.current;
+    if (elapsed < 3000) {
+      setFormError('Please take a moment to check your details, then send again.');
+      return;
+    }
 
     const fd = new FormData(e.currentTarget);
     if (fd.get('_hp')) return;
@@ -73,6 +77,7 @@ const Contact = () => {
       timeline: fd.get('timeline') || undefined,
       message:  fd.get('message'),
       _hp:      fd.get('_hp') || '',
+      _elapsed: elapsed,
       page_path: window.location.pathname,
       referrer:  document.referrer,
       ...attribution,
