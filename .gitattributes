@@ -1,0 +1,17 @@
+# Store and check out text files with LF line endings on every machine,
+# so tools without Git for Windows' autocrlf setting do not show phantom edits.
+* text=auto eol=lf
+
+# Binary files: never convert or diff.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.mov binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
