@@ -13,7 +13,7 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 | D01 | maxterz.com is the only agency domain, maxterz.co.uk redirects to it | Decided (30 Sep, Talha) |
 | D02 | Position as "your entire digital team under one roof", sell first to UK service businesses | Decided |
 | D03 | Flagship offer: Launch Kit, £1,995 + £145/month Care Plus, founding price £1,495 for the first 5 | Decided and locked (1 Oct, Talha) |
-| D04 | 6 service categories, 16 service pages at launch (video editing added) | Decided |
+| D04 | 6 service categories, 16 service pages at launch (video editing added) | Superseded by D31 |
 | D05 | Keep the current URL pattern | Decided |
 | D06 | ThumbLab stays on thumblab.maxterz.com; maxterz.com keeps a thumbnail service page | Decided (1 Oct, Talha) |
 | D07 | Fiverr stays as a revenue and proof channel, no off-platform moves | Decided |
@@ -25,7 +25,7 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 | D13 | Tracking stack with UK-compliant consent | Decided |
 | D14 | Google Business Profile as a service-area business | Decided |
 | D15 | Allow AI crawlers, keep llms.txt but do not rely on it | Decided |
-| D16 | Launch on Wednesday 7 October 2026, ads no earlier than week 3 | Decided |
+| D16 | Launch on Wednesday 7 October 2026, ads no earlier than week 3 | Date superseded by D34; ads rule holds |
 | D17 | Leads go to Supabase, email alert, then HubSpot free CRM | Decided |
 | D18 | No city pages at launch, industry pages from week 4 | Later |
 | D19 | Be open about the remote team | Decided |
@@ -39,6 +39,12 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 | D27 | Show prices: fixed work priced, custom work "from", every card leads to a call | Decided (1 Oct, Talha) |
 | D28 | Homepage hero and 5-vs-1 copy locked word for word | Locked (1 Oct, Talha) |
 | D29 | All prices live in Supabase; edits go live with no code change or redeploy | Decided (1 Oct, Talha) |
+| D30 | Keep the existing page designs, improve them in place | Locked (2 Oct, Talha) |
+| D31 | Service page map v2: 17 pages (6 category pages, 11 service pages) | Decided (3 Oct, Talha) |
+| D32 | Hero strips in one `hero_slides` table; WebP stills, MP4 animations, no GIF or PNG | Decided (3 Oct) |
+| D33 | New Supabase publishable and secret keys; info@ and talha@ mailboxes | Decided (5 Oct) |
+| D34 | Launch as soon as Phase 6 passes, no fixed date | Decided (5 Oct, Talha) |
+| D35 | One chat for strategy and build | Decided (12 Oct, Talha) |
 
 ---
 
@@ -252,3 +258,17 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 2. **Display names:** how should dixonsamanagement.com and adnights.com appear on the site?
 3. **Video testimonials:** send the files and each client's written OK. Placeholders stay hidden on the live site until then.
 4. **Doovor:** 3 to 5 screenshots and a one-paragraph summary.
+
+Open questions and recommendations from 12 Oct onwards live in `launch/TODO-talha.md`, in phase order.
+
+---
+
+## D34. Launch date: as soon as Phase 6 passes (Decided by Talha, 5 Oct 2026)
+- **Decision:** the site launches as soon as Phase 6 passes. No fixed date, and no corners cut to hit one. This replaces the 7 October date in D16. The rest of D16 holds: organic content from week 2, outreach from week 3, paid ads only after tracking is verified with real test leads.
+- **Why:** a launch with missing proof or broken tracking costs more than a few days' delay.
+- **Logged on 12 Oct:** the decision was recorded in CLAUDE.md, the brief and the plan on 5 Oct, but not here.
+
+## D35. One chat for strategy and build (Decided by Talha, 12 Oct 2026)
+- **Decision:** Talha works with Claude Code in one chat for strategy and build. The separate strategy workspace is retired. Claude Code acts as the agency operator: it leads with a recommendation, questions decisions that cost returns, and records every decision made in chat here and in the doc it changes, in the same turn (CLAUDE.md, "Your role").
+- **Changes D21:** when Talha makes a decision in chat, Claude Code also updates the business profile, offers, brief or inventory it affects. Without a decision from Talha, those files stay read only.
+- **Why:** one place for decisions and build. No hand-offs between two chats and no copies drifting apart.

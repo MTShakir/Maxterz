@@ -4,6 +4,17 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 12 Oct 2026 | Setup | One chat for strategy and build, docs committed, TODO reordered (Claude Code, launch branch)
+- Talha now works with Claude Code in one chat for strategy and build (D35). The 5 Oct "no fixed launch date" decision logged as D34. Decision summary table now lists D30 to D35.
+- Committed the strategy chat's uncommitted docs as e50c528: D31 to D33, page inventory, hero and portfolio READMEs, portfolio template, .gitignore, pricing.json remap. Left out: raw logo files in `docs/assets/logo/` and `.claude/`.
+- Line endings: 223 tracked files are CRLF on disk while git stores LF. Git for Windows hides this (system `core.autocrlf=true`); a git without that setting shows 232 files modified, of which 10 have real edits. Proposed fix: `.gitattributes` with `* text=auto eol=lf`, tested on a copy of the index with no stored file changes. Waiting on Talha.
+- Found in Supabase (read only): the live maxterz.co.uk (old Vite site) shows 3 placeholder projects from `portfolio_projects`; the new home page reads 3 placeholder `video_testimonials` and a "5 Star Trustpilot" row in `trust_stats`. Proposed: hide them from public reads. Waiting on Talha.
+- Found for Phase 4A: the code still reads `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY`, but D33 moved Vercel and `.env.local` to the new key names, so /api/leads returns 503 and no lead can save. The 33 curated Fiverr reviews were never seeded (`testimonials` holds 5 old rows). Both are the first fixes in 4A. Brief 9.2 and Part 12 still name the old keys; update them with the code fix.
+- TODO-talha rewritten in phase order with specs; done items at the bottom. Hero drop folders added for explainer-videos and social-media-management.
+- Files touched: docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md, docs/03-decisions.md, docs/02-business-profile.md, docs/assets/hero/README.md
+
+---
+
 ## 5 Oct 2026 | Setup | Launch date, accounts done (Claude, strategy workspace)
 - Launch has no fixed date: it happens as soon as Phase 6 passes, with no corners cut. CLAUDE.md, START-HERE, plan and brief updated.
 - Done by Talha: mailboxes info@ and talha@, aliases, DMARC, new Supabase keys in Vercel and `.env.local`.

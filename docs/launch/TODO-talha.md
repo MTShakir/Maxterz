@@ -1,14 +1,96 @@
 # Waiting on Talha
 
-Claude Code adds items here during the build. Tick them off and add a note on where the asset is.
+Ordered by what blocks the next phase. Next phase: **4A** (pricing tables, `hero_slides`, the 13 built pages). Done items are at the bottom. Tick an item and note where the file is. Never paste secret keys in chat.
 
-## Decisions
+Rewritten 12 Oct 2026 by Claude Code.
+
+---
+
+## Urgent: the live site (today, not tied to a phase)
+
+- [ ] **Placeholder work and testimonials.** maxterz.co.uk is live and shows 3 placeholder projects from Supabase as client work (TechCorp Brand Identity, NeoBank App Launch, Luxe Fashion Store). The new site's home page also reads 3 placeholder video testimonials (James, Sarah, Mark) that are not from your client list. Made-up testimonials are banned under the DMCC Act 2024, and invented client work is misleading. Fix: hide these rows from public reads in Supabase. Reversible, no deploy, no rows deleted. Say "hide" and Claude Code shows the SQL first. The old site's hard-coded "98%" and "350+" claims go at launch.
+- [ ] **Trustpilot.** The new home page shows "5 Star Trustpilot rating". Send the Trustpilot URL if the profile exists. If not, the claim is removed in Phase 4B.
+
+## Blocks Phase 4A (next)
+
+- [ ] **Resend API key.** Resend, API Keys: create 2 keys with "Sending access" for maxterz.com, named `vercel` and `local`. Add `vercel` in Vercel as `RESEND_API_KEY` (Production and Preview, Sensitive). Paste `local` into `.env.local` as `RESEND_API_KEY` yourself. Why: lead alerts and auto-replies have never been tested end to end. Claude Code tests the full lead flow first in 4A.
+- [ ] **Two offer facts for the price seed.**
+  1. Package names: keep Starter Kit, Launch Kit and Scale Kit (recommended). They are clear, and the /packages/launch-kit URL and future ads depend on the name. Renaming after launch breaks links.
+  2. Confirm all 5 founding places at £1,495 are still open.
+- [ ] **Migrations.** Say "apply" when Claude Code shows the SQL for the pricing tables (`price_items`, `packages`, `package_items`) and `hero_slides`. Additive only: nothing is dropped or deleted.
+- [ ] **Hero originals, web pages.** Folders `business-website-design`, `web-development`, `app-and-software-development` (`ecommerce-website-design` optional) in `docs/assets/hero/`. Stills: PNG 2400 x 1600 (3:2). Animations: MP4, 3:2, 3 to 8 second loop, no audio. 6 to 10 per page, named 01, 02, 03 in display order. Biggest originals, no conversion (full spec: `docs/assets/hero/README.md`). Until they arrive, these strips stay hidden.
+- [ ] **Hero top-ups (nice to have).** Thin strips today: logo-animation 1 image, explainer-videos 1, logo-design 2, thumbnail-design 2, social-media-management 0. Same spec, same place (all folders ready).
+- [ ] **Line endings (decision, optional).** Add a `.gitattributes` file with `* text=auto eol=lf` so every tool agrees on line endings. Tested on a copy of the index: no stored file changes. Say "fix line endings".
+
+## Blocks Phase 4B
+
+- [ ] **/packages layout (decision).** Recommended: packages and monthly plans only, plus 6 cards "Services from £X" that link to each service page, where every service price already shows. The brief's version lists all 57 price items on /packages, so £30 and £50 items sit next to a £4,995 package. That pulls buyers to the cheapest items and away from the packages. Every price stays public either way (D27). £50 "Buy now" items stay on their own pages only.
+- [ ] **Partner Plan price (decision).** £1,995 a month sits below the UK range for a full outsourced retainer (£2,000 to £3,500, price book section 11) while it includes more: SEO, social on 3 platforms, ads on 2 platforms, design and video, care and fortnightly calls. Recommended: £2,495, or drop the Design + Video subscription from it. It is also the top anchor that makes the Visibility Plan look like the sensible choice. A price change is a Supabase edit, no code.
+- [ ] **MM Window Cleaning (yes or no).** Did they get a logo, logo animation, website with lead form, 3 social profiles, post designs and Google Business Profile set-up? It becomes the Launch Kit proof line and a home page case study.
+- [ ] **Stripe.** Account for MAXTERZ LTD (business bank account, statement descriptor MAXTERZ, no tax). 4 Payment Links in GBP: Logo Design Essential £195, Logo Animation Essential £295, YouTube Thumbnail try one £50, Short-form Edit try one £50. On each link: collect name, email and phone, add a field "Business or channel name", require acceptance of your terms (https://maxterz.com/terms-conditions) and redirect after payment to `https://maxterz.com/thank-you?type=purchase`. Send the 4 links in chat (they are public). Vercel names: `NEXT_PUBLIC_STRIPE_LINK_LOGO_DESIGN`, `NEXT_PUBLIC_STRIPE_LINK_LOGO_ANIMATION`, `NEXT_PUBLIC_STRIPE_LINK_THUMBNAIL`, `NEXT_PUBLIC_STRIPE_LINK_SHORT_EDIT`. Buy now buttons stay hidden until set.
+- [ ] **Hero originals, new pages.** Folders `brand-identity-design` (full identity systems: logo, cards, signage, social, guidelines; never logos alone, or the page looks like the £195 logo page), `social-media-design`, `motion-graphics`, `video-editing`. Same spec as the web pages.
+
+## Blocks Phase 5 (proof and trust pages)
+
+- [ ] **Portfolio list.** Copy `docs/website/data/portfolio-template.csv` to `portfolio.csv`. One row per project (the 10 in business profile section 3a), service tags from page inventory section 6, `permission_to_name` yes or no for each. This is the proof on every service page. Without it, those sections stay hidden at launch.
+- [ ] **Portfolio files.** `docs/assets/portfolio/{project_slug}/`: a cover (at least 1600 px wide, 16:10), gallery 01, 02, 03 (websites: full-page desktop and mobile screenshots) and MP4 originals for video work. Biggest originals, not compressed.
+- [ ] **Case studies: BWLD, MM Window Cleaning, Areeka O Karak, Doovor.** 5 answers each, in a `notes.md` in the project folder: the problem before Maxterz, what we delivered, timeline, results the client confirmed (none if none), a quote with permission to publish.
+- [ ] **Display names** for dixonsamanagement.com and adnights.com.
+- [ ] **Doovor.** 3 to 5 screenshots and one paragraph (what it does, who it is for, beta status) in `docs/assets/portfolio/doovor/`.
+- [ ] **eSIMfo.** The 2 ad videos (MP4 originals) and a yes to name eSIMfo, in `docs/assets/portfolio/esimfo/`.
+- [ ] **Logo animation showreel.** The original MP4 of the 1.2M-view animation plus 5 to 8 of your best logo animations (originals, only work you may show publicly) in `docs/assets/portfolio/logo-animation-showreel/`. Claude Code makes the web loop (under 2MB) and the poster. Used on home and the logo animation page.
+- [ ] **Example audit video.** One real 2 to 4 minute audit (Loom link or MP4) of a public UK service business website, no private data, in `docs/assets/portfolio/example-audit/`. It is the proof on the free audit page.
+- [ ] **Video testimonials (optional for launch).** For each of the 5 clients: `testimonial.mp4` plus their written OK (email screenshot or PDF) in that client's portfolio folder. None show on the live site without the OK.
+- [ ] **Review drafts.** About story, founder note (3 lines) and case study copy. Claude Code drafts them from the docs; you approve before Phase 5 closes.
+
+## Blocks Phase 6 (QA and launch readiness)
+
+- [ ] **Vercel Pro** (about $20 a month). Hobby is for non-commercial use only (D12). Do it now.
+- [ ] **Google Search Console.** Domain properties for maxterz.com and maxterz.co.uk, verified by DNS TXT record. Do it now: the maxterz.com property shows any old URLs still in Google, and they go into the redirect tests. Export its Pages report into `docs/website/data/`.
+- [ ] **Microsoft Clarity.** New project for https://maxterz.com. Send the project ID in chat (it is public) and add it in Vercel as `NEXT_PUBLIC_CLARITY_ID`. Needed to test that Clarity waits for consent.
+- [ ] **Calendly.** Rename the event to "Free strategy call", send booking alerts to talha@, connect the calendar you use, add 15-minute buffers and 3 questions: website URL, what you need help with, budget range. Every call then arrives qualified.
+- [ ] **DNS and hosting facts.** Which company runs DNS for maxterz.com, maxterz.co.uk and maxterzhub.co.uk; where the old maxterz.co.uk site and the old maxterz.com page are hosted; what thumblab.maxterz.com points to. Claude Code writes the exact launch-day records so email and ThumbLab keep working.
+- [ ] **Legal review.** Have the privacy policy, terms and cookie policy drafts (end of Phase 5) checked by a solicitor or a legal review service. The terms must cover the 14-day cancellation right for consumers who use Buy now.
+- [ ] **Your QA pass.** Proofread every page on your phone. Submit one test on each form and make one test booking.
+
+## Launch day (after Phase 6 passes)
+
+- [ ] **Domains in Vercel:** maxterz.com (primary), www.maxterz.com, maxterz.co.uk, www.maxterz.co.uk, maxterzhub.co.uk and www.maxterzhub.co.uk. Change web records only (A and CNAME). Keep MX, SPF, DKIM, DMARC and the thumblab record. Send a test email to info@maxterz.com and info@maxterz.co.uk after every change.
+- [ ] **Vercel env check:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `RESEND_API_KEY`, `REVALIDATE_SECRET` (Claude Code generates it), `NEXT_PUBLIC_CLARITY_ID` and the 4 Stripe links.
+- [ ] **Price webhook.** Say "apply" and Claude Code creates it in Supabase: the pricing tables and testimonials call /api/revalidate with the secret. Test: change one price and see it on /packages within a minute.
+- [ ] **Search Console and Bing.** Submit the sitemap, inspect home and 5 key pages, then run Change of Address from maxterz.co.uk to maxterz.com. Bing Webmaster Tools: import from Search Console.
+- [ ] **GA4.** Mark `generate_lead` and `book_call` as key events, link Search Console and set data retention to 14 months (the default is 2).
+- [ ] **Supabase.** Deactivate the legacy anon and service_role keys once the new site is live (D33). Move to the Pro plan (about $25 a month) for daily backups: leads are the most valuable data the business holds.
+- [ ] **Profiles.** Same name, one-line description, logo and maxterz.com link on Instagram, Facebook, LinkedIn (company and yours), X, TikTok and Behance (rename it from "ThumbLab by Maxterz"). Not on Fiverr: outside links break Fiverr's rules (D07).
+- [ ] **Email signatures** for info@ and talha@: MAXTERZ LTD, company number 16822859 and the registered office address. UK law requires these details on company emails.
+- [ ] **Auto-renew** maxterz.co.uk and maxterzhub.co.uk for at least 2 years.
+
+## Before your first client (target 31 Oct)
+
+- [ ] **Services agreement** (England and Wales) that matches the site terms: deposits, IP transfer on final payment, revision rounds, Care Plus 3-month minimum, founding client consent for the video testimonial and case study. Claude Code drafts it; a solicitor checks it.
+- [ ] **Professional indemnity insurance.**
+- [ ] **Business bank account and Stripe billing** for deposit invoices and monthly plans (Stripe takes cards and Bacs Direct Debit).
+- [ ] **HubSpot free CRM** with the pipeline in `04-plan.md`. Count founding places there and switch `founding_enabled` off in Supabase the day the fifth signs.
+- [ ] **Proposal template and discovery call script.** Claude Code can draft both.
+
+## Dated
+
+- [ ] **By 13 Nov 2026:** verify your identity with Companies House (GOV.UK One Login), then file the confirmation statement.
+
+## After launch
+
+- [ ] **Google Business Profile** as a service-area business with the address hidden (D14). Verify with an address where you work or live, never 128 City Road: Google suspends virtual office addresses. Start early, verification can take days.
+- [ ] **AI receptionist.** Pick the voice platform and run it on your number (D23, D33). Then the AI page gets a demo block and, later, its own page (D31).
+- [ ] **DMARC** to `p=quarantine` about a month after launch, once mail from the mailbox and Resend passes.
+
+---
+
+## Done
+
 - [x] Price book v3 locked: services, packages and monthly plans (1 Oct)
 - [x] Homepage hero and 5-vs-1 copy locked (1 Oct)
-- [ ] Confirm the MM Window Cleaning deliverables list (logo, logo animation, website with lead form, 3 social profiles, post designs, Google profile)
-- [ ] Display names for dixonsamanagement.com and adnights.com
 - [x] Flagship offer structure: Launch Kit (1 Oct, D03)
-- [x] "Max" on the About page: yes, it is Talha's designer name (1 Oct)
+- [x] "Max" on the About page: yes, Talha's designer name (1 Oct)
 - [x] AI work so far: 1 AI chatbot for BWLD, no calling agent (1 Oct)
 - [x] ThumbLab: thumblab.maxterz.com, kept separate (1 Oct)
 - [x] Founder name: Muhammad Talha Shakir, called Talha (1 Oct)
@@ -16,37 +98,15 @@ Claude Code adds items here during the build. Tick them off and add a note on wh
 - [x] Domains: all owned (1 Oct)
 - [x] Doovor: live at doovor.com with beta users (1 Oct)
 - [x] BWLD = Black and White Leaflets Distribution (1 Oct)
-
-## Assets
-- [x] Headshot: `docs/assets/founder/` (1 Oct)
-- [x] Fiverr reviews: `docs/website/data/fiverr-reviews.json`, 33 curated (1 Oct)
+- [x] Headshot: `docs/assets/founder/` (1 Oct). Claude Code copies it to `public/images/team/` in Phase 5 (a Claude Code task, not yours)
+- [x] Fiverr reviews: `docs/website/data/fiverr-reviews.json`, 33 curated (1 Oct). Claude Code seeds them in 4A
 - [x] LinkedIn: https://www.linkedin.com/in/mtshakir (1 Oct)
 - [x] Portfolio list with links: `02-business-profile.md`, section 3a (1 Oct)
-- [ ] 5 video testimonials (BWLD, MM Window Cleaning, Quick Action Sudan, Mikey Official, Awais Creations) plus each client's written OK. Placeholders until then
-- [ ] Doovor: 3 to 5 screenshots and a one-paragraph summary
-- [x] Logo as SVG (plus a 512x512 PNG): delivered in `docs/assets/logo/`. SVGs copied to `public/images/`. Icon at `src/app/icon.svg`, `public/logo-512.png`, `public/icons/` (192 and 512 png), `src/app/apple-icon.png`. (2 Oct)
-- [ ] Best portfolio images and videos per service, compressed
-- [ ] Logo animation showreel (MP4, under 2MB for the loop) and a poster image
-- [ ] eSIMfo: the 2 ad videos (or links) for the portfolio card
-- [ ] One example website audit video thumbnail
-
-## Accounts and settings
-- [x] Mailboxes info@ and talha@, aliases support@, accounts@, privacy@ (5 Oct). Turn off the catch-all if not done
-- [x] Resend account, maxterz.com verified (5 Oct). DMARC in place (`p=none`). Move to `p=quarantine` about a month after launch, once real mail from both the mailbox and Resend passes
-- [ ] Vercel Pro plan (needed for a commercial site, see D12)
-- [ ] Stripe Payment Links: Logo Design Essential (£195), Logo Animation Essential (£295), Thumbnail try one (£50), Short-form edit try one (£50)
-- [ ] Supabase database webhook on the pricing tables, pointing to /api/revalidate (Claude Code gives you the exact URL and secret in Phase 4)
-- [ ] Microsoft Clarity project ID
-- [ ] Google Search Console Domain property for maxterz.com (verified by DNS TXT record) and maxterz.co.uk
-- [x] ICO registered: ZC165156 (4 Oct). Recorded in the business profile. Claude Code adds it to `src/lib/site.js`, the privacy policy and the footer legal bar
-- [ ] Director identity verified with Companies House (before 13 Nov 2026)
-
-## Phase 0 additions (2 Oct 2026)
-- [x] **Supabase MCP access:** connected as `supabase-maxterz` (2 Oct). Rule added to CLAUDE.md: use only that server in this repo, never the Doovor project.
-- [x] **Old indexed URLs:** the 9 indexed maxterz.co.uk URLs and their final destinations are in `docs/website/data/old-indexed-urls.md` (2 Oct). The old maxterz.com was a single page at /, covered by the new homepage.
-- [ ] **Headshot to public folder:** before Phase 5, copy `docs/assets/founder/muhammad-talha-shakir-800.webp` (and the 400px version) to `public/images/team/`. Claude Code will use them on the About page and in schema.
-
-## Service page map v2 (3 Oct 2026, D31)
+- [x] Logo as SVG and 512px PNG: `docs/assets/logo/`, copied into `public/` and `src/app/` (2 Oct)
+- [x] Supabase MCP access: connected as `supabase-maxterz` (2 Oct)
+- [x] Old indexed URLs: `docs/website/data/old-indexed-urls.md` (2 Oct)
+- [x] ICO registered: ZC165156 (4 Oct). Claude Code adds it to `src/lib/site.js`, the privacy policy and the footer legal bar
+- [x] Mailboxes info@ and talha@, aliases support@, accounts@ and privacy@ (5 Oct). Check the catch-all is off
+- [x] Resend account, maxterz.com verified, DMARC `p=none` (5 Oct)
 - [x] Supabase new keys (5 Oct): publishable key in Vercel and `.env.local`; secret key `vercel` in Vercel (Sensitive), `local` in `.env.local`. Legacy keys stay active until launch day
-- [ ] Hero strip originals in `docs/assets/hero/{page-slug}/` (folders and README ready). Images as PNG or JPG, animations as GIF, biggest you have. Brand identity: full identity mockups, not logos only. Blocks Phase 4B
-- [ ] Portfolio list: copy `docs/website/data/portfolio-template.csv` to `portfolio.csv`, one row per project, files in `docs/assets/portfolio/{project-slug}/` (see the README there). Case studies: 5 answers each, listed in that README. Blocks Phase 5 and the proof on every service page
+- [x] Strategy docs committed on the launch branch (12 Oct, e50c528)

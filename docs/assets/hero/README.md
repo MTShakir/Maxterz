@@ -13,4 +13,4 @@ What the site stores:
 
 Order: name files 01, 02, 03 in the order you want them shown. 6 to 10 per page.
 
-Folders: web-development, business-website-design, ecommerce-website-design (optional), app-and-software-development, branding-design, logo-design, brand-identity-design (full identity systems, not logos only), social-media-design, thumbnail-design, video-animation, logo-animation, motion-graphics, video-editing.
+Folders: web-development, business-website-design, ecommerce-website-design (optional), app-and-software-development, branding-design, logo-design, brand-identity-design (full identity systems, not logos only), social-media-design, thumbnail-design, video-animation, logo-animation, motion-graphics, video-editing, explainer-videos, social-media-management.

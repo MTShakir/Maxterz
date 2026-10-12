@@ -19,10 +19,10 @@ Use only these facts in website copy, ads, bios, proposals and schema. If a fact
 | SIC codes | 47910, 62012, 73110, 85590 | Companies House |
 | First confirmation statement due | 13 November 2026 | Companies House |
 | First accounts due | 31 July 2027 | Companies House |
-| Email | info@maxterz.com (live, 5 Oct 2026). info@maxterz.co.uk forwards to it. Planned: talha@maxterz.com for sales, and aliases support@, accounts@ and privacy@ into info@ (D33) | Talha, 5 Oct 2026 |
+| Email | info@maxterz.com (live, 5 Oct 2026). info@maxterz.co.uk forwards to it. talha@maxterz.com for proposals and client threads, and aliases support@, accounts@ and privacy@ into info@, all live (D33) | Talha, 5 Oct 2026 |
 | Phone and WhatsApp | +44 7375 874706 | Current site |
 | Booking link | https://calendly.com/maxterz-info/30min | Current site |
-| Main domain | maxterz.com (from launch, 7 Oct 2026) | Decision D01 |
+| Main domain | maxterz.com (from launch day, as soon as Phase 6 passes, D34) | Decision D01 |
 | Redirecting domains | maxterz.co.uk, www versions, maxterzhub.co.uk (old WordPress site, still indexed). Talha owns all of them | Decision D01 |
 | ThumbLab | https://thumblab.maxterz.com (separate site and Instagram, run separately) | Talha, 1 Oct 2026 |
 | Staging build | maxterz.vercel.app | |
