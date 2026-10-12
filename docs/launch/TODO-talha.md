@@ -31,17 +31,22 @@ Claude Code adds items here during the build. Tick them off and add a note on wh
 - [ ] One example website audit video thumbnail
 
 ## Accounts and settings
-- [ ] info@maxterz.com mailbox live, with info@maxterz.co.uk forwarding to it
-- [ ] Resend account, maxterz.com verified (SPF, DKIM, DMARC)
+- [x] Mailboxes info@ and talha@, aliases support@, accounts@, privacy@ (5 Oct). Turn off the catch-all if not done
+- [x] Resend account, maxterz.com verified (5 Oct). DMARC in place (`p=none`). Move to `p=quarantine` about a month after launch, once real mail from both the mailbox and Resend passes
 - [ ] Vercel Pro plan (needed for a commercial site, see D12)
 - [ ] Stripe Payment Links: Logo Design Essential (£195), Logo Animation Essential (£295), Thumbnail try one (£50), Short-form edit try one (£50)
 - [ ] Supabase database webhook on the pricing tables, pointing to /api/revalidate (Claude Code gives you the exact URL and secret in Phase 4)
 - [ ] Microsoft Clarity project ID
 - [ ] Google Search Console Domain property for maxterz.com (verified by DNS TXT record) and maxterz.co.uk
-- [ ] ICO data protection fee paid (registration number for the privacy policy)
+- [x] ICO registered: ZC165156 (4 Oct). Recorded in the business profile. Claude Code adds it to `src/lib/site.js`, the privacy policy and the footer legal bar
 - [ ] Director identity verified with Companies House (before 13 Nov 2026)
 
 ## Phase 0 additions (2 Oct 2026)
 - [x] **Supabase MCP access:** connected as `supabase-maxterz` (2 Oct). Rule added to CLAUDE.md: use only that server in this repo, never the Doovor project.
 - [x] **Old indexed URLs:** the 9 indexed maxterz.co.uk URLs and their final destinations are in `docs/website/data/old-indexed-urls.md` (2 Oct). The old maxterz.com was a single page at /, covered by the new homepage.
 - [ ] **Headshot to public folder:** before Phase 5, copy `docs/assets/founder/muhammad-talha-shakir-800.webp` (and the 400px version) to `public/images/team/`. Claude Code will use them on the About page and in schema.
+
+## Service page map v2 (3 Oct 2026, D31)
+- [x] Supabase new keys (5 Oct): publishable key in Vercel and `.env.local`; secret key `vercel` in Vercel (Sensitive), `local` in `.env.local`. Legacy keys stay active until launch day
+- [ ] Hero strip originals in `docs/assets/hero/{page-slug}/` (folders and README ready). Images as PNG or JPG, animations as GIF, biggest you have. Brand identity: full identity mockups, not logos only. Blocks Phase 4B
+- [ ] Portfolio list: copy `docs/website/data/portfolio-template.csv` to `portfolio.csv`, one row per project, files in `docs/assets/portfolio/{project-slug}/` (see the README there). Case studies: 5 answers each, listed in that README. Blocks Phase 5 and the proof on every service page

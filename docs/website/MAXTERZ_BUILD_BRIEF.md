@@ -1,6 +1,6 @@
 # MAXTERZ BUILD BRIEF: Website Finalisation for Conversion and SEO
 
-Version 1.5, 2 October 2026 (prices locked: price book v3; homepage copy locked; prices live in Supabase; indexed URLs mapped; existing designs kept, D30)
+Version 1.6, 3 October 2026 (prices locked: price book v3; homepage copy locked; prices live in Supabase; indexed URLs mapped; existing designs kept, D30; service page map v2, D31)
 Owner: Talha, founder of Maxterz
 Executor: Claude Code, working in the Maxterz Next.js repository (GitHub MTShakir/Maxterz)
 
@@ -23,7 +23,7 @@ Executor: Claude Code, working in the Maxterz Next.js repository (GitHub MTShaki
 
 ## PART 1. MISSION
 
-Finalise the Maxterz website (Next.js App Router, Supabase, Vercel) and launch it on **https://maxterz.com** by **Wednesday 7 October 2026**.
+Finalise the Maxterz website (Next.js App Router, Supabase, Vercel) and launch it on **https://maxterz.com** as soon as Phase 6 passes. No fixed date, and no corners cut to hit one (Talha, 5 Oct 2026).
 
 The site has three jobs, in this order:
 1. **Convert.** Turn visitors into booked strategy calls and qualified enquiries.
@@ -347,6 +347,8 @@ Old WordPress URLs end in a slash. Next.js first strips the slash, then the host
 ---
 
 ## PART 7. PAGE SPECIFICATIONS
+
+**D31 overrides this brief on service pages.** The page list, URLs, prices per page, removed pages and redirects are in `DOCS/website/03-page-inventory.md`. Where 6.2, 7.5 or 8.3 list app design, AI receptionist, AI chat agents, SEO services or local SEO as separate pages, follow the inventory instead.
 
 ### 7.1 Global components to build or standardise
 - `SiteHeader`, `MegaMenu`, `MobileMenu`, `SiteFooter`, `Breadcrumbs`
@@ -881,6 +883,9 @@ Each phase ends with: build and lint green; relevant checks run; commit with the
 - Commit: `feat(conversion): booking, lead forms, consent, analytics events`
 
 ### Phase 4. Money pages
+- **Page-by-page plan: `DOCS/website/03-page-inventory.md` (D31).** Run Phase 4 in two parts and stop after each for review.
+  - **4A:** pricing tables, seed and tests (with `service_page` from pricing.json), the `hero_slides` table, then on the 13 built pages: data on the server, prices per inventory section 3, one Book a free call button to /book, duplicate schema removed, the apps page moved, removed pages redirected, AI card change, prices sections on the AI and SEO pages. Recent work and case study sections stay as they are until Phase 5.
+  - **4B:** build Brand Identity and Social Media Design from the logo design layout, Motion Graphics and Video Editing from the video category layout, then /packages, /packages/launch-kit and the home page packages preview.
 - Supabase pricing tables, seed script and value tests (11.1), seeded from `docs/website/data/pricing.json`. Show the migration SQL before applying it.
 - Home (7.2), Services hub (7.3), 6 category hubs (7.4), 16 service pages (7.5), Packages (7.6), Launch Kit page (7.6a).
 - Write copy that follows Part 4, uses only Part 3 facts, and answers real buyer questions. Every FAQ answer is specific.

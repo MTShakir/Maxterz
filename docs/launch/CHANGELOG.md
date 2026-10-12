@@ -4,6 +4,46 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 5 Oct 2026 | Setup | Launch date, accounts done (Claude, strategy workspace)
+- Launch has no fixed date: it happens as soon as Phase 6 passes, with no corners cut. CLAUDE.md, START-HERE, plan and brief updated.
+- Done by Talha: mailboxes info@ and talha@, aliases, DMARC, new Supabase keys in Vercel and `.env.local`.
+- Files touched: CLAUDE.md, docs/00-START-HERE.md, docs/04-plan.md, docs/website/MAXTERZ_BUILD_BRIEF.md, docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md
+
+---
+
+## 5 Oct 2026 | Setup | Keys, email, ICO (Claude, strategy workspace)
+- D33: Supabase moves to publishable and secret keys (`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`); legacy keys stay active until launch day. Email: info@ and talha@ mailboxes, aliases support@, accounts@, privacy@, catch-all off. Twilio deferred to week 2.
+- ICO registration ZC165156 recorded. Mailbox and Resend ticked in TODO-talha.
+- Files touched: docs/03-decisions.md, docs/02-business-profile.md, docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md
+
+---
+
+## 3 Oct 2026 | Setup | Names, hero media, ICO (Claude, strategy workspace)
+- D31 names: menu labels use search terms (they are sitewide anchor text). AI and SEO pages take over the keywords of the pages they absorbed. Every page's H1 becomes the keyword H1 from routes.js.
+- D32: one `hero_slides` table read on the server; WebP stills, MP4 animations with posters, no GIF or PNG on the site.
+- Drop zones with READMEs: `docs/assets/hero/{page-slug}/` (13 folders) and `docs/assets/portfolio/`. Raw originals ignored in `.gitignore`.
+- MAXTERZ LTD is ICO registered (number to come).
+- Files touched: .gitignore, docs/03-decisions.md, docs/02-business-profile.md, docs/website/03-page-inventory.md, docs/assets/hero/README.md, docs/assets/portfolio/README.md, docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md
+
+---
+
+## 3 Oct 2026 | Setup | Service page map v2 (Claude, strategy workspace)
+- D31: 17 service pages (6 category pages, 11 service pages). Apps page moves to /services/web-development/app-and-software-development. App design, AI receptionist, AI chat agents, SEO services and local SEO pages removed with redirects. AI, SEO and Social are single pages.
+- `docs/website/03-page-inventory.md` rewritten as v2: page map, prices per page, redirects, price display rules, `hero_slides` table, one Book a free call button, portfolio plan.
+- `pricing.json`: `service_page` remapped to the new map; 4 package-only items set to null.
+- `docs/website/data/portfolio-template.csv` added for Talha's portfolio list.
+- Brief v1.6: D31 override note on Part 7, Phase 4A and 4B rewritten. Business profile services table, START-HERE, plan Later list and TODO-talha updated.
+- Files touched: docs/03-decisions.md, docs/02-business-profile.md, docs/00-START-HERE.md, docs/04-plan.md, docs/website/03-page-inventory.md, docs/website/MAXTERZ_BUILD_BRIEF.md, docs/website/data/pricing.json, docs/website/data/portfolio-template.csv, docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md
+
+---
+
+## 3 Oct 2026 | Setup | Page inventory (Claude, strategy workspace)
+- `docs/website/03-page-inventory.md`: Talha's two templates (category hub, sub-service page), status of all 22 service pages (13 built, 9 to build, 2 hubs missing a prices section), what every built page still needs, and the case study for each page.
+- Brief: Phase 4 split into 4A (improve the 13 built pages) and 4B (build the 9 missing pages, packages, Launch Kit, home preview), with a stop after each.
+- Files touched: docs/website/03-page-inventory.md, docs/website/MAXTERZ_BUILD_BRIEF.md, docs/00-START-HERE.md, docs/launch/CHANGELOG.md
+
+---
+
 ## 3 Oct 2026 | Phase 3 | Conversion and tracking (Claude Code, launch branch)
 
 **New global components:** CTASection (server), ProofBar (server), MobileActionBar (client, mobile-only fixed bar), CookieBanner (GA4 Consent Mode v2, mx_consent cookie, Clarity integration).

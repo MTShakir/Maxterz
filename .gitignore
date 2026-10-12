@@ -2,3 +2,9 @@ node_modules
 .next
 out
 .env*.local
+
+# Raw media originals from Talha (web versions live in Supabase Storage)
+docs/assets/hero/**/*
+!docs/assets/hero/README.md
+docs/assets/portfolio/**/*
+!docs/assets/portfolio/README.md

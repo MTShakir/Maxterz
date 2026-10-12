@@ -1,10 +1,10 @@
 # Maxterz Docs: Start Here
 
-Last updated: 2 October 2026
+Last updated: 3 October 2026
 
 This folder is the single source of truth for building Maxterz. You, Claude and Claude Code all read and write here. If it is not in this folder, it is not decided.
 
-**Current phase:** finalise the website and launch it on **maxterz.com** by **Wednesday 7 October 2026**.
+**Current phase:** finalise the website and launch it on **maxterz.com** as soon as Phase 6 passes. No fixed date, and no corners cut to hit one (Talha, 5 Oct 2026).
 
 ---
 
@@ -29,6 +29,8 @@ This folder is the single source of truth for building Maxterz. You, Claude and 
 | `website/data/fiverr-reviews.json` | 33 curated Fiverr reviews, ready to seed the site | Reviews, home and service pages |
 | `website/data/pricing-research-2026-10.md` | UK market price research with sources | When prices are questioned |
 | `website/data/old-indexed-urls.md` | Old URLs Google has indexed and where each one redirects | Phase 2 and launch day |
+| `website/03-page-inventory.md` | Service page map v2: every page, its status, template, prices and redirects | Phase 4 and any page question |
+| `website/data/portfolio-template.csv` | Template for your portfolio list (copy it to portfolio.csv and fill it) | Before Phase 5 |
 | `assets/` | Inbox for your files (headshot, logos, videos). Claude Code moves optimised copies into the site | Drop new assets here |
 
 ---
@@ -58,5 +60,5 @@ This folder is the single source of truth for building Maxterz. You, Claude and 
 1. **maxterz.com is the agency domain.** maxterz.co.uk redirects to it, path for path.
 2. **One flagship offer: Launch Kit.** Brand, website, Google profile, 3 social set-ups and 5 posts for £1,995 plus Care Plus at £145 a month. First 5 clients pay £1,495 for a video testimonial and case study. Full price book locked (D25): Starter Kit £795, Scale Kit £4,995, monthly plans from £495. Prices live in Supabase (D29).
 3. **One primary CTA everywhere:** book a free strategy call on /book.
-4. **Six service categories, 16 service pages, plus the Launch Kit page.** No thin pages, no city pages yet.
+4. **Six categories, 17 service pages (D31), plus the Launch Kit page.** No thin pages, no city pages yet.
 5. **Nothing fake ships.** Every number is verified and every review says "on Fiverr".

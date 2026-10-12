@@ -19,7 +19,7 @@ Use only these facts in website copy, ads, bios, proposals and schema. If a fact
 | SIC codes | 47910, 62012, 73110, 85590 | Companies House |
 | First confirmation statement due | 13 November 2026 | Companies House |
 | First accounts due | 31 July 2027 | Companies House |
-| Email | info@maxterz.com (Talha sets it up before launch). info@maxterz.co.uk forwards to it | Talha, 1 Oct 2026 |
+| Email | info@maxterz.com (live, 5 Oct 2026). info@maxterz.co.uk forwards to it. Planned: talha@maxterz.com for sales, and aliases support@, accounts@ and privacy@ into info@ (D33) | Talha, 5 Oct 2026 |
 | Phone and WhatsApp | +44 7375 874706 | Current site |
 | Booking link | https://calendly.com/maxterz-info/30min | Current site |
 | Main domain | maxterz.com (from launch, 7 Oct 2026) | Decision D01 |
@@ -27,8 +27,9 @@ Use only these facts in website copy, ads, bios, proposals and schema. If a fact
 | ThumbLab | https://thumblab.maxterz.com (separate site and Instagram, run separately) | Talha, 1 Oct 2026 |
 | Staging build | maxterz.vercel.app | |
 | Current state of maxterz.com | Old thumbnail page ("ThumbLab by Maxterz" in Google results). Replaced at launch | Google results |
-| Transactional email | Resend, sending from info@maxterz.com: form alerts, auto-replies, opt-in follow-ups. Never cold email | Decision D22 |
+| Transactional email | Resend, domain maxterz.com verified (5 Oct 2026), sending from info@maxterz.com: form alerts, auto-replies, opt-in follow-ups. Never cold email | Decision D22 |
 | VAT | Not registered. Prices show no VAT | Talha, 1 Oct 2026 |
+| ICO registration | ZC165156 (Information Commissioner's Office). Show it in the privacy policy and the footer legal bar: "Registered with the ICO: ZC165156" | Talha, 4 Oct 2026 |
 | Tagline | One Hub, Endless Digital Solutions | |
 
 Note: 128 City Road is a registered office service address used by many companies. Present it as the registered office, never as a walk-in studio.
@@ -97,14 +98,14 @@ Note: 128 City Road is a registered office service address used by many companie
 
 ## 4. Services (final list, 6 categories)
 
-| Category | Services with their own page at launch |
+| Category | Services with their own page at launch (D31) |
 |---|---|
-| Web and App Development | Business website design, Ecommerce website design, App design (UI/UX), Mobile app development |
-| Branding and Design | Logo design, Brand identity design, Social media design, Thumbnail design (ThumbLab) |
+| Web Development | Business websites, Ecommerce stores, Apps and software |
+| Branding and Design | Logo design, Brand identity, Social media design, Thumbnail design (ThumbLab) |
 | Video and Animation | Logo animation, Motion graphics, Explainer videos, Video editing (reels, shorts, talking head, YouTube) |
-| Social Media Management | Category page only at launch |
-| AI and Automation | AI receptionist (AI calling agent), AI chat agents (WhatsApp, SMS, web) |
-| SEO and Digital Marketing | SEO services, Local SEO |
+| Social Media Management | Category page only |
+| AI and Automation | Category page only: AI chat agents (priced), AI receptionist and workflow automation (quote) |
+| SEO and Digital Marketing | Category page only: SEO plans, local SEO, Google Business Profile, paid ads |
 
 Also delivered, covered inside the category pages (no own page yet): custom software, CRM builds, SaaS, video editing, technical SEO audits, paid ads, workflow automation.
 

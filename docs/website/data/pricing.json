@@ -8,7 +8,8 @@
     "Claude Code seeds the Supabase pricing tables from this file with an idempotent upsert script (key: id).",
     "After launch, Supabase is the live source. Talha edits prices in the table; the site updates through on-demand revalidation, with no code change or redeploy.",
     "Package and plan values and savings are calculated from items x quantity. expected_value_gbp is for the unit test only.",
-    "Keep this file in sync when prices change, or treat Supabase as the source and export from it."
+    "Keep this file in sync when prices change, or treat Supabase as the source and export from it.",
+    "service_page: the page that shows this item (D31, website/03-page-inventory.md). null means it is not shown on a service page and is used inside packages only."
   ],
   "price_items": [
     {
@@ -183,7 +184,7 @@
     {
       "id": "app-design",
       "category": "web",
-      "service_page": "/services/web-development/app-design",
+      "service_page": "/services/web-development/app-and-software-development",
       "name": "App design (UI/UX)",
       "tier_label": null,
       "model": "from",
@@ -204,7 +205,7 @@
     {
       "id": "custom-software",
       "category": "web",
-      "service_page": "/services/web-development/mobile-app-development",
+      "service_page": "/services/web-development/app-and-software-development",
       "name": "Custom software, apps and SaaS",
       "tier_label": null,
       "model": "from",
@@ -396,7 +397,7 @@
     {
       "id": "social-setup",
       "category": "branding",
-      "service_page": "/services/branding-design/social-media-design",
+      "service_page": null,
       "name": "Social account set-up (3 platforms)",
       "tier_label": null,
       "model": "fixed",
@@ -452,7 +453,7 @@
     {
       "id": "social-design-monthly",
       "category": "branding",
-      "service_page": "/services/branding-design/social-media-design",
+      "service_page": null,
       "name": "Monthly social design",
       "tier_label": null,
       "model": "monthly",
@@ -858,7 +859,7 @@
     {
       "id": "seo-audit",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/seo-services",
+      "service_page": "/services/seo-digital-marketing",
       "name": "SEO audit",
       "tier_label": null,
       "model": "fixed",
@@ -878,7 +879,7 @@
     {
       "id": "seo-foundation",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/seo-services",
+      "service_page": "/services/seo-digital-marketing",
       "name": "SEO Foundation",
       "tier_label": null,
       "model": "fixed",
@@ -899,7 +900,7 @@
     {
       "id": "local-seo",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/local-seo",
+      "service_page": "/services/seo-digital-marketing",
       "name": "Local SEO",
       "tier_label": "Local",
       "model": "monthly",
@@ -920,7 +921,7 @@
     {
       "id": "seo-growth",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/seo-services",
+      "service_page": "/services/seo-digital-marketing",
       "name": "SEO",
       "tier_label": "Growth",
       "model": "monthly",
@@ -942,7 +943,7 @@
     {
       "id": "seo-authority",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/seo-services",
+      "service_page": "/services/seo-digital-marketing",
       "name": "SEO",
       "tier_label": "Authority",
       "model": "monthly",
@@ -964,7 +965,7 @@
     {
       "id": "gbp-setup",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/local-seo",
+      "service_page": "/services/seo-digital-marketing",
       "name": "Google Business Profile set-up",
       "tier_label": null,
       "model": "fixed",
@@ -984,7 +985,7 @@
     {
       "id": "gbp-management",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/local-seo",
+      "service_page": "/services/seo-digital-marketing",
       "name": "Google Business Profile management",
       "tier_label": null,
       "model": "monthly",
@@ -1005,7 +1006,7 @@
     {
       "id": "blog-post",
       "category": "seo",
-      "service_page": "/services/seo-digital-marketing/seo-services",
+      "service_page": "/services/seo-digital-marketing",
       "name": "SEO blog post (1,000 to 1,500 words)",
       "tier_label": null,
       "model": "per-unit",
@@ -1068,7 +1069,7 @@
     {
       "id": "ai-chat-agent",
       "category": "ai",
-      "service_page": "/services/ai-automation/ai-chat-agents",
+      "service_page": "/services/ai-automation",
       "name": "AI chat agent (website or WhatsApp)",
       "tier_label": null,
       "model": "monthly",
@@ -1088,7 +1089,7 @@
     {
       "id": "ai-receptionist",
       "category": "ai",
-      "service_page": "/services/ai-automation/ai-receptionist",
+      "service_page": null,
       "name": "AI receptionist",
       "tier_label": null,
       "model": "monthly",
@@ -1110,7 +1111,7 @@
     {
       "id": "workflow-automation",
       "category": "ai",
-      "service_page": "/services/ai-automation",
+      "service_page": null,
       "name": "Workflow automation",
       "tier_label": null,
       "model": "from",

@@ -10,7 +10,7 @@ Version 1.0, 30 September 2026. Review every Monday. Tick tasks as you go.
 
 | Milestone | Target | By |
 |---|---|---|
-| Website live on maxterz.com (maxterz.co.uk redirecting) | Launched, tracking verified | Wed 7 Oct 2026 |
+| Website live on maxterz.com (maxterz.co.uk redirecting) | Launched, tracking verified | As soon as Phase 6 passes (no fixed date, 5 Oct) |
 | First agency client (outside Fiverr) | 1 signed deal | Sat 31 Oct 2026 |
 | Month 2 | £6,000 cash collected | 30 Nov 2026 |
 | Month 3 | £8,000 cash collected in the month, including £1,500 monthly recurring (MRR) | 31 Dec 2026 |
@@ -48,7 +48,9 @@ These are targets, not promises. The weekly scorecard (section 7) tells us early
 
 ---
 
-## 3. Week 1: website sprint (30 Sep to 7 Oct 2026)
+## 3. Website sprint (from 30 Sep 2026, until Phase 6 passes)
+
+The day plan below was the first schedule. Launch now follows the phases, not the dates (5 Oct). Weeks 2 to 13 start from launch day.
 
 Claude Code does the build. You gather the assets it needs in parallel. Each phase ends with a commit and a short report. Read the report before you say "continue".
 
@@ -193,4 +195,5 @@ Claude Code does the build. You gather the assets it needs in parallel. Each pha
 
 Ideas that come up during the sprint go here, not into the build.
 
--
+- AI receptionist page (/services/ai-automation/ai-receptionist) once Maxterz runs its own receptionist (D23, D31)
+- Local SEO page once there is a local SEO case study (D31)

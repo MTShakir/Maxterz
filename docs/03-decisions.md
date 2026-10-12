@@ -71,7 +71,7 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 - **Why:** it sells the skills Maxterz is known for, at agency prices instead of Fiverr prices. It creates recurring revenue from the first client, and the founding price buys the case studies and video proof the agency needs.
 - **Offer page:** /packages/launch-kit, built in Phase 4. "Launch Kit" is a working name.
 
-## D04. Six categories, 16 service pages
+## D04. Six categories, 16 service pages (Superseded by D31, 3 Oct 2026)
 - **Decision:** Keep the 6 categories already built. Launch with these service pages:
   - Web and App: business website design, ecommerce website design, app design (new), mobile app development
   - Branding: logo design, brand identity design (new), social media design (new), thumbnail design
@@ -195,6 +195,30 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 - **New pages:** the 9 service pages scaffolded in Phase 2 are built by copying the nearest existing service screen, so the site reads as one system. Examples: brand identity from logo design, video editing from thumbnail design (same pricing block), app design from mobile app development.
 - **Brief 7.4 and 7.5** become a checklist of what each page must contain, not a section order. Missing items fit into the existing layout.
 - **Why:** the design is done and Talha likes it. A rebuild costs days and adds risk before launch. The gains now come from prices, proof and speed.
+
+## D31. Service page map v2 (Decided by Talha, 3 Oct 2026)
+- **Decision:** 17 service pages: 6 category pages and 11 service pages. Full map, prices per page and redirects: `website/03-page-inventory.md`.
+  - Web: Business Websites, Ecommerce Stores, Apps and Software (moves to /services/web-development/app-and-software-development and covers app design and custom software). The separate app design page is dropped.
+  - Branding: Logo Design, Brand Identity (new), Social Media Design (new), Thumbnail Design.
+  - Video: Logo Animation, Motion Graphics (new), Explainer Videos, Video Editing (new).
+  - Social Media Management, AI and Automation, SEO and Digital Marketing: one page each, no service pages. The AI page sells the AI chat agent with a price and takes everything else as a quote.
+- **Names:** menu labels are sitewide anchor text, so they use the search terms: Web Design and Development, Website Design, Ecommerce Website Design, App and Software Development. The AI and SEO pages take over the keywords of the pages they absorbed (AI chatbots, local SEO). Full table in the inventory. Only the apps page URL moves, because its scope changed.
+- **Hero image strips:** one `hero_slides` table replaces the 7 slide tables, read on the server.
+- **Proof:** recent work and case studies wait for the portfolio (Phase 5). Until then no page shows work from the wrong service.
+- **Later:** a dedicated AI receptionist page once Maxterz runs its own (D23), and a Local SEO page once there is a local SEO case study. Both are strong search terms.
+- **Why:** fewer, stronger pages launch faster and rank better than thin ones. Every page now has real prices behind it.
+
+## D32. Hero strips and media formats (Decided, 3 Oct 2026)
+- **Decision:** hero strips stay in Supabase, as one `hero_slides` table read on the server, not 7 tables read in the browser. Stills are WebP, animations are muted MP4 with a WebP poster. No GIFs or PNGs on the site. Talha drops originals in `docs/assets/hero/`; Claude Code converts and uploads.
+- **Why:** swap images without a deploy and edit them from a future admin dashboard, with the same speed as static files once the page is rendered on the server and cached. MP4 is 5 to 10 times lighter than GIF, which protects page speed and conversions.
+
+## D33. Supabase keys and email set-up (Decided, 5 Oct 2026)
+- **Supabase keys:** use the new publishable and secret keys, not the legacy anon and service_role keys. Supabase ends the legacy keys at the end of 2026, and the new ones can be rotated one at a time without downtime. Secret keys also refuse to work from a browser.
+  - Env names: `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (public) and `SUPABASE_SECRET_KEY` (server only, Sensitive on Vercel).
+  - One secret key per place: one named `vercel` for Production and Preview, one named `local` for `.env.local`. A leak then only forces one rotation.
+  - Keep the legacy keys active until launch day: the current live site on maxterz.co.uk is built with the anon key. Deactivate them after the new site is live (reversible in the dashboard).
+- **Email:** two real mailboxes: info@maxterz.com (public address, forms, Resend sender) and talha@maxterz.com (proposals, follow-ups and client threads; buyers reply more to a named founder than to info@). support@, accounts@ and privacy@ are free aliases into info@. Turn off the catch-all once the aliases exist: it collects spam sent to random names and hides real mail. Keep the other 3 mailbox slots for the first hires. Cold email never goes from maxterz.com (separate domain, plan week 2).
+- **Twilio:** not needed for launch. Decide in week 2 with the AI receptionist (D23): pick the voice platform first, and only open Twilio if that platform needs it.
 
 ## D26. Git workflow (Decided, 1 Oct 2026)
 - **Decision:** Claude Code commits `docs/` and `CLAUDE.md` to main once, then creates a `launch` branch. All sprint work happens on `launch`, with a commit after each phase. Each push gives a Vercel preview link for review. `launch` merges into main on launch day.
