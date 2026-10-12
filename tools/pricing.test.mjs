@@ -29,7 +29,7 @@ test('savings match the price book percentages', () => {
   assert.deepEqual(saving('launch-kit'), { amount: 1485, percent: 43 });
   assert.deepEqual(saving('scale-kit'), { amount: 4425, percent: 47 });
   assert.deepEqual(saving('visibility-plan'), { amount: 610, percent: 43 });
-  assert.deepEqual(saving('partner-plan'), { amount: 1525, percent: 43 });
+  assert.deepEqual(saving('partner-plan'), { amount: 1025, percent: 29 }); // £2,495 from 13 Oct (D40)
 });
 
 test('a package with no items has no value or saving', () => {

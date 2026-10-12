@@ -13,7 +13,7 @@ Live source after launch: the Supabase pricing tables. Talha edits prices there;
 **Three layers, one logic:**
 1. **Service prices.** Every service has a published price: tiers, a "from" price or a fixed price.
 2. **Fixed packages (one-time).** 3 packages, each 40 to 47% below the same services bought separately.
-3. **Monthly plans.** 3 plans, about 43% below the same services bought separately, plus Care Plus on every website.
+3. **Monthly plans.** 3 plans, 29 to 43% below the same services bought separately, plus Care Plus on every website.
 
 **Rules that hold the system together:**
 - Prices of £100 and over end in 95. Prices under £100 are round numbers (£30, £50, £75, £95).
@@ -174,7 +174,7 @@ Public headline: **"Start strong with a fixed-price package."**
 ### Launch Kit details (the flagship)
 - Live in 21 working days from receiving your content: brand in week 1, website in weeks 2 to 4.
 - Guarantees: (1) live in 21 working days from receiving your content, or your first month of Care Plus is free; (2) if none of the first 4 logo concepts works for you, we design 4 new ones at no extra cost.
-- Proof: MM Window Cleaning received almost exactly this kit (confirm the deliverables list with Talha before using this line).
+- Proof: MM Window Cleaning received this kit: logo, logo animation, website with lead form, 3 social profiles, post designs and Google Business Profile set-up (confirmed by Talha, 13 Oct 2026, D38).
 
 **Founding client rules (keep them true):**
 - £1,495 for the first 5 clients only, in return for a written OK to record a short video testimonial and publish a case study.
@@ -193,11 +193,11 @@ Public terms line: **"No long contracts. Design and Care plans: cancel with 30 d
 
 | | Design Subscription | Visibility Plan (Most popular) | Partner Plan |
 |---|---|---|---|
-| **Price** | **£495 a month** (Design + Video: **£895**) | **£795 a month** | **£1,995 a month** |
+| **Price** | **£495 a month** (Design + Video: **£895**) | **£795 a month** | **£2,495 a month** (D40, 13 Oct 2026) |
 | **Ideal for** | Businesses and marketing teams with steady design needs | Local businesses that want more calls and enquiries | Growing businesses that want an outsourced digital team |
 | **Includes** | Unlimited requests and revisions, **one active request at a time**, most delivered in 1 to 2 working days. Design + Video adds a second active request, short-form edits and motion graphics up to 30 seconds | Local SEO, Google Business Profile management, social media on 2 platforms (12 posts including 2 reels), 1 SEO blog post, Website Care, monthly report and call | SEO Growth, social media on 3 platforms (16 posts including 4 reels), Google and Meta ads management (ad spend up to £3,000 a month, paid by you), Design + Video subscription, Website Care, Google profile management, fortnightly strategy call with Talha, same-working-day replies Monday to Friday |
 | **Value (calculated)** | | £1,405 a month | £3,520 a month |
-| **Saving** | | £610 (43%) | £1,525 (43%) |
+| **Saving** | | £610 (43%) | £1,025 (29%) |
 | **Terms** | 30 days' notice | 3-month minimum, then rolling | 3-month minimum, then rolling |
 
 Wording rule: "unlimited" always sits next to "one active request at a time". Never write "unlimited designs" or "unlimited output" (ASA guidance on "unlimited" claims).
@@ -289,7 +289,7 @@ The packages and plans above are permanent. Campaign pages (ads, seasons, indust
 | Google Business Profile management | £150 to £300 a month | £145 |
 | Website care | £50 to £150 a month | £95 / £145 |
 | AI chat agent | Set-up £300 to £2,500, then £150 to £400 a month | £795 + £149 a month |
-| Full outsourced marketing retainer | £2,000 to £3,500 a month | £1,995 |
+| Full outsourced marketing retainer | £2,000 to £3,500 a month | £2,495 (Partner Plan) |
 
 Real data point: eSIMfo paid in line with the £595 and £995 motion graphics tiers. Client budgets stay private.
 

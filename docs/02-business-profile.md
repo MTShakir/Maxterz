@@ -76,7 +76,7 @@ Note: 128 City Road is a registered office service address used by many companie
 | Client | Where | What Maxterz delivered | Link | Video testimonial |
 |---|---|---|---|---|
 | Black and White Leaflets Distribution (BWLD) | UK, leaflet distribution | Website with an interactive campaign calculator (select areas or postcodes on a map to calculate houses and price), rebrand, SEO, social media design, blog writing, posting and images, Google Business Profile optimisation, on-site AI chatbot | https://black-white-leaflets-distribution.com/ | Yes |
-| MM Window Cleaning | UK, local service | Logo design and logo animation, website with lead form, 3 social profiles set up, social post designs, Google Business Profile set-up (confirm this list belongs to MM, see open questions) | https://mmwindows-cleaning.co.uk/ | Yes |
+| MM Window Cleaning | UK, local service | Logo design and logo animation, website with lead form, 3 social profiles set up, social post designs, Google Business Profile set-up (confirmed by Talha, 13 Oct 2026: the full Launch Kit set, D38) | https://mmwindows-cleaning.co.uk/ | Yes |
 | Areeka O Karak | Restaurant | Complete ordering, menu and admin management system, plus public website with a reward points system | https://areekaokarak.com/ | |
 | Dixon SA Management (display name to confirm) | UK, property management | Website | https://dixonsamanagement.com/ | |
 | AD Nights (display name to confirm) | UK, property management | Website | https://adnights.com/ | |

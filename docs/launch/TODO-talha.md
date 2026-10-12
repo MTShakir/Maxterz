@@ -8,16 +8,10 @@ Rewritten 12 Oct 2026 by Claude Code.
 
 ## Blocks Phase 4A (next)
 
-- [ ] **Migrations.** Say "apply" to the SQL for the pricing tables (`price_items`, `packages`, `package_items`), `hero_slides` and the `hero-slides` storage bucket. Additive only: nothing is dropped or deleted.
 - [ ] **Strip images, 11 built pages.** All old strips were placeholders (D36), so every page needs its own set. Folders in `docs/assets/hero/`: web-development, business-website-design, ecommerce-website-design (optional), app-and-software-development, branding-design, logo-design, thumbnail-design, video-animation, logo-animation, explainer-videos, social-media-management. Any format and size (PNG, JPG, WebP, or SVG with text outlined). 3:2 landscape is best; other shapes are cropped from the centre. Animations: MP4 only (no YouTube for strips). 6 to 10 per page, named 01, 02, 03 in display order. A strip stays hidden until its page has images.
-- [ ] **ffmpeg for strip videos (yes or no).** Needed to compress MP4 strips. Claude Code runs a temporary copy from its scratch folder: nothing installed on your system or in the project.
-- [ ] **Resend API key.** Resend, API Keys: create 2 keys with "Sending access" for maxterz.com, named `vercel` and `local`. Add `vercel` in Vercel as `RESEND_API_KEY` (Production and Preview, Sensitive). Paste `local` into `.env.local` as `RESEND_API_KEY` yourself. Why: lead alerts and auto-replies have never been tested end to end.
 
 ## Blocks Phase 4B
 
-- [ ] **/packages layout (decision).** Recommended: packages and monthly plans only, plus 6 cards "Services from £X" that link to each service page, where every service price already shows. The brief's version lists all 57 price items on /packages, so £30 and £50 items sit next to a £4,995 package. That pulls buyers to the cheapest items and away from the packages. Every price stays public either way (D27). £50 "Buy now" items stay on their own pages only.
-- [ ] **Partner Plan price (decision).** £1,995 a month sits below the UK range for a full outsourced retainer (£2,000 to £3,500, price book section 11) while it includes more: SEO, social on 3 platforms, ads on 2 platforms, design and video, care and fortnightly calls. Recommended: £2,495, or drop the Design + Video subscription from it. It is also the top anchor that makes the Visibility Plan look like the sensible choice. A price change is a Supabase edit, no code.
-- [ ] **MM Window Cleaning (yes or no).** Did they get a logo, logo animation, website with lead form, 3 social profiles, post designs and Google Business Profile set-up? It becomes the Launch Kit proof line and a home page case study.
 - [ ] **Stripe.** Account for MAXTERZ LTD (business bank account, statement descriptor MAXTERZ, no tax). 4 Payment Links in GBP: Logo Design Essential £195, Logo Animation Essential £295, YouTube Thumbnail try one £50, Short-form Edit try one £50. On each link: collect name, email and phone, add a field "Business or channel name", require acceptance of your terms (https://maxterz.com/terms-conditions) and redirect after payment to `https://maxterz.com/thank-you?type=purchase`. Send the 4 links in chat (they are public). Vercel names: `NEXT_PUBLIC_STRIPE_LINK_LOGO_DESIGN`, `NEXT_PUBLIC_STRIPE_LINK_LOGO_ANIMATION`, `NEXT_PUBLIC_STRIPE_LINK_THUMBNAIL`, `NEXT_PUBLIC_STRIPE_LINK_SHORT_EDIT`. Buy now buttons stay hidden until set.
 - [ ] **Strip images, 4 new pages.** Folders `brand-identity-design` (full identity systems: logo, cards, signage, social, guidelines; never logos alone, or the page looks like the £195 logo page), `social-media-design`, `motion-graphics`, `video-editing`. Same spec as the built pages.
 - [ ] **Home hero visual.** Today it shows your Maxterz logo animation GIF, with stock photos as a fallback (stock goes). Recommended: 1 to 3 device mockups of finished client work (a website on laptop and phone, the brand on cards), because Launch Kit buyers want to see a brand and website, not a logo reveal. Folder `docs/assets/hero/home/`.
@@ -43,7 +37,7 @@ Rewritten 12 Oct 2026 by Claude Code.
 - [ ] **Calendly.** Rename the event to "Free strategy call", send booking alerts to talha@, connect the calendar you use, add 15-minute buffers and 3 questions: website URL, what you need help with, budget range. Every call then arrives qualified.
 - [ ] **DNS and hosting facts.** Which company runs DNS for maxterz.com, maxterz.co.uk and maxterzhub.co.uk; where the old maxterz.co.uk site and the old maxterz.com page are hosted; what thumblab.maxterz.com points to. Claude Code writes the exact launch-day records so email and ThumbLab keep working.
 - [ ] **Legal review.** Have the privacy policy, terms and cookie policy drafts (end of Phase 5) checked by a solicitor or a legal review service. The terms must cover the 14-day cancellation right for consumers who use Buy now.
-- [ ] **Your QA pass.** Proofread every page on your phone. Submit one test on each form and make one test booking.
+- [ ] **Your QA pass.** Proofread every page on your phone. Submit one test on each form from a Gmail address (it shows whether the auto-reply lands in the inbox) and make one test booking.
 
 ## Launch day (after Phase 6 passes)
 
@@ -105,3 +99,9 @@ Rewritten 12 Oct 2026 by Claude Code.
 - [x] Placeholder projects and video testimonials hidden from public reads (12 Oct). All existing Supabase content is placeholder (D36)
 - [x] Package names locked: Starter Kit, Launch Kit, Scale Kit (12 Oct, D37). All 5 founding places open
 - [x] Line endings: `.gitattributes` added (12 Oct, 6966bef)
+- [x] Migrations applied: pricing tables, `hero_slides`, `hero-slides` bucket, reviews `is_published` (12 Oct). 57 prices seeded, 33 real reviews live
+- [x] ffmpeg: temporary copy approved for strip videos (12 Oct)
+- [x] Resend API keys in Vercel and `.env.local` (12 Oct). Test leads: saved, alerts and auto-replies sent. The audit auto-reply landed in spam once (sent from info@ to itself; subject made calmer). Retest from a Gmail address in Phase 6
+- [x] MM Window Cleaning received the full Launch Kit set (13 Oct, D38)
+- [x] /packages shows packages and plans only, plus "Services from £X" cards (13 Oct, D39)
+- [x] Partner Plan £2,495 a month (13 Oct, D40). Live in Supabase

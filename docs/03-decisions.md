@@ -47,6 +47,9 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 | D35 | One chat for strategy and build | Decided (12 Oct, Talha) |
 | D36 | All existing Supabase content is placeholder: hidden or replaced, never shown | Decided (12 Oct, Talha) |
 | D37 | Package names locked: Starter Kit, Launch Kit, Scale Kit | Decided (12 Oct, Talha delegated) |
+| D38 | MM Window Cleaning received the full Launch Kit set: it is the Launch Kit proof | Decided (13 Oct, Talha) |
+| D39 | /packages shows packages and plans only, plus "Services from £X" cards | Decided (13 Oct, Talha) |
+| D40 | Partner Plan £2,495 a month (was £1,995) | Decided (13 Oct, Talha) |
 
 ---
 
@@ -256,7 +259,7 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 - Pricing: price book v3 locked (D25). Homepage copy locked (D28). Prices live in Supabase (D29).
 
 ## Open questions for Talha
-1. **MM Window Cleaning:** your list "3 social profiles, website, lead form, social post designs, Google Business Profile, logo design and logo animation" sat under the restaurant line in your message. Confirm it belongs to MM Window Cleaning.
+1. **MM Window Cleaning:** your list "3 social profiles, website, lead form, social post designs, Google Business Profile, logo design and logo animation" sat under the restaurant line in your message. Confirm it belongs to MM Window Cleaning. **Answered 13 Oct: yes (D38).**
 2. **Display names:** how should dixonsamanagement.com and adnights.com appear on the site?
 3. **Video testimonials:** send the files and each client's written OK. Placeholders stay hidden on the live site until then.
 4. **Doovor:** 3 to 5 screenshots and a one-paragraph summary.
@@ -286,3 +289,15 @@ Open questions and recommendations from 12 Oct onwards live in `launch/TODO-talh
 ## D37. Package names locked: Starter Kit, Launch Kit, Scale Kit (Decided 12 Oct 2026, Talha delegated the call)
 - **Decision:** the three package names stay. This ends the "working name" status in D03 and in `05-offers.md` section 10.
 - **Why:** the names show a clear path (start, launch, scale). "Launch Kit" is short and ownable in ads, and the /packages/launch-kit URL, ads and outreach depend on it. The page titles and H1s carry the search terms ("brand, website and Google"), so the name does not have to.
+
+## D38. MM Window Cleaning is the Launch Kit proof (Decided by Talha, 13 Oct 2026)
+- **Decision:** MM Window Cleaning received the full Launch Kit set: logo, logo animation, website with lead form, 3 social profiles, post designs and Google Business Profile set-up. The Launch Kit page uses it as the proof line, and the home page shows it as a case study.
+- **Why:** real proof that the exact package has been delivered is the strongest line on an offer page.
+
+## D39. /packages sells packages and plans; service prices live on service pages (Decided by Talha, 13 Oct 2026)
+- **Decision:** /packages shows the 3 packages, the 3 monthly plans, Care Plus and 6 "Services from £X" cards that link to the service pages. It no longer lists all 57 price items. Every price stays public on its own service page (D27 holds), including the "Buy now" items. Replaces brief 7.6 item 5.
+- **Why:** £30 and £50 items next to a £4,995 package pull buyers to the cheapest option and away from the packages. Three clear choices convert better than a long menu, and each service price sits on the page that ranks for "how much does X cost".
+
+## D40. Partner Plan £2,495 a month (Decided by Talha, 13 Oct 2026)
+- **Decision:** the Partner Plan rises from £1,995 to £2,495 a month. Value stays £3,520 (calculated), so the saving is £1,025 (29%). Changes the Partner price in D25 and `05-offers.md` section 4. Live in Supabase and `pricing.json` the same day.
+- **Why:** £1,995 sat below the UK range for a full outsourced retainer (£2,000 to £3,500) while it includes more than most: SEO, social on 3 platforms, ads on 2 platforms, design and video, care and fortnightly calls with Talha. The higher price protects margin on the heaviest plan, and as the top anchor it makes the Visibility Plan look like the sensible choice.

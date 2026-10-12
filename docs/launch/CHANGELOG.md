@@ -4,6 +4,16 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 13 Oct 2026 | Phase 4A | Data layer live, lead flow tested, D38 to D40 (Claude Code, launch branch)
+- Migrations (shown and approved): `pricing_tables_and_hero_slides` (price_items, packages, package_items, hero_slides, `set_updated_at` trigger, read-only RLS, public `hero-slides` bucket for WebP and MP4 up to 2MB) and `testimonials_is_published` (published switch; both read policies use it; nothing dropped). Security advisor: no findings.
+- Seeded 57 price items, 7 packages and 32 package links from pricing.json (`npm run seed:pricing`, safe to rerun, never overwrites Supabase edits without `--overwrite`). Unit test `npm run test:pricing`: 7 of 7 pass. 33 curated Fiverr reviews published (`npm run seed:reviews`); the 5 placeholder rows stay hidden. The old seed could never run: package.json is `"type": "module"` and the script used `require`.
+- Lead flow tested on localhost: honeypot and too-fast submissions save nothing; a bad email returns a readable 422; 2 real test leads saved with every attribution field, alert and auto-reply sent. Test rows marked `status = 'test'`. The audit auto-reply landed in spam once (sent to itself, "free" in the subject); wording made calmer.
+- Supabase clients moved to the new key names (D33). New: `src/lib/pricing.js` (cached, tag `pricing`), `src/lib/pricing-calc.js` (pure maths), `tools/seed-pricing.mjs`, `tools/pricing.test.mjs`. `SITE.icoNumber` added.
+- D38: MM Window Cleaning received the full Launch Kit set (proof line). D39: /packages shows packages and plans only, plus "Services from £X" cards (brief 7.6 item 5 updated). D40: Partner Plan £2,495 a month, live in Supabase, pricing.json and the price book.
+- Files touched: src/app/api/leads/route.js, src/lib/supabaseServer.js, src/lib/customSupabaseClient.js, src/lib/pricing.js, src/lib/pricing-calc.js, src/lib/site.js, src/screens/Contact.jsx, src/app/free-website-audit/AuditForm.jsx, tools/seed-pricing.mjs, tools/seed-testimonials.js, tools/pricing.test.mjs, package.json, docs/website/data/pricing.json, docs/05-offers.md, docs/03-decisions.md, docs/02-business-profile.md, docs/website/MAXTERZ_BUILD_BRIEF.md, docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md
+
+---
+
 ## 12 Oct 2026 | Phase 4A prep | Placeholders hidden, line endings fixed, D36 and D37 (Claude Code, launch branch)
 - Supabase migration `hide_placeholder_portfolio_and_testimonials`: the `public_read` policies on `portfolio_projects` and `video_testimonials` now use `false`. Verified as the anon role: 0 rows visible, rows still stored, `case_studies` untouched. The live old site's /portfolio and project pages are now empty instead of showing invented clients. Its hard-coded stock-photo projects and "98%" and "350+" claims go at launch.
 - D36: Talha confirmed all existing Supabase content is placeholder. `hero_slides` starts empty (no old slide rows copied); inventory section 4 updated. D37: package names locked (Talha delegated the call); offers section 10 updated, all 5 founding places open.
