@@ -263,7 +263,8 @@ The packages and plans above are permanent. Campaign pages (ads, seasons, indust
 - Create the 4 Stripe Payment Links in section 2.8.
 - AI receptionist: choose a platform in week 2 and run it on the Maxterz number first (D23).
 - Currency: GBP only at launch. Consider USD for international visitors once traffic justifies it.
-- "Starter Kit", "Launch Kit" and "Scale Kit" are working names. Rename before launch if better names come up.
+- Package names locked: Starter Kit, Launch Kit and Scale Kit (D37, 12 Oct 2026).
+- Founding places: all 5 open (Talha, 12 Oct 2026).
 
 ---
 

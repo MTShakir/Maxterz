@@ -6,21 +6,12 @@ Rewritten 12 Oct 2026 by Claude Code.
 
 ---
 
-## Urgent: the live site (today, not tied to a phase)
-
-- [ ] **Placeholder work and testimonials.** maxterz.co.uk is live and shows 3 placeholder projects from Supabase as client work (TechCorp Brand Identity, NeoBank App Launch, Luxe Fashion Store). The new site's home page also reads 3 placeholder video testimonials (James, Sarah, Mark) that are not from your client list. Made-up testimonials are banned under the DMCC Act 2024, and invented client work is misleading. Fix: hide these rows from public reads in Supabase. Reversible, no deploy, no rows deleted. Say "hide" and Claude Code shows the SQL first. The old site's hard-coded "98%" and "350+" claims go at launch.
-- [ ] **Trustpilot.** The new home page shows "5 Star Trustpilot rating". Send the Trustpilot URL if the profile exists. If not, the claim is removed in Phase 4B.
-
 ## Blocks Phase 4A (next)
 
-- [ ] **Resend API key.** Resend, API Keys: create 2 keys with "Sending access" for maxterz.com, named `vercel` and `local`. Add `vercel` in Vercel as `RESEND_API_KEY` (Production and Preview, Sensitive). Paste `local` into `.env.local` as `RESEND_API_KEY` yourself. Why: lead alerts and auto-replies have never been tested end to end. Claude Code tests the full lead flow first in 4A.
-- [ ] **Two offer facts for the price seed.**
-  1. Package names: keep Starter Kit, Launch Kit and Scale Kit (recommended). They are clear, and the /packages/launch-kit URL and future ads depend on the name. Renaming after launch breaks links.
-  2. Confirm all 5 founding places at £1,495 are still open.
-- [ ] **Migrations.** Say "apply" when Claude Code shows the SQL for the pricing tables (`price_items`, `packages`, `package_items`) and `hero_slides`. Additive only: nothing is dropped or deleted.
-- [ ] **Hero originals, web pages.** Folders `business-website-design`, `web-development`, `app-and-software-development` (`ecommerce-website-design` optional) in `docs/assets/hero/`. Stills: PNG 2400 x 1600 (3:2). Animations: MP4, 3:2, 3 to 8 second loop, no audio. 6 to 10 per page, named 01, 02, 03 in display order. Biggest originals, no conversion (full spec: `docs/assets/hero/README.md`). Until they arrive, these strips stay hidden.
-- [ ] **Hero top-ups (nice to have).** Thin strips today: logo-animation 1 image, explainer-videos 1, logo-design 2, thumbnail-design 2, social-media-management 0. Same spec, same place (all folders ready).
-- [ ] **Line endings (decision, optional).** Add a `.gitattributes` file with `* text=auto eol=lf` so every tool agrees on line endings. Tested on a copy of the index: no stored file changes. Say "fix line endings".
+- [ ] **Migrations.** Say "apply" to the SQL for the pricing tables (`price_items`, `packages`, `package_items`), `hero_slides` and the `hero-slides` storage bucket. Additive only: nothing is dropped or deleted.
+- [ ] **Strip images, 11 built pages.** All old strips were placeholders (D36), so every page needs its own set. Folders in `docs/assets/hero/`: web-development, business-website-design, ecommerce-website-design (optional), app-and-software-development, branding-design, logo-design, thumbnail-design, video-animation, logo-animation, explainer-videos, social-media-management. Any format and size (PNG, JPG, WebP, or SVG with text outlined). 3:2 landscape is best; other shapes are cropped from the centre. Animations: MP4 only (no YouTube for strips). 6 to 10 per page, named 01, 02, 03 in display order. A strip stays hidden until its page has images.
+- [ ] **ffmpeg for strip videos (yes or no).** Needed to compress MP4 strips. Claude Code runs a temporary copy from its scratch folder: nothing installed on your system or in the project.
+- [ ] **Resend API key.** Resend, API Keys: create 2 keys with "Sending access" for maxterz.com, named `vercel` and `local`. Add `vercel` in Vercel as `RESEND_API_KEY` (Production and Preview, Sensitive). Paste `local` into `.env.local` as `RESEND_API_KEY` yourself. Why: lead alerts and auto-replies have never been tested end to end.
 
 ## Blocks Phase 4B
 
@@ -28,7 +19,8 @@ Rewritten 12 Oct 2026 by Claude Code.
 - [ ] **Partner Plan price (decision).** £1,995 a month sits below the UK range for a full outsourced retainer (£2,000 to £3,500, price book section 11) while it includes more: SEO, social on 3 platforms, ads on 2 platforms, design and video, care and fortnightly calls. Recommended: £2,495, or drop the Design + Video subscription from it. It is also the top anchor that makes the Visibility Plan look like the sensible choice. A price change is a Supabase edit, no code.
 - [ ] **MM Window Cleaning (yes or no).** Did they get a logo, logo animation, website with lead form, 3 social profiles, post designs and Google Business Profile set-up? It becomes the Launch Kit proof line and a home page case study.
 - [ ] **Stripe.** Account for MAXTERZ LTD (business bank account, statement descriptor MAXTERZ, no tax). 4 Payment Links in GBP: Logo Design Essential £195, Logo Animation Essential £295, YouTube Thumbnail try one £50, Short-form Edit try one £50. On each link: collect name, email and phone, add a field "Business or channel name", require acceptance of your terms (https://maxterz.com/terms-conditions) and redirect after payment to `https://maxterz.com/thank-you?type=purchase`. Send the 4 links in chat (they are public). Vercel names: `NEXT_PUBLIC_STRIPE_LINK_LOGO_DESIGN`, `NEXT_PUBLIC_STRIPE_LINK_LOGO_ANIMATION`, `NEXT_PUBLIC_STRIPE_LINK_THUMBNAIL`, `NEXT_PUBLIC_STRIPE_LINK_SHORT_EDIT`. Buy now buttons stay hidden until set.
-- [ ] **Hero originals, new pages.** Folders `brand-identity-design` (full identity systems: logo, cards, signage, social, guidelines; never logos alone, or the page looks like the £195 logo page), `social-media-design`, `motion-graphics`, `video-editing`. Same spec as the web pages.
+- [ ] **Strip images, 4 new pages.** Folders `brand-identity-design` (full identity systems: logo, cards, signage, social, guidelines; never logos alone, or the page looks like the £195 logo page), `social-media-design`, `motion-graphics`, `video-editing`. Same spec as the built pages.
+- [ ] **Home hero visual.** Today it shows your Maxterz logo animation GIF, with stock photos as a fallback (stock goes). Recommended: 1 to 3 device mockups of finished client work (a website on laptop and phone, the brand on cards), because Launch Kit buyers want to see a brand and website, not a logo reveal. Folder `docs/assets/hero/home/`.
 
 ## Blocks Phase 5 (proof and trust pages)
 
@@ -110,3 +102,6 @@ Rewritten 12 Oct 2026 by Claude Code.
 - [x] Resend account, maxterz.com verified, DMARC `p=none` (5 Oct)
 - [x] Supabase new keys (5 Oct): publishable key in Vercel and `.env.local`; secret key `vercel` in Vercel (Sensitive), `local` in `.env.local`. Legacy keys stay active until launch day
 - [x] Strategy docs committed on the launch branch (12 Oct, e50c528)
+- [x] Placeholder projects and video testimonials hidden from public reads (12 Oct). All existing Supabase content is placeholder (D36)
+- [x] Package names locked: Starter Kit, Launch Kit, Scale Kit (12 Oct, D37). All 5 founding places open
+- [x] Line endings: `.gitattributes` added (12 Oct, 6966bef)

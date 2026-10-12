@@ -45,6 +45,8 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 | D33 | New Supabase publishable and secret keys; info@ and talha@ mailboxes | Decided (5 Oct) |
 | D34 | Launch as soon as Phase 6 passes, no fixed date | Decided (5 Oct, Talha) |
 | D35 | One chat for strategy and build | Decided (12 Oct, Talha) |
+| D36 | All existing Supabase content is placeholder: hidden or replaced, never shown | Decided (12 Oct, Talha) |
+| D37 | Package names locked: Starter Kit, Launch Kit, Scale Kit | Decided (12 Oct, Talha delegated) |
 
 ---
 
@@ -272,3 +274,15 @@ Open questions and recommendations from 12 Oct onwards live in `launch/TODO-talh
 - **Decision:** Talha works with Claude Code in one chat for strategy and build. The separate strategy workspace is retired. Claude Code acts as the agency operator: it leads with a recommendation, questions decisions that cost returns, and records every decision made in chat here and in the doc it changes, in the same turn (CLAUDE.md, "Your role").
 - **Changes D21:** when Talha makes a decision in chat, Claude Code also updates the business profile, offers, brief or inventory it affects. Without a decision from Talha, those files stay read only.
 - **Why:** one place for decisions and build. No hand-offs between two chats and no copies drifting apart.
+
+## D36. Existing Supabase content is placeholder (Decided by Talha, 12 Oct 2026)
+- **Decision:** every row in the current Supabase tables and storage is placeholder content: portfolio, case studies, testimonials, video testimonials, trust stats, why choose us, the old package tables, the slide tables and hero images. None of it is shown on the new site.
+  - Hidden now from public reads: `portfolio_projects` and `video_testimonials` (the live old site reads `portfolio_projects`). Nothing deleted. Undo: the same policy with `using (true)`.
+  - `hero_slides` starts empty and is filled only from Talha's originals. The old slide rows are not copied across (this replaces that step in inventory section 4).
+  - Real data replaces the rest: prices from `pricing.json` and reviews from `fiverr-reviews.json` in Phase 4A; portfolio and case studies from `portfolio.csv` and Talha's answers in Phase 5.
+  - Old tables stay in the database, unused by the new code. No rows are deleted.
+- **Why:** nothing fake ships (D24). Made-up testimonials are banned under the DMCC Act 2024, and invented client work misleads buyers.
+
+## D37. Package names locked: Starter Kit, Launch Kit, Scale Kit (Decided 12 Oct 2026, Talha delegated the call)
+- **Decision:** the three package names stay. This ends the "working name" status in D03 and in `05-offers.md` section 10.
+- **Why:** the names show a clear path (start, launch, scale). "Launch Kit" is short and ownable in ads, and the /packages/launch-kit URL, ads and outreach depend on it. The page titles and H1s carry the search terms ("brand, website and Google"), so the name does not have to.

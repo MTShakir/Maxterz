@@ -67,7 +67,7 @@ Note: 128 City Road is a registered office service address used by many companie
 | Curated Fiverr reviews | 33 of 39 supplied reviews kept, 7 from UK clients, several repeat clients | `docs/website/data/fiverr-reviews.json` |
 | Systems | Restaurant management system (Areeka O Karak: online ordering, payments, admin dashboard) | Case study |
 | Own product | Doovor (https://doovor.com), Maxterz's own software product. Live and serving beta users (October 2026) | Case study: "Live, in beta". Placeholder images until Talha sends screenshots |
-| Case studies on the new site | MM Window Cleaning, BWLD, Areeka O Karak, Logo and Graphic Design | Keep and improve. Replace "Logo and Graphic Design" with a named project |
+| Case studies on the new site | BWLD, MM Window Cleaning, Areeka O Karak, Doovor | Written in Phase 5 from Talha's answers. The current Supabase case study rows are placeholders (D36) |
 | Other named client work | eSIMfo: 2 motion graphics ads. Road2Olympia and Crave: no permission, do not name | eSIMfo card or case study. Never publish client budgets |
 | Fiverr certifications | Logo Intro Animator, Logo Designer, Animation BootCamp, After Effects Kickstart | About page |
 

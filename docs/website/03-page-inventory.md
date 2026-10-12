@@ -81,15 +81,15 @@ New metadata for the moved page:
 
 ## 4. Hero image strips (D32)
 
-- **One table, `hero_slides`:** page_path, media_type (image or video), image_url, video_url, poster_url, alt_text, display_order, active. It replaces the 7 slide tables. Copy their rows across and leave the old tables in the database.
+- **One table, `hero_slides`:** page_path, media_type (image or video), image_url, video_url, poster_url, alt_text, display_order, active. It replaces the 7 slide tables. It starts empty: the old slide rows are placeholders (D36), so nothing is copied across. The old tables stay in the database, unused. A strip stays hidden until its page has real slides.
 - **Read on the server**, cached with a `slides` tag, refreshed by the same webhook as prices. No browser fetch.
 - **Files in Supabase Storage**, bucket `hero-slides/{page-slug}/`. Images go through next/image (AVIF and WebP).
 - **Stills:** WebP, 1200 x 800 (3:2; the card is 288 x 192 and the lightbox 576 wide), quality 80. Never PNG or SVG for work images.
 - **Animations:** never GIF on the site. Each GIF becomes a muted MP4 (H.264), 720 x 480, 3 to 8 seconds, under 1MB, with a WebP poster. Videos play only while on screen.
 - **Loading:** only the first visible slides load at once. Alt text names the project and the service.
 - **Intake:** Talha drops originals in `docs/assets/hero/{page-slug}/` (see the README there): PNG 2400 x 1600 for stills, MP4 (or GIF) for animations. The script re-encodes MP4 originals the same way as GIFs. Claude Code converts, uploads and adds rows. Originals are not committed.
-- Web pages get a new strip, placed the same way as on the branding pages. The existing explainer and social media management strips move across from their tables.
-- **Brand identity:** do not reuse the logo strip. The page sells £995 to £1,995 identity systems, so it shows full systems (logo, cards, signage, social, guidelines). Logo-only images make it look like the £195 logo page and pull buyers down to the cheaper option. For launch, the logo strip is allowed as a stopgap only.
+- Web pages get a new strip, placed the same way as on the branding pages. Every strip, including explainer videos and social media management, is filled from Talha's originals (D36).
+- **Brand identity:** do not reuse the logo strip. The page sells £995 to £1,995 identity systems, so it shows full systems (logo, cards, signage, social, guidelines). Logo-only images make it look like the £195 logo page and pull buyers down to the cheaper option.
 
 ---
 

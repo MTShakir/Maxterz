@@ -4,6 +4,15 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 12 Oct 2026 | Phase 4A prep | Placeholders hidden, line endings fixed, D36 and D37 (Claude Code, launch branch)
+- Supabase migration `hide_placeholder_portfolio_and_testimonials`: the `public_read` policies on `portfolio_projects` and `video_testimonials` now use `false`. Verified as the anon role: 0 rows visible, rows still stored, `case_studies` untouched. The live old site's /portfolio and project pages are now empty instead of showing invented clients. Its hard-coded stock-photo projects and "98%" and "350+" claims go at launch.
+- D36: Talha confirmed all existing Supabase content is placeholder. `hero_slides` starts empty (no old slide rows copied); inventory section 4 updated. D37: package names locked (Talha delegated the call); offers section 10 updated, all 5 founding places open.
+- `.gitattributes` (`* text=auto eol=lf`, binaries marked) committed as 6966bef. Git warnings gone; no stored file changed.
+- Hero drop zone: formats relaxed to any format and size, `home` folder added for the home hero visual. Business profile: case studies are BWLD, MM Window Cleaning, Areeka O Karak and Doovor, written in Phase 5.
+- Files touched: .gitattributes, docs/03-decisions.md, docs/05-offers.md, docs/02-business-profile.md, docs/website/03-page-inventory.md, docs/assets/hero/README.md, docs/launch/TODO-talha.md, docs/launch/CHANGELOG.md
+
+---
+
 ## 12 Oct 2026 | Setup | One chat for strategy and build, docs committed, TODO reordered (Claude Code, launch branch)
 - Talha now works with Claude Code in one chat for strategy and build (D35). The 5 Oct "no fixed launch date" decision logged as D34. Decision summary table now lists D30 to D35.
 - Committed the strategy chat's uncommitted docs as e50c528: D31 to D33, page inventory, hero and portfolio READMEs, portfolio template, .gitignore, pricing.json remap. Left out: raw logo files in `docs/assets/logo/` and `.claude/`.
