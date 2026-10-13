@@ -91,7 +91,7 @@ A fresh reviewer checked the change set against the brief, the inventory, D25 to
 
 ## 6. Left for later
 
-- Strip images for all 15 service pages and the home hero slides (TODO). ffmpeg now works for MP4 and GIF originals.
+- Strip images for all 15 service pages and the home hero slides (TODO). ffmpeg 6.0 works for MP4 and GIF originals: `C:/Users/haree/AppData/Local/Temp/claude/C--Users-haree-Desktop-Data-Max-website-Maxterz/37f4050c-bfde-4aa8-a499-a57cd41add58/scratchpad/ffmpeg-dl/ffmpeg.exe`. Run `FFMPEG_PATH=<that path> npm run upload:hero home` after writing `alt.json` in the folder. If the temp folder was cleaned, download ffmpeg-static b6.0 (win32-x64) again; Talha approved a temporary copy on 12 Oct.
 - 7 FAQ answers waiting on Talha (revision rounds and inclusions; TODO).
 - Founder note approval, D41 to D43, and the home section order (TODO).
 - Phase 5 must: rebuild /our-work and the case studies (the home has no client-work proof until then); rewrite the terms to match the FAQs (50% to start and 50% before launch, 40/30/30 on the Scale Kit, files and code yours on final payment); every founding-client video testimonial says it was given for a discount (CMA guidance under the DMCC Act 2024).
