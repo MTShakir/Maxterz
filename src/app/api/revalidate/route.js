@@ -1,30 +1,54 @@
+import { Buffer } from 'node:buffer';
+import { timingSafeEqual } from 'node:crypto';
 import { revalidateTag } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 /**
- * On-demand revalidation endpoint (brief 8.6).
- * Called by Supabase database webhooks on pricing/testimonials/work table changes.
+ * On-demand revalidation (brief 8.6, D29): a Supabase edit goes live in seconds, no redeploy.
  *
- * POST /api/revalidate
- * Header: x-revalidate-secret: <REVALIDATE_SECRET>
- * Body: { "tag": "pricing" | "testimonials" | "work" }
+ * POST /api/revalidate with header `x-revalidate-secret: <REVALIDATE_SECRET>` and either:
+ * - a Supabase Database Webhook payload ({ type, table, record, ... }): the table picks the tag, or
+ * - a manual body { "tag": "pricing" }, or the query string ?tag=pricing.
  */
+const TABLE_TAGS = {
+  price_items: 'pricing',
+  packages: 'pricing',
+  package_items: 'pricing',
+  testimonials: 'testimonials',
+  hero_slides: 'slides',
+  case_studies: 'work',
+  portfolio_projects: 'work',
+};
+const ALLOWED_TAGS = new Set(Object.values(TABLE_TAGS));
+
+/** @param {string | null} given */
+function secretMatches(given) {
+  const expected = process.env.REVALIDATE_SECRET;
+  if (!expected || !given) return false;
+  const a = Buffer.from(given);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
 export async function POST(request) {
-  const secret = request.headers.get('x-revalidate-secret');
-  if (!process.env.REVALIDATE_SECRET || secret !== process.env.REVALIDATE_SECRET) {
+  if (!secretMatches(request.headers.get('x-revalidate-secret'))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let tag;
+  let body = {};
   try {
-    ({ tag } = await request.json());
+    body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid body' }, { status: 400 });
+    // A ?tag= request may have no body.
   }
 
-  const allowed = ['pricing', 'testimonials', 'work'];
-  if (!allowed.includes(tag)) {
-    return NextResponse.json({ error: `Unknown tag. Allowed: ${allowed.join(', ')}` }, { status: 400 });
+  const tag =
+    new URL(request.url).searchParams.get('tag') ||
+    body?.tag ||
+    TABLE_TAGS[body?.table];
+
+  if (!ALLOWED_TAGS.has(tag)) {
+    return NextResponse.json({ error: `Unknown tag or table. Tags: ${[...ALLOWED_TAGS].join(', ')}` }, { status: 400 });
   }
 
   revalidateTag(tag);

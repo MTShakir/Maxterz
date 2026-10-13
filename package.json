@@ -10,7 +10,8 @@
     "lint": "eslint . --quiet",
     "test:pricing": "node --test tools/pricing.test.mjs",
     "seed:pricing": "node tools/seed-pricing.mjs",
-    "seed:reviews": "node tools/seed-testimonials.js"
+    "seed:reviews": "node tools/seed-testimonials.js",
+    "upload:hero": "node tools/upload-hero.mjs"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.3.1",

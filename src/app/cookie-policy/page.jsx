@@ -1,6 +1,7 @@
 import { buildMetadata, ROUTES } from '@/lib/routes';
 import { PageSchema } from '@/lib/schema';
 import Link from 'next/link';
+import { SITE } from '@/lib/site';
 
 const route = ROUTES.find(r => r.path === '/cookie-policy');
 export const metadata = buildMetadata(route);
@@ -18,8 +19,8 @@ export default function CookiePolicyPage() {
             <p className="text-gray-600 leading-relaxed mb-6">
               This policy explains what cookies and storage items are used on maxterz.com,
               what each one does, how long it lasts, and how to change your preferences.
-              It covers MAXTERZ LTD (company number 15768014), operating from 128 City Road,
-              London EC1V 2NX.
+              It covers {SITE.legalName} (company number {SITE.companyNumber}), registered office{' '}
+              {SITE.registeredOffice.street}, {SITE.registeredOffice.locality} {SITE.registeredOffice.postcode}.
             </p>
             <h2 className="text-xl font-bold text-gray-900 mb-3">What are cookies?</h2>
             <p className="text-gray-600 leading-relaxed mb-6">

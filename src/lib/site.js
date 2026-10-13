@@ -33,6 +33,7 @@ export const SITE = {
     fiverrSince: '2017',
     projects: '10,000+',
     logoAnimationReviews: '1,000+',
+    thumbnailReviews: '200+', // count only; never show the 4.8 gig rating (business profile)
     instagramFollowers: '6,000+',
     viralViews: '1.2M',
   },

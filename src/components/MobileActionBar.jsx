@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { SITE } from '@/lib/site';
+import { usePathname } from 'next/navigation';
+import { bookHref, serviceSlugFromPath, whatsappHref } from '@/lib/cta';
 
 const WhatsAppIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -14,6 +15,7 @@ const WhatsAppIcon = ({ className }) => (
  * Sits above any floating elements.
  */
 export default function MobileActionBar() {
+  const pathname = usePathname();
   return (
     <>
       {/* Spacer so content doesn't scroll behind the bar */}
@@ -24,14 +26,14 @@ export default function MobileActionBar() {
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
         <Link
-          href="/book"
+          href={bookHref(serviceSlugFromPath(pathname))}
           data-cta="mobile-bar-book"
           className="flex-1 flex items-center justify-center py-3.5 bg-gradient-to-r from-[#1044ff] to-[#0020bf] text-white font-bold text-[14px] min-h-[44px]"
         >
           Book a free call
         </Link>
         <a
-          href={SITE.whatsappUrl}
+          href={whatsappHref(serviceSlugFromPath(pathname))}
           target="_blank"
           rel="noopener noreferrer"
           data-cta="mobile-bar-whatsapp"

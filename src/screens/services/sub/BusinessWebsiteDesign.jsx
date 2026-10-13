@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
-import { ArrowRight, CheckCircle, ArrowUpRight, Loader2, Star, ShieldCheck, Clock, Layers, Zap, Unlock } from 'lucide-react';
-import { supabase } from '@/lib/customSupabaseClient';
+import { motion } from 'framer-motion';
+import { ArrowRight, Check, CheckCircle, ArrowUpRight, Star, ShieldCheck, Layers, Zap, Unlock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Accordion,
@@ -13,200 +12,182 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-import TrustBar from '@/components/TrustBar';
-import PackageCard from '@/components/packages/PackageCard';
+import WorkImageStrip from '@/components/WorkImageStrip';
+import FromPriceLine from '@/components/service/FromPriceLine';
+import ServiceReviews from '@/components/service/ServiceReviews';
 import CTASection from '@/components/home/CTASection';
+import { BOOK_LABEL } from '@/lib/cta';
+import { SITE } from '@/lib/site';
+import { faqs } from '@/content/faq/business-website-design';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-// Animated Number Component
-const AnimatedNumber = ({ value, suffix = '', prefix = '', duration = 2 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.floor(latest));
-
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(count, value, { duration, ease: "easeOut" });
-      return controls.stop;
-    }
-  }, [isInView, value, duration, count]);
+/**
+ * One price card, in the design of the old packages cards (D30). Every value comes from Supabase.
+ * @param {{ item: object, headingLevel?: 3 | 4 }} props
+ */
+const PriceCard = ({ item, headingLevel = 3 }) => {
+  const featured = item.popular;
+  const Title = headingLevel === 4 ? 'h4' : 'h3';
+  const showName = Boolean(item.tier_label) && item.name !== item.tier_label;
+  const muted = featured ? 'text-blue-200' : 'text-gray-500';
 
   return (
-    <span ref={ref} className="inline-block">
-      {prefix}<motion.span>{rounded}</motion.span>{suffix}
-    </span>
+    <div
+      className={`relative flex flex-col h-full rounded-[2rem] p-8 md:p-10 transition-all duration-300 ${
+        featured
+          ? 'bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white shadow-2xl scale-100 md:scale-105 z-10 hover:-translate-y-2'
+          : 'bg-white border border-gray-100 text-gray-900 shadow-sm hover:shadow-xl hover:-translate-y-1'
+      }`}
+    >
+      {featured && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#eb7444] text-white text-xs font-bold uppercase tracking-wider py-1.5 px-4 rounded-full shadow-lg whitespace-nowrap">
+          Most popular
+        </div>
+      )}
+
+      <div className="mb-8">
+        <Title className={`text-2xl font-extrabold tracking-tight mb-4 ${featured ? 'text-white' : 'text-gray-900'}`}>
+          {item.tier_label || item.name}
+        </Title>
+        {showName && <p className={`text-sm font-medium mb-6 ${muted}`}>{item.name}</p>}
+
+        <div className="flex items-baseline gap-2 mb-2">
+          {item.display.prefix && <span className={`text-sm font-medium ${muted}`}>{item.display.prefix}</span>}
+          <span className={`text-4xl md:text-5xl font-extrabold tracking-tight ${featured ? 'text-white' : 'text-gray-900'}`}>
+            {item.display.amount}
+          </span>
+          {item.display.suffix && <span className={`text-sm font-medium ${muted}`}>{item.display.suffix}</span>}
+        </div>
+        {item.display.setup && <p className={`text-sm font-medium ${muted}`}>{item.display.setup}</p>}
+        {item.timeline && <p className={`text-sm font-medium mt-2 ${muted}`}>Delivery: {item.timeline}</p>}
+      </div>
+
+      <div className="flex-grow">
+        <ul className="space-y-4 mb-8">
+          {(item.includes || []).map((feature) => (
+            <li key={feature} className="flex items-start gap-3">
+              <Check size={20} className={`shrink-0 mt-0.5 ${featured ? 'text-[#eb7444]' : 'text-[#1044ff]'}`} aria-hidden="true" />
+              <span className={`text-sm font-medium leading-relaxed ${featured ? 'text-white' : 'text-gray-700'}`}>
+                {feature}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <Link
+        href={item.book_href}
+        data-cta="book-a-free-call"
+        className={`w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-300 ${
+          featured
+            ? 'bg-none bg-white text-[#1044ff] hover:bg-gray-50 shadow-lg'
+            : 'bg-gray-900 text-white hover:bg-[#1044ff] shadow-md'
+        }`}
+      >
+        {BOOK_LABEL} <ArrowRight size={18} aria-hidden="true" />
+      </Link>
+      {item.buy_url && (
+        <a
+          href={item.buy_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cta="buy-now"
+          className={`mt-3 w-full min-h-[44px] py-3 rounded-full border-2 font-bold flex items-center justify-center transition-all duration-300 ${
+            featured
+              ? 'border-white text-white hover:bg-white/10'
+              : 'border-gray-900 text-gray-900 hover:border-[#1044ff] hover:text-[#1044ff]'
+          }`}
+        >
+          Buy now
+        </a>
+      )}
+    </div>
   );
 };
 
-const BusinessWebsiteDesign = () => {
-  const [caseStudy, setCaseStudy] = useState(null);
-  const [loadingCaseStudy, setLoadingCaseStudy] = useState(true);
-
-  const [projects, setProjects] = useState([]);
-  const [loadingProjects, setLoadingProjects] = useState(true);
-
-  const [packages, setPackages] = useState([]);
-  const [loadingPackages, setLoadingPackages] = useState(true);
-
+/**
+ * Business website design page (D30: existing layout, data read on the server and passed in).
+ *
+ * @param {{
+ *   h1: string, prices: object[], addOns?: object[], fromPrice: number | null, billing: 'one-off' | 'monthly',
+ *   slides: object[], reviews: object[], bookHref: string, caseStudy?: object | null, projects?: object[]
+ * }} props
+ *   prices: website and landing page items; addOns: items shown as a line under the cards.
+ *   caseStudy and projects arrive in Phase 5 (D36). Their sections stay hidden while empty.
+ */
+const BusinessWebsiteDesign = ({
+  h1,
+  prices = [],
+  addOns = [],
+  fromPrice,
+  billing,
+  slides = [],
+  reviews = [],
+  bookHref,
+  caseStudy = null,
+  projects = [],
+  related = null,
+}) => {
   // State for the Approach Section 3D hover effect
   const [hoveredApproach, setHoveredApproach] = useState(null);
+  // Same value on the server and the first browser render, so the 3D fan never mismatches.
+  const isMobile = useIsMobile();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // Fetch Case Study
-      try {
-        const { data } = await supabase
-          .from('case_studies')
-          .select('*')
-          .eq('slug', 'uk-cleaning-company')
-          .single();
-        setCaseStudy(data);
-      } catch (e) {
-        console.error("Error fetching case study", e);
-      } finally {
-        setLoadingCaseStudy(false);
-      }
-
-      // Fetch Projects
-      try {
-        const { data } = await supabase
-          .from('portfolio_projects')
-          .select('*')
-          .eq('category', 'Web Development')
-          .order('created_at', { ascending: false })
-          .limit(3);
-        setProjects(data || []);
-      } catch (e) {
-        console.error("Error fetching projects", e);
-      } finally {
-        setLoadingProjects(false);
-      }
-
-      // Fetch Packages
-      try {
-        const { data } = await supabase
-          .from('packages_one_time')
-          .select('*')
-          .in('name', ['Startup Launch Kit', 'Growth Launchpad', 'Digital Authority Kit'])
-          .order('display_order', { ascending: true });
-        setPackages(data || []);
-      } catch (e) {
-        console.error("Error fetching packages", e);
-      } finally {
-        setLoadingPackages(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const schemaOrg = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Service",
-        "name": "Business Website Design",
-        "description": "Professional business websites built to convert visitors into paying clients. SEO-ready, mobile-first, fast-loading.",
-        "provider": {
-          "@type": "Organization",
-          "name": "Maxterz"
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "7100"
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://maxterz.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Services",
-            "item": "https://maxterz.com/services"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Business Website Design",
-            "item": "https://maxterz.com/services/web-development/business-website-design"
-          }
-        ]
-      }
-    ]
-  }
-
-  const faqs = [
-    { q: "How long does a website build take?", a: "Most websites are completed within 2 to 4 weeks from approved brief and design." },
-    { q: "Do I need to supply content and images?", a: "We work with what you provide and are clear about what we need before starting." },
-    { q: "Will the website work on mobile?", a: "Yes. Every site is designed mobile-first and tested across devices before launch." },
-    { q: "Can I update it myself after launch?", a: "Yes. We build with a CMS so you can update pages without a developer." },
-    { q: "Is SEO included?", a: "Technical SEO is included in every build. Ongoing SEO is a separate service." },
-    { q: "What if I need more than the package covers?", a: "Every package is a starting point. Additional scope gets a custom quote." }
-  ];
+  const landingPages = prices.filter((item) => item.id.startsWith('landing-'));
+  const websites = prices.filter((item) => !item.id.startsWith('landing-'));
 
   return (
     <div className="bg-white selection:bg-[#1044ff] selection:text-white">
-      <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
-
-      {/* SECTION 1 — HERO */}
-      <section className="relative min-h-[80vh] flex flex-col justify-center items-center pt-24 pb-16 px-4 overflow-hidden bg-white">
+      {/* SECTION 1: HERO */}
+      <section className="relative min-h-[80vh] flex flex-col pt-24 pb-16 overflow-hidden bg-white">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808015_1px,transparent_1px),linear-gradient(to_bottom,#80808015_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none opacity-50" />
 
-        <div className="container mx-auto relative z-10 text-center max-w-5xl mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <span className="badge-standard-light mb-8">BUSINESS WEBSITE DESIGN</span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.1] text-balance">
-              Your Website Is Either <span className="text-[#1044ff]">Winning Clients</span> or Losing Them.
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-              Most websites were built to look presentable. Not to convert. There is a significant difference.
-            </p>
+        <div className="flex-1 w-full flex flex-col justify-center items-center px-4">
+          <div className="container mx-auto relative z-10 text-center max-w-5xl mt-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <h1 className="badge-standard-light mb-8">{h1}</h1>
+              <p className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.1] text-balance">
+                Your Website Is Either <span className="text-[#1044ff]">Winning Clients</span> or Losing Them.
+              </p>
+              <p className="text-xl md:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto font-light leading-relaxed">
+                Most websites were built to look presentable. Not to convert. There is a significant difference.
+              </p>
+              <FromPriceLine price={fromPrice} billing={billing} label="Business websites" className="mb-12" />
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-              <Button asChild size="lg" className="rounded-full h-14 px-8 text-lg bg-[#1044ff] hover:bg-[#0020bf] shadow-xl shadow-blue-500/20 w-full sm:w-auto transition-transform hover:scale-105">
-                <a href="https://calendly.com/maxterz-info/30min" target="_blank" rel="noopener noreferrer">
-                  Get a Free Website Review
-                </a>
-              </Button>
-              <Button onClick={() => scrollTo('work-samples')} variant="outline" size="lg" className="rounded-full h-14 px-8 text-lg border-2 w-full sm:w-auto bg-white/80 backdrop-blur-sm">
-                See Our Work <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </div>
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+                <Button asChild size="lg" className="rounded-full h-14 px-8 text-lg bg-[#1044ff] hover:bg-[#0020bf] shadow-xl shadow-blue-500/20 w-full sm:w-auto transition-transform hover:scale-105">
+                  <Link href={bookHref} data-cta="book-a-free-call">
+                    {BOOK_LABEL}
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-lg border-2 w-full sm:w-auto bg-white/80 backdrop-blur-sm">
+                  <a href="#prices">
+                    See prices <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+                  </a>
+                </Button>
+              </div>
 
-            <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-gray-800 uppercase tracking-wider mb-8">
-              <span className="flex items-center gap-2"><Star className="w-4 h-4 text-[#eb7444] fill-current" /> 4.9 Stars</span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full" />
-              <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#1044ff]" /> 7,100 Reviews</span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full" />
-              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-500" /> 11,600 Projects</span>
-            </div>
-
-            <TrustBar />
-          </motion.div>
+              <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-gray-800 uppercase tracking-wider mb-8">
+                <span className="flex items-center gap-2"><Star className="w-4 h-4 text-[#eb7444] fill-current" aria-hidden="true" /> {SITE.proof.fiverrRating} Stars on Fiverr</span>
+                <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
+                <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#1044ff]" aria-hidden="true" /> {SITE.proof.fiverrReviews} Reviews on Fiverr</span>
+                <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
+                <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-500" aria-hidden="true" /> {SITE.proof.projects} Projects Since {SITE.proof.fiverrSince}</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
+
+        {/* Strip pinned to the bottom of the hero, as on the branding pages. Hidden until real slides exist (D32). */}
+        <WorkImageStrip slides={slides} label="Recent Website Work" />
       </section>
 
-      {/* SECTION 2 — THE COST */}
+      {/* SECTION 2: THE COST */}
       <section className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] border-y border-white/10">
         <div className="container mx-auto max-w-6xl">
           <motion.div
@@ -216,18 +197,18 @@ const BusinessWebsiteDesign = () => {
             className="text-center mb-16"
           >
             <span className="inline-block border border-white/20 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">THE REAL COST</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">What a Poor Website Costs Every Month.</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">What a Poor Website Costs You.</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {[
-              { val: 94, suf: "%", title: "First impressions are design-based.", desc: "Visitors judge your credibility in under 3 seconds based entirely on visual structure.", color: "text-[#1044ff]" },
-              { val: 7, suf: "%", title: "Conversion drop per second.", desc: "Slow sites push people to competitors before they read a single word of your copy.", color: "text-[#eb7444]" },
-              { val: 75, suf: "%", title: "Judge credibility by website alone.", desc: "Your site is your most visible representative. Right now it may be failing you.", color: "text-[#1044ff]" },
-              { textVal: "3 to 5", title: "Enquiries missed monthly.", desc: "At any project value, that is thousands in revenue left on the table by the average site.", color: "text-[#eb7444]" }
+              { value: "Slow", title: "Slow pages lose visitors.", desc: "People leave a slow site before they read a word about you.", color: "text-[#1044ff]" },
+              { value: "Dated", title: "An old design costs trust.", desc: "Buyers look you up before they call. A dated site sends them to a competitor.", color: "text-[#eb7444]" },
+              { value: "Hidden", title: "Missing from Google.", desc: "If search engines cannot read your site, buyers find someone else first.", color: "text-[#1044ff]" },
+              { value: "Stuck", title: "Every edit needs a developer.", desc: "Small changes wait for days and cost you money each time.", color: "text-[#eb7444]" }
             ].map((stat, idx) => (
               <motion.div
-                key={idx}
+                key={stat.value}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -237,11 +218,7 @@ const BusinessWebsiteDesign = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-[#f0f4ff]/0 to-[#f0f4ff]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 <div className={`text-4xl md:text-5xl lg:text-6xl font-black ${stat.color} mb-3 tracking-tighter relative z-10`}>
-                  {stat.textVal ? (
-                    <span>{stat.textVal}</span>
-                  ) : (
-                    <AnimatedNumber value={stat.val} suffix={stat.suf} />
-                  )}
+                  <span>{stat.value}</span>
                 </div>
 
                 <h3 className="text-[11px] md:text-xs lg:text-sm font-bold text-gray-900 mb-2 relative z-10 uppercase tracking-wide group-hover:text-[#1044ff] transition-colors leading-tight">
@@ -259,7 +236,7 @@ const BusinessWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 3 — OUTCOMES */}
+      {/* SECTION 3: OUTCOMES */}
       <section className="py-24 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <motion.div
@@ -274,12 +251,12 @@ const BusinessWebsiteDesign = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
-              { title: "Generates leads while you sleep.", desc: "A well-structured site moves visitors from curious to contact without you lifting a finger." },
+              { title: "Brings in enquiries around the clock.", desc: "A clear site takes visitors from first look to contact form, day and night." },
               { title: "Builds credibility before the first call.", desc: "Clients look you up before reaching out. A premium site confirms they made the right choice." },
               { title: "Works as hard as your sales team.", desc: "It qualifies visitors, handles objections, and delivers a clear next step at the right moment." }
             ].map((outcome, idx) => (
               <motion.div
-                key={idx}
+                key={outcome.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -289,7 +266,7 @@ const BusinessWebsiteDesign = () => {
                 <div className="absolute -top-10 -right-10 w-32 h-32 md:w-40 md:h-40 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
 
                 <div className="mb-6 md:mb-8 inline-flex p-3 sm:p-4 rounded-[1rem] md:rounded-2xl bg-white/10 backdrop-blur-sm w-fit group-hover:bg-gradient-to-r group-hover:from-[#eb7444] group-hover:to-[#e05220] transition-all duration-300 border border-white shadow-lg relative z-10">
-                  <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                  <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-white" aria-hidden="true" />
                 </div>
 
                 <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3 md:mb-4 group-hover:translate-x-1 transition-transform duration-300 tracking-tight leading-tight relative z-10">
@@ -305,14 +282,12 @@ const BusinessWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* CASE STUDY INSERTION */}
-      <section className="py-12 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center md:text-left">It works. Here is the proof.</h3>
+      {/* CASE STUDY INSERTION (Phase 5: hidden until a real case study exists, D36) */}
+      {caseStudy && (
+        <section className="py-12 px-4 bg-white">
+          <div className="container mx-auto max-w-6xl">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center md:text-left">It works. Here is the proof.</h3>
 
-          {loadingCaseStudy ? (
-            <div className="flex justify-center items-center py-20 bg-gray-50 rounded-[2rem] border border-gray-100"><Loader2 className="animate-spin text-[#1044ff] w-10 h-10" /></div>
-          ) : caseStudy ? (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -350,7 +325,7 @@ const BusinessWebsiteDesign = () => {
                 {caseStudy.key_result && (
                   <div className="bg-gradient-to-r from-blue-50 to-white border-l-4 border-[#1044ff] p-5 rounded-r-xl w-full shadow-sm">
                     <p className="text-[#1044ff] font-bold text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                      <CheckCircle size={14} /> Key Result
+                      <CheckCircle size={14} aria-hidden="true" /> Key Result
                     </p>
                     <p className="text-gray-900 font-semibold text-sm md:text-base">
                       {caseStudy.key_result}
@@ -359,14 +334,11 @@ const BusinessWebsiteDesign = () => {
                 )}
               </div>
             </motion.div>
-          ) : (
-            <div className="text-center py-10 text-gray-500 bg-gray-50 rounded-[2rem] border border-gray-100">Case study not available.</div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* SECTION 4 — APPROACH / HOW WE BUILD IT */}
-      {/* UPDATE 2: 3D Overlapping Card Layout */}
+      {/* SECTION 4: APPROACH / HOW WE BUILD IT (3D overlapping cards) */}
       <section className="py-24 px-4 bg-gray-50 border-y border-gray-100 overflow-hidden">
         <div className="container mx-auto max-w-7xl">
           <motion.div
@@ -381,13 +353,13 @@ const BusinessWebsiteDesign = () => {
 
           <div className="flex flex-col md:flex-row justify-center items-center md:items-stretch gap-6 md:gap-0 [perspective:1200px] py-10">
             {[
-              { icon: <ShieldCheck className="w-8 h-8" />, title: "SEO from day one.", desc: "Site structure and content built for search visibility before a line of code is written." },
-              { icon: <Layers className="w-8 h-8" />, title: "Conversion-focused on every page.", desc: "Every page has a clear job. Design follows conversion intent." },
-              { icon: <Zap className="w-8 h-8" />, title: "Speed without compromise.", desc: "Fast-loading, high-scoring on Core Web Vitals. A ranking and trust signal." },
-              { icon: <Unlock className="w-8 h-8" />, title: "You own everything.", desc: "Full file handover, all credentials, no ongoing access fees." }
+              { icon: <ShieldCheck className="w-8 h-8" aria-hidden="true" />, title: "SEO from day one.", desc: "Site structure and content built for search visibility before a line of code is written." },
+              { icon: <Layers className="w-8 h-8" aria-hidden="true" />, title: "Conversion-focused on every page.", desc: "Every page has a clear job. Design follows conversion intent." },
+              { icon: <Zap className="w-8 h-8" aria-hidden="true" />, title: "Speed without compromise.", desc: "Fast-loading, high-scoring on Core Web Vitals. A ranking and trust signal." },
+              { icon: <Unlock className="w-8 h-8" aria-hidden="true" />, title: "You own everything.", desc: "Full file handover, all credentials, no ongoing access fees." }
             ].map((item, idx) => (
               <motion.div
-                key={idx}
+                key={item.title}
                 initial={{ opacity: 0, x: 50, rotateY: 0 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -398,7 +370,7 @@ const BusinessWebsiteDesign = () => {
                 style={{
                   zIndex: hoveredApproach === idx ? 50 : 10 - idx,
                   // Desktop 3D Transform
-                  transform: typeof window !== 'undefined' && window.innerWidth >= 768
+                  transform: !isMobile
                     ? hoveredApproach === idx
                       ? 'rotateY(0deg) scale(1.05) translateY(-16px)'
                       : 'rotateY(-12deg) scale(0.95)'
@@ -426,7 +398,7 @@ const BusinessWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 5 — PROCESS */}
+      {/* SECTION 5: PROCESS */}
       <section className="py-24 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <motion.div
@@ -444,13 +416,13 @@ const BusinessWebsiteDesign = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6">
               {[
-                { step: "01", title: "Discovery and Brief", desc: "We ask the questions most agencies skip. Everything scoped before anything starts." },
+                { step: "01", title: "Discovery and Brief", desc: "We ask the questions most agencies skip. You get a plan and a fixed quote within one working day." },
                 { step: "02", title: "Design and Approval", desc: "Key pages designed and approved before any development begins." },
-                { step: "03", title: "Build and Refine", desc: "Full development, SEO setup, speed optimisation. Two rounds of revisions included." },
-                { step: "04", title: "Launch and Handover", desc: "Live launch, device testing, and a full walkthrough so you can manage it yourself." }
+                { step: "03", title: "Build and Refine", desc: "Full build, SEO set-up and speed checks. Two revision rounds on 5 and 10-page sites." },
+                { step: "04", title: "Launch and Handover", desc: "Launch on the agreed date, device testing, and a full walkthrough so you can manage it yourself." }
               ].map((item, idx) => (
                 <motion.div
-                  key={idx}
+                  key={item.step}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -469,30 +441,25 @@ const BusinessWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 6 — WORK SAMPLES */}
-      {/* UPDATE 1: Changed background to brand blue gradient */}
-      <section id="work-samples" className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white">
-        <div className="container mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
-          >
-            <div>
-              <span className="inline-block border border-white/30 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">OUR WEBSITE WORK</span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Recent Projects.</h2>
-            </div>
-            <Link href="/our-work" className="text-white hover:text-white/80 flex items-center gap-2 font-semibold transition-colors">
-              View all website projects <ArrowRight size={16} />
-            </Link>
-          </motion.div>
+      {/* SECTION 6: WORK SAMPLES (Phase 5: hidden until real projects exist, D36) */}
+      {projects.length > 0 && (
+        <section id="work-samples" className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white">
+          <div className="container mx-auto max-w-7xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
+            >
+              <div>
+                <span className="inline-block border border-white/30 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">OUR WEBSITE WORK</span>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Recent Projects.</h2>
+              </div>
+              <Link href="/our-work" className="text-white hover:text-white/80 flex items-center gap-2 font-semibold transition-colors">
+                View all website projects <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </motion.div>
 
-          {loadingProjects ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-white w-10 h-10" /></div>
-          ) : projects.length === 0 ? (
-            <div className="text-center py-20 text-white/70 border border-white/20 rounded-[2rem]">No projects found.</div>
-          ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {projects.map((project, idx) => (
                 <motion.div
@@ -512,7 +479,7 @@ const BusinessWebsiteDesign = () => {
                       />
                       <div className="absolute inset-0 bg-[#1044ff]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center scale-50 group-hover:scale-100 transition-transform duration-300">
-                          <ArrowUpRight size={32} className="text-[#1044ff]" />
+                          <ArrowUpRight size={32} className="text-[#1044ff]" aria-hidden="true" />
                         </div>
                       </div>
                     </div>
@@ -529,12 +496,12 @@ const BusinessWebsiteDesign = () => {
                 </motion.div>
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* SECTION 7 — PACKAGES */}
-      <section className="py-24 px-4 bg-gray-50">
+      {/* SECTION 7: PRICES (from Supabase, inventory section 3) */}
+      <section id="prices" className="py-24 px-4 bg-gray-50">
         <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -542,42 +509,91 @@ const BusinessWebsiteDesign = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="badge-standard-light">WEBSITE PACKAGES</span>
+            <span className="badge-standard-light">WEBSITE PRICES</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Choose Your Starting Point.</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Fixed scope. Fixed price. No hidden costs.</p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Clear starting prices. A fixed quote before work starts.</p>
           </motion.div>
 
-          {loadingPackages ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#1044ff] w-10 h-10" /></div>
-          ) : packages.length === 0 ? (
-            <div className="text-center py-20 text-gray-500 bg-white rounded-[2rem] border border-gray-100">No packages available at the moment.</div>
-          ) : (
+          {websites.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {packages.map((pkg, idx) => (
+              {websites.map((item, idx) => (
                 <motion.div
-                  key={pkg.id}
+                  key={item.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.15 }}
+                  className="h-full"
                 >
-                  <PackageCard {...pkg} />
+                  <PriceCard item={item} />
                 </motion.div>
               ))}
             </div>
           )}
 
+          {landingPages.length > 0 && (
+            <div className="max-w-5xl mx-auto mb-16">
+              <div className="text-center mb-10">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Landing pages</h3>
+                <p className="text-gray-600 mt-3">One focused page for a campaign, a launch or a single service.</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {landingPages.map((item, idx) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.15 }}
+                    className="h-full"
+                  >
+                    <PriceCard item={item} headingLevel={4} />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="max-w-3xl mx-auto mb-16 text-center space-y-4">
+            {addOns.map((item) => (
+              <p key={item.id} className="text-gray-700">
+                <span className="font-bold text-gray-900">Add-on: {item.name}, {item.display.label}.</span>
+                {item.includes?.length ? ` ${item.includes.join('. ')}.` : ''}
+              </p>
+            ))}
+            <p className="text-gray-700">
+              Need a brand and a Google profile as well? The{' '}
+              <Link href="/packages/launch-kit" className="text-[#1044ff] font-semibold hover:underline">
+                Launch Kit
+              </Link>{' '}
+              brings brand identity, a website of up to 10 pages and Google Business Profile set-up together, live in 21 working days from receiving your content.
+            </p>
+          </div>
+
           <div className="text-center bg-white border border-gray-100 p-8 md:p-12 rounded-[2rem] max-w-4xl mx-auto shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Need something larger or more specific?</h3>
-            <p className="text-gray-600 mb-8">For custom applications, complex integrations, or large-scale ecommerce, we scope entirely bespoke projects.</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Need something custom?</h3>
+            <p className="text-gray-600 mb-8">
+              Larger sites, complex integrations, online stores and apps are scoped on a free call with a fixed quote. See{' '}
+              <Link href="/services/web-development/ecommerce-website-design" className="text-[#1044ff] font-semibold hover:underline">
+                ecommerce website design
+              </Link>{' '}
+              for online stores and{' '}
+              <Link href="/services/web-development/app-and-software-development" className="text-[#1044ff] font-semibold hover:underline">
+                app and software development
+              </Link>{' '}
+              for apps and custom software.
+            </p>
             <Button asChild size="lg" className="rounded-full h-14 px-10 text-lg bg-gray-900 hover:bg-black text-white">
-              <Link href="/contact">Get a Custom Quote</Link>
+              <Link href={bookHref} data-cta="book-a-free-call">{BOOK_LABEL}</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* SECTION 8 — FAQ */}
+      {/* REVIEWS (renders nothing without reviews) */}
+      <ServiceReviews reviews={reviews} />
+
+      {/* SECTION 8: FAQ */}
       <section className="py-24 px-4 bg-white border-y border-gray-100">
         <div className="container mx-auto max-w-3xl">
           <motion.div
@@ -592,7 +608,7 @@ const BusinessWebsiteDesign = () => {
 
           <Accordion type="single" collapsible className="w-full space-y-4">
             {faqs.map((faq, idx) => (
-              <AccordionItem key={idx} value={`item-${idx}`} className="bg-gray-50 px-6 rounded-2xl border border-gray-100">
+              <AccordionItem key={faq.q} value={`item-${idx}`} className="bg-gray-50 px-6 rounded-2xl border border-gray-100">
                 <AccordionTrigger className="text-lg font-bold hover:no-underline hover:text-[#1044ff] text-left py-6">
                   {faq.q}
                 </AccordionTrigger>
@@ -605,14 +621,13 @@ const BusinessWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 9 — FINAL CTA */}
+      {/* SECTION 9: FINAL CTA */}
+      {related}
+
       <CTASection
         headline="Ready to Turn Your Website Into Your Best Sales Asset?"
-        subtext="Book a free 30-minute review. We look at your current site, identify what is holding it back, and tell you exactly what needs to change."
-        primaryCTA="Book Free Website Review"
-        secondaryCTA="Get a Custom Quote"
-        whatsapp="https://wa.me/447375874706"
-        background="orange"
+        subtext="Book a free 30-minute call. We look at your current site and show you what is holding it back and what to change."
+        service="business-website-design"
       />
     </div>
   );

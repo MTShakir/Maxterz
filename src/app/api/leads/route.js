@@ -11,7 +11,7 @@ const schema = z.object({
   email:            z.string().trim().email().max(254),
   phone:            optionalText(30),
   company:          optionalText(200),
-  website_url:      optionalText(500),
+  website_url:      z.string().trim().max(500).regex(/^\S*$/, 'Enter a web address without spaces').optional(),
   service:          optionalText(100),
   budget:           optionalText(100),
   timeline:         optionalText(100),
@@ -91,17 +91,22 @@ function alertEmail(lead) {
   };
 }
 
-/** Auto-reply to the person who filled in the form (brief 9.3). Transactional, not marketing. */
+/**
+ * Auto-reply to the person who filled in the form (brief 9.3). Transactional, not marketing.
+ * It never repeats free text from the form, so nobody can use it to send their own words
+ * from info@maxterz.com. A first name is used only when it looks like a name.
+ */
 function autoReply(lead) {
-  const firstName = lead.name.split(/\s+/)[0];
+  const first = lead.name.split(/\s+/)[0];
+  const greeting = /^[\p{L}'-]{1,30}$/u.test(first) ? `Thanks ${first}` : 'Thanks';
   const isAudit = lead.source === 'free-website-audit';
   // Calm wording and one link: words like "free" in a subject push mail towards spam.
   const paragraphs = isAudit
     ? [
-        `Thanks ${firstName}, we have your audit request.`,
-        `Talha will record a short video audit of ${lead.website_url || 'your website'}, covering speed, SEO and conversion. You will have it within 48 hours.`,
+        `${greeting}, we have your audit request.`,
+        'Talha will record a short video audit of your website, covering speed, SEO and conversion. You will have it within 48 hours.',
       ]
-    : [`Thanks ${firstName}, we have your message.`, 'Talha will reply within one working day.'];
+    : [`${greeting}, we have your message.`, 'Talha will reply within one working day.'];
   paragraphs.push(`If you would like to talk sooner, you can book a 30-minute call here: ${SITE.url}/book`);
 
   return {
@@ -144,7 +149,6 @@ export async function POST(request) {
     return NextResponse.json({ error: failMessage }, { status: 503 });
   }
 
-  // eslint-disable-next-line no-unused-vars
   const { _hp, _elapsed, ...lead } = parsed.data;
 
   // Save first. Email never decides whether a lead is kept (brief 9.3).
@@ -169,11 +173,25 @@ export async function POST(request) {
       emailErrors.push(`alert: ${err.message ?? err}`);
     }
 
-    try {
-      const { error } = await resend.emails.send(autoReply(lead));
-      if (error) throw new Error(error.message);
-    } catch (err) {
-      emailErrors.push(`auto-reply: ${err.message ?? err}`);
+    // At most one auto-reply per address every 15 minutes, so the form cannot be used to flood
+    // someone's inbox. The lead is still saved and the alert still goes to info@.
+    const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();
+    const { count: recent } = await supabase
+      .from('leads')
+      .select('id', { count: 'exact', head: true })
+      .eq('email', lead.email)
+      .gte('created_at', since)
+      .neq('id', saved.id);
+
+    if (recent) {
+      emailErrors.push('auto-reply skipped: same address within 15 minutes');
+    } else {
+      try {
+        const { error } = await resend.emails.send(autoReply(lead));
+        if (error) throw new Error(error.message);
+      } catch (err) {
+        emailErrors.push(`auto-reply: ${err.message ?? err}`);
+      }
     }
   } else {
     emailErrors.push('RESEND_API_KEY is not set');

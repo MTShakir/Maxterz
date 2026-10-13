@@ -1,7 +1,7 @@
 import { buildMetadata, ROUTES } from '@/lib/routes';
 import { PageSchema } from '@/lib/schema';
 import Link from 'next/link';
-import { Code, Palette, Video, Users, Cpu, TrendingUp } from 'lucide-react';
+import { Code, Palette, Video, Users, Cpu, TrendingUp, ArrowRight } from 'lucide-react';
 
 const route = ROUTES.find(r => r.path === '/services');
 export const metadata = buildMetadata(route);
@@ -9,7 +9,7 @@ export const metadata = buildMetadata(route);
 const categories = [
   {
     icon: Code,
-    label: 'Web and App Development',
+    label: 'Web Design and Development',
     description: 'Websites, ecommerce stores, mobile apps and UI/UX design built for performance.',
     href: '/services/web-development',
   },
@@ -77,7 +77,7 @@ export default function ServicesPage() {
                   {description}
                 </p>
                 <span className="mt-4 text-[13px] font-semibold text-[#1044ff] group-hover:text-[#e7581e] transition-colors">
-                  View services &#8594;
+                  View services <ArrowRight className="inline w-3.5 h-3.5 ml-1" aria-hidden="true" />
                 </span>
               </Link>
             ))}

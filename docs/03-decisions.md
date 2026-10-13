@@ -50,6 +50,7 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 | D38 | MM Window Cleaning received the full Launch Kit set: it is the Launch Kit proof | Decided (13 Oct, Talha) |
 | D39 | /packages shows packages and plans only, plus "Services from £X" cards | Decided (13 Oct, Talha) |
 | D40 | Partner Plan £2,495 a month (was £1,995) | Decided (13 Oct, Talha) |
+| D41 | Stripe Payment Links for the 4 Buy now items now; Stripe API checkout later, with a trigger | Proposed (13 Oct, Claude Code) |
 
 ---
 
@@ -301,3 +302,10 @@ Open questions and recommendations from 12 Oct onwards live in `launch/TODO-talh
 ## D40. Partner Plan £2,495 a month (Decided by Talha, 13 Oct 2026)
 - **Decision:** the Partner Plan rises from £1,995 to £2,495 a month. Value stays £3,520 (calculated), so the saving is £1,025 (29%). Changes the Partner price in D25 and `05-offers.md` section 4. Live in Supabase and `pricing.json` the same day.
 - **Why:** £1,995 sat below the UK range for a full outsourced retainer (£2,000 to £3,500) while it includes more than most: SEO, social on 3 platforms, ads on 2 platforms, design and video, care and fortnightly calls with Talha. The higher price protects margin on the heaviest plan, and as the top anchor it makes the Visibility Plan look like the sensible choice.
+
+## D41. Stripe: Payment Links now, API checkout later (Proposed by Claude Code, 13 Oct 2026)
+- **Context:** Talha's Stripe account is set up and approved. He asked whether to use the Stripe API for pricing and payments on the site instead of Payment Links.
+- **Proposal:** use 4 Stripe Payment Links for the 4 Buy now items (price book 2.8). No Stripe keys on the website. Deposits, Care Plus and monthly plans are billed with Stripe invoices and subscriptions from the dashboard. Supabase stays the only source of displayed prices (D29); Stripe only collects money.
+- **Price rule:** a Buy now price changes in two places on the same day: the Supabase row and a new Stripe Payment Link at the new price (then update the env var). The amount charged must always equal the advertised price (consumer law).
+- **Trigger to build API checkout:** about 10 self-serve orders a month, or the wish to take card deposits and Care Plus subscriptions on the site. Then build Stripe Checkout Sessions created from the Supabase price, with a verified webhook that writes orders to Supabase.
+- **Why:** links need no code, no secret keys and no webhook to secure, and they work today. An API checkout costs a build, testing and a second place that holds prices, for items that have not sold yet.

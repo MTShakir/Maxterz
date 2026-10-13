@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { SITE } from '@/lib/site';
 
 const XIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -88,7 +89,7 @@ const Footer = () => (
           <span className={colTitle}>Services</span>
           <nav className="flex flex-col gap-3">
             {[
-              { label: 'Web and App Development',   path: '/services/web-development'         },
+              { label: 'Web Design and Development', path: '/services/web-development'        },
               { label: 'Branding and Design',        path: '/services/branding-design'         },
               { label: 'Video and Animation',        path: '/services/video-animation'         },
               { label: 'Social Media Management',    path: '/services/social-media-management' },
@@ -155,17 +156,14 @@ const Footer = () => (
                 +44 7375 874706
               </span>
             </a>
-            <a
-              href="https://maps.google.com/?q=128+City+Road,+London+EC1V+2NX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-start gap-3 group"
-            >
-              <MapPin size={16} className="text-orange-300 mt-0.5 shrink-0" />
-              <span className="text-[13.5px] text-white/75 group-hover:text-white transition-colors leading-snug">
-                128 City Road, London<br />EC1V 2NX, UK
+            {/* Registered office only: not a walk-in studio, so no map link (business profile) */}
+            <p className="flex items-start gap-3">
+              <MapPin size={16} className="text-orange-300 mt-0.5 shrink-0" aria-hidden="true" />
+              <span className="text-[13.5px] text-white/75 leading-snug">
+                Registered office: {SITE.registeredOffice.street}, {SITE.registeredOffice.locality}<br />
+                {SITE.registeredOffice.postcode}, UK
               </span>
-            </a>
+            </p>
           </div>
           <div className="flex flex-col gap-2">
             <Link
@@ -190,17 +188,19 @@ const Footer = () => (
 
       {/* Legal bar */}
       <div className="relative z-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
-        <p className="text-white/45 text-xs text-center md:text-left">
-          &copy; {new Date().getFullYear()} MAXTERZ LTD. All rights reserved. UK-registered company.
+        <p className="text-white/70 text-xs text-center md:text-left leading-relaxed">
+          {SITE.legalName}. Registered in {SITE.registeredIn}. Company number {SITE.companyNumber}.
+          Registered office: {SITE.registeredOffice.street}, {SITE.registeredOffice.locality},{' '}
+          {SITE.registeredOffice.countryName}, {SITE.registeredOffice.postcode}. Registered with the ICO: {SITE.icoNumber}.
         </p>
         <div className="flex gap-5">
-          <Link href="/privacy-policy"   onClick={scrollTop} className="text-white/45 hover:text-white transition-colors text-xs">Privacy</Link>
-          <Link href="/terms-conditions" onClick={scrollTop} className="text-white/45 hover:text-white transition-colors text-xs">Terms</Link>
-          <Link href="/cookie-policy"    onClick={scrollTop} className="text-white/45 hover:text-white transition-colors text-xs">Cookies</Link>
+          <Link href="/privacy-policy"   onClick={scrollTop} className="text-white/70 hover:text-white transition-colors text-xs">Privacy</Link>
+          <Link href="/terms-conditions" onClick={scrollTop} className="text-white/70 hover:text-white transition-colors text-xs">Terms</Link>
+          <Link href="/cookie-policy"    onClick={scrollTop} className="text-white/70 hover:text-white transition-colors text-xs">Cookies</Link>
           <button
             type="button"
             onClick={() => typeof window !== 'undefined' && window.dispatchEvent(new CustomEvent('openCookieSettings'))}
-            className="text-white/45 hover:text-white transition-colors text-xs bg-transparent border-0 p-0 cursor-pointer"
+            className="text-white/70 hover:text-white transition-colors text-xs bg-transparent border-0 p-0 cursor-pointer"
           >
             Cookie settings
           </button>

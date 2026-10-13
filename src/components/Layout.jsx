@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
+import { MotionConfig } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingButtons from '@/components/FloatingButtons';
@@ -12,19 +13,22 @@ const Layout = ({ children }) => {
   const pathname = usePathname();
   const showBreadcrumb = pathname !== '/';
 
+  // reducedMotion="user": framer-motion skips movement for visitors who ask for less motion.
   return (
-    <div className="min-h-screen bg-[#fafafa] selection:bg-orange-500/30 selection:text-orange-900">
-      <Navbar />
-      <div className="pt-[122px]">
-        {showBreadcrumb && <Breadcrumb />}
-        <main>
-          {children}
-        </main>
+    <MotionConfig reducedMotion="user">
+      <div className="min-h-screen bg-[#fafafa] selection:bg-orange-500/30 selection:text-orange-900">
+        <Navbar />
+        <div className="pt-[122px]">
+          {showBreadcrumb && <Breadcrumb />}
+          <main>
+            {children}
+          </main>
+        </div>
+        <Footer />
+        <FloatingButtons />
+        <MobileActionBar />
       </div>
-      <Footer />
-      <FloatingButtons />
-      <MobileActionBar />
-    </div>
+    </MotionConfig>
   );
 };
 

@@ -34,12 +34,21 @@ export function buildBreadcrumbItems(path) {
 }
 
 /**
- * Build the full JSON-LD graph for a static page: WebPage + BreadcrumbList + optional Service.
- * Returns null for paths not in ROUTES.
+ * @typedef {Object} PageSchemaOptions
+ * @property {number | null} [fromPrice] live lowest price from Supabase; falls back to the route's fromPriceGBP
+ * @property {"one-off"|"monthly"} [billing]
+ * @property {number | null} [setupFee] one-off set-up fee that comes with a monthly price
+ * @property {Array<{ q: string, a: string }>} [faqs] the questions visible on the page (FAQPage only when visible)
+ */
+
+/**
+ * Build the full JSON-LD graph for a static page: WebPage + BreadcrumbList + optional Service
+ * and FAQPage. Returns null for paths not in ROUTES.
  * @param {string} path
+ * @param {PageSchemaOptions} [options]
  * @returns {object|null}
  */
-export function buildPageSchema(path) {
+export function buildPageSchema(path, { fromPrice, billing, setupFee, faqs } = {}) {
   const route = ROUTES.find(r => r.path === path);
   if (!route) return null;
 
@@ -93,12 +102,35 @@ export function buildPageSchema(path) {
       areaServed: 'Worldwide',
       url,
     };
-    if (route.fromPriceGBP) {
-      serviceNode.offers = route.billing === 'monthly'
-        ? { '@type': 'UnitPriceSpecification', price: route.fromPriceGBP, priceCurrency: 'GBP', unitCode: 'MON' }
-        : { '@type': 'AggregateOffer', lowPrice: `${route.fromPriceGBP}`, priceCurrency: 'GBP' };
+    const price = fromPrice ?? route.fromPriceGBP;
+    const priceBilling = billing ?? route.billing;
+    if (price) {
+      const monthly = { '@type': 'UnitPriceSpecification', price, priceCurrency: 'GBP', unitCode: 'MON' };
+      // A set-up fee is a separate price component next to the monthly price (brief 7.6).
+      const setup = setupFee
+        ? { '@type': 'PriceSpecification', price: setupFee, priceCurrency: 'GBP', name: 'One-off set-up fee' }
+        : null;
+      serviceNode.offers = priceBilling === 'monthly'
+        ? {
+            '@type': 'Offer',
+            priceCurrency: 'GBP',
+            priceSpecification: setup ? [monthly, setup] : monthly,
+          }
+        : { '@type': 'AggregateOffer', lowPrice: `${price}`, priceCurrency: 'GBP' };
     }
     graph.push(serviceNode);
+  }
+
+  if (faqs?.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: faqs.map(({ q, a }) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    });
   }
 
   return { '@context': 'https://schema.org', '@graph': graph };
@@ -106,10 +138,10 @@ export function buildPageSchema(path) {
 
 /**
  * Server component: renders the page-level JSON-LD for a route.
- * @param {{ path: string }} props
+ * @param {{ path: string } & PageSchemaOptions} props
  */
-export function PageSchema({ path }) {
-  const data = buildPageSchema(path);
+export function PageSchema({ path, fromPrice, billing, setupFee, faqs }) {
+  const data = buildPageSchema(path, { fromPrice, billing, setupFee, faqs });
   if (!data) return null;
   return <JsonLd data={data} />;
 }

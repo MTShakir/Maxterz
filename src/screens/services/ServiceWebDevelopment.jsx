@@ -1,16 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
   ArrowUpRight,
-  Loader2,
+  Check,
+  CheckCircle,
   LayoutTemplate,
+  ShieldCheck,
   ShoppingCart,
   Smartphone,
   Search,
+  Star,
   Zap,
   Target,
   Unlock,
@@ -24,167 +27,191 @@ import {
   Users,
   GitBranch,
 } from 'lucide-react';
-import { supabase } from '@/lib/customSupabaseClient';
 import { Button } from '@/components/ui/button';
 
-import TrustBar from '@/components/TrustBar';
-import PackageCard from '@/components/packages/PackageCard';
+import FromPriceLine from '@/components/service/FromPriceLine';
+import ServiceReviews from '@/components/service/ServiceReviews';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { faqs } from '@/content/faq/web-development';
+import WorkImageStrip from '@/components/WorkImageStrip';
 import CTASection from '@/components/home/CTASection';
+import { BOOK_LABEL } from '@/lib/cta';
+import { formatGBP } from '@/lib/pricing-calc';
+import { SITE } from '@/lib/site';
 
-const ServiceWebDevelopment = () => {
-  const [projects, setProjects] = useState([]);
-  const [loadingProjects, setLoadingProjects] = useState(true);
-  const [projectsError, setProjectsError] = useState(null);
+const WEBSITES_PATH = '/services/web-development/business-website-design';
+const ECOMMERCE_PATH = '/services/web-development/ecommerce-website-design';
+const APPS_PATH = '/services/web-development/app-and-software-development';
 
-  const [packages, setPackages] = useState([]);
-  const [loadingPackages, setLoadingPackages] = useState(true);
-  const [packagesError, setPackagesError] = useState(null);
+/** The 3 service pages in this category (D31 names). */
+const services = [
+  {
+    icon: <LayoutTemplate size={32} aria-hidden="true" />,
+    title: 'Website Design',
+    desc: 'Fast, SEO-ready websites and landing pages that build trust and turn visitors into enquiries.',
+    link: WEBSITES_PATH,
+  },
+  {
+    icon: <ShoppingCart size={32} aria-hidden="true" />,
+    title: 'Ecommerce Website Design',
+    desc: 'Shopify and custom online stores built to cut cart abandonment and sell around the clock.',
+    link: ECOMMERCE_PATH,
+  },
+  {
+    icon: <Smartphone size={32} aria-hidden="true" />,
+    title: 'App and Software Development',
+    desc: 'App design, mobile apps, custom software and SaaS, built around how your business runs.',
+    link: APPS_PATH,
+  },
+];
 
-  const fetchProjects = async () => {
-    setLoadingProjects(true);
-    setProjectsError(null);
-    try {
-      const { data, error } = await supabase
-        .from('portfolio_projects')
-        .select('*')
-        .eq('category', 'Web Development')
-        .order('created_at', { ascending: false })
-        .limit(3);
-      if (error) throw error;
-      setProjects(data || []);
-    } catch (e) {
-      console.error("Error fetching projects", e);
-      setProjectsError(e.message);
-    } finally {
-      setLoadingProjects(false);
-    }
-  };
+/** Category price cards: one per service page, with its lowest "from" price (inventory section 3). */
+const priceCards = [
+  {
+    title: 'Website Design',
+    link: WEBSITES_PATH,
+    idealFor: 'service businesses that want more calls and enquiries',
+    features: ['Landing pages', 'Websites of up to 5, 10 or 25 pages', 'CMS, SEO foundations and tracking', 'Copywriting add-on'],
+    cta: 'See website design prices',
+  },
+  {
+    title: 'Ecommerce Website Design',
+    link: ECOMMERCE_PATH,
+    idealFor: 'brands that sell products online',
+    features: ['Shopify store set-up', 'Custom online stores', 'Payments and shipping set up', 'Training at handover'],
+    cta: 'See ecommerce prices',
+  },
+  {
+    title: 'App and Software Development',
+    link: APPS_PATH,
+    idealFor: 'businesses with a product idea or a process to build',
+    features: ['App design (UI/UX)', 'Mobile apps and web apps', 'Custom software and SaaS', 'A fixed quote for each phase'],
+    cta: 'See app and software prices',
+  },
+];
 
-  const fetchPackages = async () => {
-    setLoadingPackages(true);
-    setPackagesError(null);
-    try {
-      const { data, error } = await supabase
-        .from('packages_one_time')
-        .select('*')
-        .order('display_order', { ascending: true })
-        .limit(3);
-      if (error) throw error;
-      setPackages(data || []);
-    } catch (e) {
-      console.error("Error fetching packages", e);
-      setPackagesError(e.message);
-    } finally {
-      setLoadingPackages(false);
-    }
-  };
+/**
+ * One category price card, in the design of the old packages cards (D30).
+ * @param {{ title: string, price: number | null | undefined, idealFor: string, features: string[], href: string, cta: string }} props
+ */
+const CategoryPriceCard = ({ title, price, idealFor, features, href, cta }) => (
+  <div className="relative flex flex-col h-full rounded-[2rem] p-8 md:p-10 transition-all duration-300 bg-white border border-gray-100 text-gray-900 shadow-sm hover:shadow-xl hover:-translate-y-1">
+    <div className="mb-8">
+      <h3 className="text-2xl font-extrabold tracking-tight mb-4 text-gray-900">{title}</h3>
+      <p className="text-sm font-medium mb-6 text-gray-500">Ideal for: {idealFor}</p>
+      <div className="flex items-baseline gap-2 mb-2">
+        {price != null ? (
+          <>
+            <span className="text-sm font-medium text-gray-500">from</span>
+            <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">{formatGBP(price)}</span>
+          </>
+        ) : (
+          <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">Custom quote</span>
+        )}
+      </div>
+    </div>
 
-  useEffect(() => {
-    fetchProjects();
-    fetchPackages();
-  }, []);
+    <div className="flex-grow">
+      <ul className="space-y-4 mb-8">
+        {features.map((feature) => (
+          <li key={feature} className="flex items-start gap-3">
+            <Check size={20} className="shrink-0 mt-0.5 text-[#1044ff]" aria-hidden="true" />
+            <span className="text-sm font-medium leading-relaxed text-gray-700">{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
 
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
-  };
+    <Link
+      href={href}
+      className="w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-300 bg-gray-900 text-white hover:bg-[#1044ff] shadow-md"
+    >
+      {cta} <ArrowRight size={18} aria-hidden="true" />
+    </Link>
+  </div>
+);
 
-  const schemaOrg = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Service",
-        "name": "Web and App Development Services",
-        "description": "Full-stack web development, custom software, SaaS platforms, mobile apps, AI integrations, and ecommerce builds for businesses worldwide.",
-        "provider": { "@type": "Organization", "name": "Maxterz", "url": "https://maxterz.com" },
-        "areaServed": "Worldwide",
-        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "7100" },
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Web Development Services",
-          "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Website Design" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ecommerce Website Design" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mobile App Development" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Software Development" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SaaS Platform Development" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Integration Development" } }
-          ]
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://maxterz.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Web Development", "item": "https://maxterz.com/services/web-development" }
-        ]
-      }
-    ]
-  };
-
+/**
+ * Web design and development category page (D30: existing layout, data from the server).
+ *
+ * @param {{
+ *   h1: string, fromPrice: number | null, billing: 'one-off' | 'monthly',
+ *   fromPrices: Record<string, number | null>, reviews: object[], bookHref: string, projects?: object[]
+ * }} props
+ *   projects: recent work, passed in Phase 5 (D36). The section stays hidden while empty.
+ */
+const ServiceWebDevelopment = ({ h1, fromPrice, billing, fromPrices = {}, slides = [], reviews = [], bookHref, projects = [], related = null }) => {
   const additionalServices = [
     {
-      icon: <Code2 className="w-6 h-6" />,
+      icon: <Code2 className="w-6 h-6" aria-hidden="true" />,
       title: "Custom Software Development",
       desc: "Bespoke applications built around your exact workflows. No off-the-shelf compromises. Software that solves the actual problem, not a generic version of it.",
-      tag: "Most Requested",
+      tag: "Fixed quote per phase",
       tagStyle: "bg-white/15 text-white border border-white/20",
       variant: "dark",
       large: true,
     },
     {
-      icon: <PenTool className="w-6 h-6" />,
+      icon: <PenTool className="w-6 h-6" aria-hidden="true" />,
       title: "UI/UX Design and Prototyping",
-      desc: "Research-backed design systems and clickable prototypes that reduce development risk and increase conversion before a single line of code is written.",
+      desc: "User flows, wireframes, design systems and clickable prototypes that cut development risk before a single line of code is written.",
       variant: "light",
       large: false,
     },
     {
-      icon: <Database className="w-6 h-6" />,
+      icon: <Database className="w-6 h-6" aria-hidden="true" />,
       title: "CRM Development and Integration",
       desc: "Custom CRM builds or Salesforce, HubSpot, and Pipedrive integrations tailored to your actual sales process, not the vendor's default.",
       variant: "blue",
       large: false,
     },
     {
-      icon: <Cloud className="w-6 h-6" />,
+      icon: <Cloud className="w-6 h-6" aria-hidden="true" />,
       title: "Full SaaS Platform Development",
       desc: "Multi-tenant SaaS products with recurring billing, onboarding flows, user role management, usage analytics, and admin dashboards built to scale.",
       variant: "light",
       large: true,
     },
     {
-      icon: <Bot className="w-6 h-6" />,
+      icon: <Bot className="w-6 h-6" aria-hidden="true" />,
       title: "AI Integration and Intelligent Features",
-      desc: "Embed LLMs, AI chatbots, recommendation engines, and intelligent automations directly into your product or website. Built on real APIs, not wrappers.",
-      tag: "Trending",
+      desc: (
+        <>
+          Add AI chatbots, recommendation engines and automations to your product or website. See{' '}
+          <Link href="/services/ai-automation" className="underline underline-offset-2 font-semibold text-white hover:text-white/90">
+            AI chatbots and automation
+          </Link>
+          .
+        </>
+      ),
+      tag: "Chatbots and automation",
       tagStyle: "bg-white/20 text-white border border-white/30",
       variant: "orange",
       large: false,
     },
     {
-      icon: <Globe className="w-6 h-6" />,
+      icon: <Globe className="w-6 h-6" aria-hidden="true" />,
       title: "Progressive Web Apps (PWAs)",
-      desc: "App-like web experiences that work offline, install to home screens, and load instantly. Reach mobile users without App Store dependency.",
+      desc: "App-like web experiences that work offline, install to home screens, and load fast. Reach mobile users without App Store dependency.",
       variant: "light",
       large: false,
     },
     {
-      icon: <Plug className="w-6 h-6" />,
+      icon: <Plug className="w-6 h-6" aria-hidden="true" />,
       title: "API Development and Third-Party Integrations",
-      desc: "REST and GraphQL APIs, webhook pipelines, and custom integrations that connect your entire tech stack and eliminate manual data handling.",
+      desc: "REST and GraphQL APIs, webhook pipelines, and custom integrations that connect your entire tech stack and cut manual data handling.",
       variant: "dark",
       large: false,
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: <Users className="w-6 h-6" aria-hidden="true" />,
       title: "Membership and Subscription Platforms",
       desc: "Gated content, recurring billing via Stripe, member portals, and loyalty features built for businesses that run on recurring revenue.",
       variant: "blue",
       large: true,
     },
     {
-      icon: <GitBranch className="w-6 h-6" />,
+      icon: <GitBranch className="w-6 h-6" aria-hidden="true" />,
       title: "Headless and Composable Architecture",
       desc: "Decoupled frontends with headless CMS backends for maximum speed, developer flexibility, and performance at scale.",
       variant: "light",
@@ -198,35 +225,33 @@ const ServiceWebDevelopment = () => {
       icon: "bg-white/10 text-white group-hover:bg-white group-hover:text-gray-900",
       title: "text-white",
       desc: "text-gray-400",
-      cta: "text-gray-500 group-hover:text-white",
+      cta: "text-gray-400 group-hover:text-white",
     },
     blue: {
       card: "bg-gradient-to-br from-[#1044ff] to-[#0020bf] border-transparent",
       icon: "bg-white/15 text-white group-hover:bg-white group-hover:text-[#1044ff]",
       title: "text-white",
       desc: "text-white/75",
-      cta: "text-white/50 group-hover:text-white",
+      cta: "text-white/90 group-hover:text-white",
     },
     orange: {
       card: "bg-gradient-to-br from-[#e7811e] to-[#e7581e] border-transparent",
       icon: "bg-white/20 text-white",
       title: "text-white",
       desc: "text-white/85",
-      cta: "text-white/60 group-hover:text-white",
+      cta: "text-white group-hover:text-white",
     },
     light: {
       card: "bg-white border-gray-100 hover:border-blue-100 hover:shadow-xl",
       icon: "bg-blue-50 text-[#1044ff] group-hover:bg-[#1044ff] group-hover:text-white",
       title: "text-gray-900 group-hover:text-[#1044ff]",
       desc: "text-gray-500",
-      cta: "text-gray-300 group-hover:text-[#1044ff]",
+      cta: "text-gray-500 group-hover:text-[#1044ff]",
     },
   };
 
   return (
     <div className="bg-white selection:bg-[#1044ff] selection:text-white">
-      <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
-
       {/* ─── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative min-h-[80vh] flex flex-col justify-center items-center pt-24 pb-16 px-4 overflow-hidden bg-white">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808015_1px,transparent_1px),linear-gradient(to_bottom,#80808015_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
@@ -238,28 +263,39 @@ const ServiceWebDevelopment = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <span className="badge-standard-light mb-8">WEB & APP DEVELOPMENT</span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.1] text-balance">
+            <h1 className="badge-standard-light mb-8">{h1}</h1>
+            <p className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.1] text-balance">
               Websites and Apps That <span className="text-[#1044ff]">Work as Hard as You Do.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+            </p>
+            <p className="text-xl md:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto font-light leading-relaxed">
               From business websites to ecommerce stores, mobile apps to full SaaS platforms, built for performance, search visibility, and results that show in your numbers.
             </p>
+            <FromPriceLine price={fromPrice} billing={billing} label="Web projects" className="mb-12" />
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
               <Button asChild size="lg" className="rounded-full h-14 px-8 text-lg bg-[#1044ff] hover:bg-[#0020bf] shadow-xl shadow-blue-500/20 w-full sm:w-auto transition-transform hover:scale-105">
-                <a href="https://calendly.com/maxterz-info/30min" target="_blank" rel="noopener noreferrer">
-                  Book a Free Consultation
-                </a>
+                <Link href={bookHref} data-cta="book-a-free-call">
+                  {BOOK_LABEL}
+                </Link>
               </Button>
-              <Button onClick={() => scrollTo('work-samples')} variant="outline" size="lg" className="rounded-full h-14 px-8 text-lg border-2 w-full sm:w-auto bg-white/80 backdrop-blur-sm hover:bg-gray-50">
-                See Our Work <ArrowRight className="ml-2 w-5 h-5" />
+              <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-lg border-2 w-full sm:w-auto bg-white/80 backdrop-blur-sm hover:bg-gray-50">
+                <a href="#prices">
+                  See prices <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+                </a>
               </Button>
             </div>
 
-            <TrustBar />
+            <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-gray-800 uppercase tracking-wider mb-8">
+              <span className="flex items-center gap-2"><Star className="w-4 h-4 text-[#eb7444] fill-current" aria-hidden="true" /> {SITE.proof.fiverrRating} Stars on Fiverr</span>
+              <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
+              <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#1044ff]" aria-hidden="true" /> {SITE.proof.fiverrReviews} Reviews on Fiverr</span>
+              <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-500" aria-hidden="true" /> {SITE.proof.projects} Projects Since {SITE.proof.fiverrSince}</span>
+            </div>
           </motion.div>
         </div>
+
+        <WorkImageStrip slides={slides} label="Recent Web Work" />
       </section>
 
       {/* ─── DEDICATED SOLUTIONS ──────────────────────────────────────── */}
@@ -271,36 +307,17 @@ const ServiceWebDevelopment = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="badge-standard-light">OUR SPECIALTIES</span>
+            <span className="badge-standard-light">OUR SPECIALITIES</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">Dedicated Solutions.</h2>
             <p className="text-lg text-gray-500 mt-4 max-w-2xl mx-auto">
-              Three core web development services with dedicated teams, proven processes, and full subpages to explore.
+              Three core web services, each with its own page, prices and process.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <LayoutTemplate size={32} />,
-                title: "Business Website Design",
-                desc: "High-converting, SEO-ready websites that establish credibility and turn visitors into enquiries.",
-                link: "/services/web-development/business-website-design",
-              },
-              {
-                icon: <ShoppingCart size={32} />,
-                title: "Ecommerce Website Design",
-                desc: "Online stores engineered to reduce cart abandonment, increase average order value, and sell 24/7.",
-                link: "/services/web-development/ecommerce-website-design",
-              },
-              {
-                icon: <Smartphone size={32} />,
-                title: "Mobile App Development",
-                desc: "Cross-platform iOS and Android apps that increase customer retention and open new revenue channels.",
-                link: "/services/web-development/mobile-app-development",
-              },
-            ].map((service, idx) => (
+            {services.map((service, idx) => (
               <motion.div
-                key={idx}
+                key={service.link}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -315,11 +332,16 @@ const ServiceWebDevelopment = () => {
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 tracking-tight group-hover:text-[#1044ff] transition-colors relative z-10">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 mb-8 flex-grow relative z-10 leading-relaxed">
+                  <p className="text-gray-600 mb-6 flex-grow relative z-10 leading-relaxed">
                     {service.desc}
                   </p>
+                  {fromPrices[service.link] != null && (
+                    <p className="text-gray-900 font-bold mb-6 relative z-10">
+                      From <span className="text-[#1044ff]">{formatGBP(fromPrices[service.link])}</span>
+                    </p>
+                  )}
                   <div className="flex items-center text-[#1044ff] font-bold text-sm uppercase tracking-wider relative z-10 mt-auto">
-                    Explore Service <ArrowRight size={16} className="ml-2 group-hover:translate-x-2 transition-transform" />
+                    Explore Service <ArrowRight size={16} className="ml-2 group-hover:translate-x-2 transition-transform" aria-hidden="true" />
                   </div>
                 </Link>
               </motion.div>
@@ -351,7 +373,7 @@ const ServiceWebDevelopment = () => {
               const s = variantStyles[service.variant];
               return (
                 <motion.div
-                  key={idx}
+                  key={service.title}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
@@ -380,11 +402,11 @@ const ServiceWebDevelopment = () => {
                     </p>
                   </div>
 
-                  {/* footer cta */}
+                  {/* footer cta: padded hit area keeps the tap target 44px tall without moving the layout */}
                   <div className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest mt-auto pt-2 transition-all duration-300 ${s.cta}`}>
-                    <a href="https://calendly.com/maxterz-info/30min" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:gap-3 transition-all duration-200">
-                      Get a quote <ArrowRight size={13} />
-                    </a>
+                    <Link href={bookHref} data-cta="book-a-free-call" className="flex items-center gap-1.5 py-[14px] -my-[14px] hover:gap-3 transition-all duration-200">
+                      {BOOK_LABEL} <ArrowRight size={13} aria-hidden="true" />
+                    </Link>
                   </div>
                 </motion.div>
               );
@@ -396,18 +418,18 @@ const ServiceWebDevelopment = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="text-center text-gray-400 text-sm mt-8"
+            className="text-center text-gray-500 text-sm mt-8"
           >
             Not sure what you need?{' '}
-            <a href="https://calendly.com/maxterz-info/30min" target="_blank" rel="noopener noreferrer" className="text-[#1044ff] font-semibold hover:underline">
-              Book a free 30-minute call
-            </a>{' '}
+            <Link href={bookHref} data-cta="book-a-free-call" className="text-[#1044ff] font-semibold hover:underline">
+              {BOOK_LABEL}
+            </Link>{' '}
             and we will scope it with you.
           </motion.p>
         </div>
       </section>
 
-      {/* ─── WHY MAXTERZ ──────────────────────────────────────────────── */}
+      {/* ─── WHY CHOOSE US ────────────────────────────────────────────── */}
       <section className="py-24 px-4 bg-gray-50 border-y border-gray-100">
         <div className="container mx-auto max-w-7xl">
           <motion.div
@@ -416,35 +438,43 @@ const ServiceWebDevelopment = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="badge-standard-light">WHY MAXTERZ</span>
+            <span className="badge-standard-light">WHY CHOOSE US</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">Built Around Revenue, Not Just Deliverables.</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: <Search />,
+                icon: <Search aria-hidden="true" />,
                 title: "SEO from day one",
-                desc: "Site architecture, page structure, and content built for organic search before the first line of code.",
+                desc: (
+                  <>
+                    Site architecture, page structure, and content built for organic search before the first line of code. For ongoing growth, see our{' '}
+                    <Link href="/services/seo-digital-marketing" className="text-[#1044ff] font-semibold hover:underline">
+                      SEO and local SEO services
+                    </Link>
+                    .
+                  </>
+                ),
               },
               {
-                icon: <Zap />,
+                icon: <Zap aria-hidden="true" />,
                 title: "Speed without compromise",
                 desc: "Fast-loading, optimised Core Web Vitals scores. A ranking signal and a conversion signal at once.",
               },
               {
-                icon: <Target />,
+                icon: <Target aria-hidden="true" />,
                 title: "Conversion-focused design",
                 desc: "Every page has a single clear purpose. Design follows that purpose, not personal preference.",
               },
               {
-                icon: <Unlock />,
+                icon: <Unlock aria-hidden="true" />,
                 title: "You own everything",
                 desc: "Full handover of source code, credentials, and documentation. No recurring access fees.",
               },
             ].map((item, idx) => (
               <motion.div
-                key={idx}
+                key={item.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -462,36 +492,25 @@ const ServiceWebDevelopment = () => {
         </div>
       </section>
 
-      {/* ─── WORK SAMPLES ─────────────────────────────────────────────── */}
-      <section id="work-samples" className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white">
-        <div className="container mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
-          >
-            <div>
-              <span className="inline-block border border-white/30 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">OUR WEBSITE WORK</span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Recent Projects.</h2>
-            </div>
-            <Link href="/our-work" className="text-white hover:text-white/80 flex items-center gap-2 font-semibold transition-colors">
-              View all projects <ArrowRight size={16} />
-            </Link>
-          </motion.div>
+      {/* ─── WORK SAMPLES (Phase 5: hidden until real projects exist, D36) ─── */}
+      {projects.length > 0 && (
+        <section id="work-samples" className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white">
+          <div className="container mx-auto max-w-7xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
+            >
+              <div>
+                <span className="inline-block border border-white/30 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">OUR WEBSITE WORK</span>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Recent Projects.</h2>
+              </div>
+              <Link href="/our-work" className="text-white hover:text-white/80 flex items-center gap-2 font-semibold transition-colors">
+                View all projects <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </motion.div>
 
-          {loadingProjects ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-white w-10 h-10" /></div>
-          ) : projectsError ? (
-            <div className="text-center py-20 text-white/70 border border-white/20 rounded-[2rem] bg-white/5">
-              <p className="mb-4">Failed to load projects.</p>
-              <Button onClick={fetchProjects} variant="outline" className="bg-transparent text-white hover:bg-white hover:text-blue-900">
-                Retry
-              </Button>
-            </div>
-          ) : projects.length === 0 ? (
-            <div className="text-center py-20 text-white/70 border border-white/20 rounded-[2rem]">No projects found.</div>
-          ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {projects.map((project, idx) => (
                 <motion.div
@@ -515,7 +534,7 @@ const ServiceWebDevelopment = () => {
                       )}
                       <div className="absolute inset-0 bg-[#1044ff]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center scale-50 group-hover:scale-100 transition-transform duration-300">
-                          <ArrowUpRight size={32} className="text-[#1044ff]" />
+                          <ArrowUpRight size={32} className="text-[#1044ff]" aria-hidden="true" />
                         </div>
                       </div>
                     </div>
@@ -531,12 +550,12 @@ const ServiceWebDevelopment = () => {
                 </motion.div>
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* ─── PACKAGES ─────────────────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-gray-50">
+      {/* ─── PRICES (category price cards, inventory section 3) ───────── */}
+      <section id="prices" className="py-24 px-4 bg-gray-50">
         <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -544,54 +563,91 @@ const ServiceWebDevelopment = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="badge-standard-light">WEB DEVELOPMENT PACKAGES</span>
+            <span className="badge-standard-light">WEB DEVELOPMENT PRICES</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Choose Your Starting Point.</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Fixed scope. Fixed price. No hidden costs.</p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Clear starting prices. A fixed quote before work starts.</p>
           </motion.div>
 
-          {loadingPackages ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#1044ff] w-10 h-10" /></div>
-          ) : packagesError ? (
-            <div className="text-center py-20 text-gray-500 bg-white rounded-[2rem] border border-gray-100">
-              <p className="mb-4">Failed to load packages.</p>
-              <Button onClick={fetchPackages} variant="outline">Retry</Button>
-            </div>
-          ) : packages.length === 0 ? (
-            <div className="text-center py-20 text-gray-500 bg-white rounded-[2rem] border border-gray-100">No packages available at the moment.</div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {packages.map((pkg, idx) => (
-                <motion.div
-                  key={pkg.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.15 }}
-                >
-                  <PackageCard {...pkg} />
-                </motion.div>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {priceCards.map((card, idx) => (
+              <motion.div
+                key={card.link}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.15 }}
+                className="h-full"
+              >
+                <CategoryPriceCard
+                  title={card.title}
+                  price={fromPrices[card.link]}
+                  idealFor={card.idealFor}
+                  features={card.features}
+                  href={card.link}
+                  cta={card.cta}
+                />
+              </motion.div>
+            ))}
+          </div>
+
+          <p className="text-center text-gray-700 max-w-3xl mx-auto mb-16">
+            Need a brand and a website together? Our{' '}
+            <Link href="/packages" className="text-[#1044ff] font-semibold hover:underline">
+              fixed-price packages
+            </Link>{' '}
+            combine them for less than buying each part on its own.
+          </p>
 
           <div className="text-center bg-white border border-gray-100 p-8 md:p-12 rounded-[2rem] max-w-4xl mx-auto shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Need a custom scope?</h3>
-            <p className="text-gray-600 mb-8">Custom software, SaaS platforms, complex integrations, and large-scale builds are scoped as bespoke projects with a fixed quote.</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Need something custom?</h3>
+            <p className="text-gray-600 mb-8">
+              Custom software, SaaS platforms, complex integrations and large builds are scoped on a free call, with a fixed quote for each phase.
+            </p>
             <Button asChild size="lg" className="rounded-full h-14 px-10 text-lg bg-gray-900 hover:bg-black text-white">
-              <Link href="/contact">Get a Custom Quote</Link>
+              <Link href={bookHref} data-cta="book-a-free-call">{BOOK_LABEL}</Link>
             </Button>
           </div>
         </div>
       </section>
 
+      {/* ─── REVIEWS (renders nothing without reviews) ─────────────────── */}
+      <ServiceReviews reviews={reviews} />
+
       {/* ─── FINAL CTA ────────────────────────────────────────────────── */}
+      {/* FAQ (brief 7.4 item 8): answers are in the server HTML */}
+      <section className="py-24 px-4 bg-white border-y border-gray-100">
+        <div className="container mx-auto max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="badge-standard-light">QUESTIONS</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">Common Questions</h2>
+          </motion.div>
+
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            {faqs.map((faq, idx) => (
+              <AccordionItem key={faq.q} value={`item-${idx}`} className="bg-gray-50 px-6 rounded-2xl border border-gray-100">
+                <AccordionTrigger className="text-lg font-bold hover:no-underline hover:text-[#1044ff] text-left py-6">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pb-6 text-base leading-relaxed">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {related}
+
       <CTASection
         headline="Ready to Build Something That Converts?"
-        subtext="Book a free consultation and we will map out exactly what your business needs online."
-        primaryCTA="Book Free Consultation"
-        secondaryCTA="Get a Custom Quote"
-        whatsapp="https://wa.me/447375874706"
-        background="orange"
+        subtext="Book a free 30-minute call and we will map out what your business needs online."
+        service="web-development"
       />
     </div>
   );

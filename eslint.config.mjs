@@ -16,6 +16,8 @@ export default [
 		},
 		settings: {
 			react: { version: 'detect' },
+			// Next.js resolves 'server-only' itself (a build alias), so there is no package to find.
+			'import/core-modules': ['server-only'],
 			'import/resolver': {
 				node: { extensions: ['.js', '.jsx'] },
 				alias: { map: [['@', './src']], extensions: ['.js', '.jsx'] },

@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
-import { ArrowRight, CheckCircle, ArrowUpRight, Loader2, Star, ShieldCheck, Layers, Zap, Package, ShoppingCart } from 'lucide-react';
-import { supabase } from '@/lib/customSupabaseClient';
+import { motion } from 'framer-motion';
+import { ArrowRight, Check, CheckCircle, ArrowUpRight, Star, ShieldCheck, Zap, Package, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Accordion,
@@ -13,175 +12,175 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-import TrustBar from '@/components/TrustBar';
-import PackageCard from '@/components/packages/PackageCard';
+import WorkImageStrip from '@/components/WorkImageStrip';
+import FromPriceLine from '@/components/service/FromPriceLine';
+import ServiceReviews from '@/components/service/ServiceReviews';
 import CTASection from '@/components/home/CTASection';
+import { BOOK_LABEL } from '@/lib/cta';
+import { SITE } from '@/lib/site';
+import { faqs } from '@/content/faq/ecommerce-website-design';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-const AnimatedNumber = ({ value, suffix = '', prefix = '', duration = 2 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.floor(latest));
-
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(count, value, { duration, ease: "easeOut" });
-      return controls.stop;
-    }
-  }, [isInView, value, duration, count]);
+/**
+ * One price card, in the design of the old packages cards (D30). Every value comes from Supabase.
+ * @param {{ item: object }} props
+ */
+const PriceCard = ({ item }) => {
+  const featured = item.popular;
+  const showName = Boolean(item.tier_label) && item.name !== item.tier_label;
+  const muted = featured ? 'text-blue-200' : 'text-gray-500';
 
   return (
-    <span ref={ref} className="inline-block">
-      {prefix}<motion.span>{rounded}</motion.span>{suffix}
-    </span>
+    <div
+      className={`relative flex flex-col h-full rounded-[2rem] p-8 md:p-10 transition-all duration-300 ${
+        featured
+          ? 'bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white shadow-2xl scale-100 md:scale-105 z-10 hover:-translate-y-2'
+          : 'bg-white border border-gray-100 text-gray-900 shadow-sm hover:shadow-xl hover:-translate-y-1'
+      }`}
+    >
+      {featured && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#eb7444] text-white text-xs font-bold uppercase tracking-wider py-1.5 px-4 rounded-full shadow-lg whitespace-nowrap">
+          Most popular
+        </div>
+      )}
+
+      <div className="mb-8">
+        <h3 className={`text-2xl font-extrabold tracking-tight mb-4 ${featured ? 'text-white' : 'text-gray-900'}`}>
+          {item.tier_label || item.name}
+        </h3>
+        {showName && <p className={`text-sm font-medium mb-6 ${muted}`}>{item.name}</p>}
+
+        <div className="flex items-baseline gap-2 mb-2">
+          {item.display.prefix && <span className={`text-sm font-medium ${muted}`}>{item.display.prefix}</span>}
+          <span className={`text-4xl md:text-5xl font-extrabold tracking-tight ${featured ? 'text-white' : 'text-gray-900'}`}>
+            {item.display.amount}
+          </span>
+          {item.display.suffix && <span className={`text-sm font-medium ${muted}`}>{item.display.suffix}</span>}
+        </div>
+        {item.display.setup && <p className={`text-sm font-medium ${muted}`}>{item.display.setup}</p>}
+        {item.timeline && <p className={`text-sm font-medium mt-2 ${muted}`}>Delivery: {item.timeline}</p>}
+      </div>
+
+      <div className="flex-grow">
+        <ul className="space-y-4 mb-8">
+          {(item.includes || []).map((feature) => (
+            <li key={feature} className="flex items-start gap-3">
+              <Check size={20} className={`shrink-0 mt-0.5 ${featured ? 'text-[#eb7444]' : 'text-[#1044ff]'}`} aria-hidden="true" />
+              <span className={`text-sm font-medium leading-relaxed ${featured ? 'text-white' : 'text-gray-700'}`}>
+                {feature}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <Link
+        href={item.book_href}
+        data-cta="book-a-free-call"
+        className={`w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-300 ${
+          featured
+            ? 'bg-none bg-white text-[#1044ff] hover:bg-gray-50 shadow-lg'
+            : 'bg-gray-900 text-white hover:bg-[#1044ff] shadow-md'
+        }`}
+      >
+        {BOOK_LABEL} <ArrowRight size={18} aria-hidden="true" />
+      </Link>
+      {item.buy_url && (
+        <a
+          href={item.buy_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cta="buy-now"
+          className={`mt-3 w-full min-h-[44px] py-3 rounded-full border-2 font-bold flex items-center justify-center transition-all duration-300 ${
+            featured
+              ? 'border-white text-white hover:bg-white/10'
+              : 'border-gray-900 text-gray-900 hover:border-[#1044ff] hover:text-[#1044ff]'
+          }`}
+        >
+          Buy now
+        </a>
+      )}
+    </div>
   );
 };
 
-const EcommerceWebsiteDesign = () => {
-  const [caseStudy, setCaseStudy] = useState(null);
-  const [loadingCaseStudy, setLoadingCaseStudy] = useState(true);
-  const [projects, setProjects] = useState([]);
-  const [loadingProjects, setLoadingProjects] = useState(true);
-  const [packages, setPackages] = useState([]);
-  const [loadingPackages, setLoadingPackages] = useState(true);
+/**
+ * Shopify and ecommerce website design page (D30: existing layout, data read on the server and passed in).
+ *
+ * @param {{
+ *   h1: string, prices: object[], fromPrice: number | null, billing: 'one-off' | 'monthly',
+ *   slides: object[], reviews: object[], bookHref: string, caseStudy?: object | null, projects?: object[]
+ * }} props
+ *   caseStudy and projects arrive in Phase 5 (D36). Their sections stay hidden while empty.
+ */
+const EcommerceWebsiteDesign = ({
+  h1,
+  prices = [],
+  fromPrice,
+  billing,
+  slides = [],
+  reviews = [],
+  bookHref,
+  caseStudy = null,
+  projects = [],
+  related = null,
+}) => {
   const [hoveredApproach, setHoveredApproach] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await supabase
-          .from('case_studies')
-          .select('*')
-          .eq('slug', 'uk-distribution-business')
-          .single();
-        setCaseStudy(data);
-      } catch (e) {
-        console.error("Error fetching case study", e);
-      } finally {
-        setLoadingCaseStudy(false);
-      }
-
-      try {
-        const { data } = await supabase
-          .from('portfolio_projects')
-          .select('*')
-          .eq('category', 'Web Development')
-          .order('created_at', { ascending: false })
-          .limit(3);
-        setProjects(data || []);
-      } catch (e) {
-        console.error("Error fetching projects", e);
-      } finally {
-        setLoadingProjects(false);
-      }
-
-      try {
-        const { data } = await supabase
-          .from('packages_one_time')
-          .select('*')
-          .in('name', ['Brand Presence Kit', 'Growth Launchpad', 'Digital Authority Kit'])
-          .order('display_order', { ascending: true });
-        setPackages(data || []);
-      } catch (e) {
-        console.error("Error fetching packages", e);
-      } finally {
-        setLoadingPackages(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const schemaOrg = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Service",
-        "name": "Ecommerce Website Design",
-        "description": "Custom ecommerce websites built to convert browsers into buyers. Mobile-optimised, fast-loading, with seamless checkout and full backend integration.",
-        "provider": {
-          "@type": "Organization",
-          "name": "Maxterz"
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "7100"
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://maxterz.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://maxterz.com/services" },
-          { "@type": "ListItem", "position": 3, "name": "Ecommerce Website Design", "item": "https://maxterz.com/services/web-development/ecommerce-website-design" }
-        ]
-      }
-    ]
-  };
-
-  const faqs = [
-    { q: "What platforms do you build ecommerce stores on?", a: "We build custom and on Shopify, WooCommerce, or headless setups depending on your catalogue size and growth plans. We recommend the right platform for your specific situation." },
-    { q: "How long does an ecommerce build take?", a: "Most stores are launched in 3 to 6 weeks depending on catalogue size, integrations, and how quickly content is supplied." },
-    { q: "Can I manage products myself after launch?", a: "Yes. You get a full walkthrough and can add, edit, or remove products without touching a developer again." },
-    { q: "Do you handle payment gateway setup?", a: "Yes. Stripe, PayPal, and major card processors are integrated and tested as standard. No extra charge for setup." },
-    { q: "Is SEO included in an ecommerce build?", a: "Product page SEO, schema markup, category structure, and site speed are all handled before launch." },
-    { q: "What if I already have a store that is underperforming?", a: "We audit what you have and decide together whether to migrate, rebuild, or refactor based on what is actually losing you revenue." }
-  ];
+  // Same value on the server and the first browser render, so the 3D fan never mismatches.
+  const isMobile = useIsMobile();
 
   return (
     <div className="bg-white selection:bg-[#1044ff] selection:text-white">
-      <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
-
-      {/* SECTION 1 — HERO */}
-      <section className="relative min-h-[80vh] flex flex-col justify-center items-center pt-24 pb-16 px-4 overflow-hidden bg-white">
+      {/* SECTION 1: HERO */}
+      <section className="relative min-h-[80vh] flex flex-col pt-24 pb-16 overflow-hidden bg-white">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808015_1px,transparent_1px),linear-gradient(to_bottom,#80808015_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none opacity-50" />
 
-        <div className="container mx-auto relative z-10 text-center max-w-5xl mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <span className="badge-standard-light mb-8">ECOMMERCE WEBSITE DESIGN</span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.1] text-balance">
-              Your Store Is Getting Visitors. <span className="text-[#1044ff]">It Should Be Getting Sales.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-              Most online stores attract traffic and lose the sale. The problem is almost never the product.
-            </p>
+        <div className="flex-1 w-full flex flex-col justify-center items-center px-4">
+          <div className="container mx-auto relative z-10 text-center max-w-5xl mt-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <h1 className="badge-standard-light mb-8">{h1}</h1>
+              <p className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[1.1] text-balance">
+                Your Store Is Getting Visitors. <span className="text-[#1044ff]">It Should Be Getting Sales.</span>
+              </p>
+              <p className="text-xl md:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto font-light leading-relaxed">
+                Most online stores attract traffic and lose the sale. The problem is almost never the product.
+              </p>
+              <FromPriceLine price={fromPrice} billing={billing} label="Online stores" className="mb-12" />
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-              <Button asChild size="lg" className="rounded-full h-14 px-8 text-lg bg-[#1044ff] hover:bg-[#0020bf] shadow-xl shadow-blue-500/20 w-full sm:w-auto transition-transform hover:scale-105">
-                <a href="https://calendly.com/maxterz-info/30min" target="_blank" rel="noopener noreferrer">
-                  Get a Free Store Audit
-                </a>
-              </Button>
-              <Button onClick={() => scrollTo('work-samples')} variant="outline" size="lg" className="rounded-full h-14 px-8 text-lg border-2 w-full sm:w-auto bg-white/80 backdrop-blur-sm">
-                See Our Work <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </div>
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+                <Button asChild size="lg" className="rounded-full h-14 px-8 text-lg bg-[#1044ff] hover:bg-[#0020bf] shadow-xl shadow-blue-500/20 w-full sm:w-auto transition-transform hover:scale-105">
+                  <Link href={bookHref} data-cta="book-a-free-call">
+                    {BOOK_LABEL}
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-lg border-2 w-full sm:w-auto bg-white/80 backdrop-blur-sm">
+                  <a href="#prices">
+                    See prices <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+                  </a>
+                </Button>
+              </div>
 
-            <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-gray-800 uppercase tracking-wider mb-8">
-              <span className="flex items-center gap-2"><Star className="w-4 h-4 text-[#eb7444] fill-current" /> 4.9 Stars</span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full" />
-              <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#1044ff]" /> 7,100 Reviews</span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full" />
-              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-500" /> 11,600 Projects</span>
-            </div>
-
-            <TrustBar />
-          </motion.div>
+              <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-bold text-gray-800 uppercase tracking-wider mb-8">
+                <span className="flex items-center gap-2"><Star className="w-4 h-4 text-[#eb7444] fill-current" aria-hidden="true" /> {SITE.proof.fiverrRating} Stars on Fiverr</span>
+                <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
+                <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#1044ff]" aria-hidden="true" /> {SITE.proof.fiverrReviews} Reviews on Fiverr</span>
+                <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
+                <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-500" aria-hidden="true" /> {SITE.proof.projects} Projects Since {SITE.proof.fiverrSince}</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
+
+        {/* Strip pinned to the bottom of the hero, as on the branding pages. Hidden until real slides exist (D32). */}
+        <WorkImageStrip slides={slides} label="Recent Store Work" />
       </section>
 
-      {/* SECTION 2 — THE COST */}
+      {/* SECTION 2: THE COST */}
       <section className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] border-y border-white/10">
         <div className="container mx-auto max-w-6xl">
           <motion.div
@@ -191,18 +190,18 @@ const EcommerceWebsiteDesign = () => {
             className="text-center mb-16"
           >
             <span className="inline-block border border-white/20 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">WHAT IT IS COSTING YOU</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">What a Poorly Built Store Loses Every Month.</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">What a Poorly Built Store Costs You.</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {[
-              { val: 70, suf: "%", title: "Average cart abandonment rate.", desc: "Seven in ten shoppers add to cart and leave. Most of the time it is a UX problem, not a price problem.", color: "text-[#1044ff]" },
-              { val: 7, suf: "%", title: "Conversion drop per second of load time.", desc: "Slow stores push buyers to faster competitors before they reach your checkout.", color: "text-[#eb7444]" },
-              { val: 53, suf: "%", title: "Mobile shoppers who never return after a poor checkout.", desc: "Over half your mobile traffic will leave and not come back if checkout feels broken.", color: "text-[#1044ff]" },
-              { textVal: "3x", title: "More revenue from optimised UX vs default themes.", desc: "The difference between a template store and a conversion-built store is not cosmetic.", color: "text-[#eb7444]" }
+              { value: "Slow", title: "Slow stores lose sales.", desc: "Shoppers leave a slow page and buy from a faster store.", color: "text-[#1044ff]" },
+              { value: "Clunky", title: "A checkout that feels hard.", desc: "Extra steps and surprise costs make buyers give up at the last step.", color: "text-[#eb7444]" },
+              { value: "Hidden", title: "Products Google cannot find.", desc: "Without product SEO and clear categories, search sends buyers to other stores.", color: "text-[#1044ff]" },
+              { value: "Manual", title: "Orders handled by hand.", desc: "Updating stock, shipping and orders by hand eats into your week.", color: "text-[#eb7444]" }
             ].map((stat, idx) => (
               <motion.div
-                key={idx}
+                key={stat.value}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -211,7 +210,7 @@ const EcommerceWebsiteDesign = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#f0f4ff]/0 to-[#f0f4ff]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 <div className={`text-4xl md:text-5xl lg:text-6xl font-black ${stat.color} mb-3 tracking-tighter relative z-10`}>
-                  {stat.textVal ? <span>{stat.textVal}</span> : <AnimatedNumber value={stat.val} suffix={stat.suf} />}
+                  <span>{stat.value}</span>
                 </div>
                 <h3 className="text-[11px] md:text-xs lg:text-sm font-bold text-gray-900 mb-2 relative z-10 uppercase tracking-wide group-hover:text-[#1044ff] transition-colors leading-tight">
                   {stat.title}
@@ -226,7 +225,7 @@ const EcommerceWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 3 — OUTCOMES */}
+      {/* SECTION 3: OUTCOMES */}
       <section className="py-24 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <motion.div
@@ -241,12 +240,12 @@ const EcommerceWebsiteDesign = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
-              { title: "Sells while you sleep.", desc: "Your store takes orders, processes payments, and confirms delivery without you involved. That is the point of ecommerce done right." },
+              { title: "Sells around the clock.", desc: "Your store takes orders, payments and confirmations at any hour, so you can focus on running the business." },
               { title: "Turns first buyers into repeat customers.", desc: "Email capture, account features, and post-purchase flows that bring buyers back without spending more on ads." },
-              { title: "Scales with your growth.", desc: "Whether you stock 10 products or 10,000, the architecture holds. No rebuild needed when demand increases." }
+              { title: "Grows with your business.", desc: "Start with the products you have today. Add more as you grow, without a rebuild." }
             ].map((outcome, idx) => (
               <motion.div
-                key={idx}
+                key={outcome.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -255,7 +254,7 @@ const EcommerceWebsiteDesign = () => {
               >
                 <div className="absolute -top-10 -right-10 w-32 h-32 md:w-40 md:h-40 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
                 <div className="mb-6 md:mb-8 inline-flex p-3 sm:p-4 rounded-[1rem] md:rounded-2xl bg-white/10 backdrop-blur-sm w-fit group-hover:bg-gradient-to-r group-hover:from-[#eb7444] group-hover:to-[#e05220] transition-all duration-300 border border-white shadow-lg relative z-10">
-                  <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                  <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-white" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3 md:mb-4 group-hover:translate-x-1 transition-transform duration-300 tracking-tight leading-tight relative z-10">
                   {outcome.title}
@@ -269,14 +268,12 @@ const EcommerceWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* CASE STUDY INSERTION */}
-      <section className="py-12 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center md:text-left">It works. Here is the proof.</h3>
+      {/* CASE STUDY INSERTION (Phase 5: hidden until a real case study exists, D36) */}
+      {caseStudy && (
+        <section className="py-12 px-4 bg-white">
+          <div className="container mx-auto max-w-6xl">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center md:text-left">It works. Here is the proof.</h3>
 
-          {loadingCaseStudy ? (
-            <div className="flex justify-center items-center py-20 bg-gray-50 rounded-[2rem] border border-gray-100"><Loader2 className="animate-spin text-[#1044ff] w-10 h-10" /></div>
-          ) : caseStudy ? (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -299,19 +296,17 @@ const EcommerceWebsiteDesign = () => {
                 <p className="text-gray-600 text-base lg:text-lg mb-6 leading-relaxed font-light">{caseStudy.description}</p>
                 {caseStudy.key_result && (
                   <div className="bg-gradient-to-r from-blue-50 to-white border-l-4 border-[#1044ff] p-5 rounded-r-xl w-full shadow-sm">
-                    <p className="text-[#1044ff] font-bold text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><CheckCircle size={14} /> Key Result</p>
+                    <p className="text-[#1044ff] font-bold text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><CheckCircle size={14} aria-hidden="true" /> Key Result</p>
                     <p className="text-gray-900 font-semibold text-sm md:text-base">{caseStudy.key_result}</p>
                   </div>
                 )}
               </div>
             </motion.div>
-          ) : (
-            <div className="text-center py-10 text-gray-500 bg-gray-50 rounded-[2rem] border border-gray-100">Case study not available.</div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* SECTION 4 — APPROACH */}
+      {/* SECTION 4: APPROACH */}
       <section className="py-24 px-4 bg-gray-50 border-y border-gray-100 overflow-hidden">
         <div className="container mx-auto max-w-7xl">
           <motion.div
@@ -326,13 +321,13 @@ const EcommerceWebsiteDesign = () => {
 
           <div className="flex flex-col md:flex-row justify-center items-center md:items-stretch gap-6 md:gap-0 [perspective:1200px] py-10">
             {[
-              { icon: <ShoppingCart className="w-8 h-8" />, title: "Product-first UX design.", desc: "Every page is built around how buyers browse, compare, and decide. Not around what the designer found interesting." },
-              { icon: <ShieldCheck className="w-8 h-8" />, title: "Checkout that converts.", desc: "Frictionless payment flows with trust signals at every step. Fewer distractions. More completed orders." },
-              { icon: <Zap className="w-8 h-8" />, title: "Mobile-optimised from the start.", desc: "Over half of ecommerce traffic is mobile. We design for that first, not as an afterthought." },
-              { icon: <Package className="w-8 h-8" />, title: "Backend built for growth.", desc: "Stock management, order tracking, and fulfilment tools connected and automated before launch." }
+              { icon: <ShoppingCart className="w-8 h-8" aria-hidden="true" />, title: "Product-first UX design.", desc: "Every page is built around how buyers browse, compare, and decide. Not around what the designer found interesting." },
+              { icon: <ShieldCheck className="w-8 h-8" aria-hidden="true" />, title: "Checkout that converts.", desc: "Frictionless payment flows with trust signals at every step. Fewer distractions. More completed orders." },
+              { icon: <Zap className="w-8 h-8" aria-hidden="true" />, title: "Mobile-optimised from the start.", desc: "Many shoppers buy on their phones. We design for mobile first, not as an afterthought." },
+              { icon: <Package className="w-8 h-8" aria-hidden="true" />, title: "Backend built for growth.", desc: "Products, payments and shipping set up and connected before launch, so the store runs from day one." }
             ].map((item, idx) => (
               <motion.div
-                key={idx}
+                key={item.title}
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -342,7 +337,7 @@ const EcommerceWebsiteDesign = () => {
                 className="relative w-full max-w-[340px] bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:-ml-8 transition-all duration-500 ease-out flex flex-col group shrink-0"
                 style={{
                   zIndex: hoveredApproach === idx ? 50 : 10 - idx,
-                  transform: typeof window !== 'undefined' && window.innerWidth >= 768
+                  transform: !isMobile
                     ? hoveredApproach === idx
                       ? 'rotateY(0deg) scale(1.05) translateY(-16px)'
                       : 'rotateY(-12deg) scale(0.95)'
@@ -363,7 +358,7 @@ const EcommerceWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 5 — PROCESS */}
+      {/* SECTION 5: PROCESS */}
       <section className="py-24 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <motion.div
@@ -380,13 +375,13 @@ const EcommerceWebsiteDesign = () => {
             <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-100 hidden md:block -translate-y-1/2 rounded-full" />
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6">
               {[
-                { step: "01", title: "Discovery and Catalogue Mapping", desc: "We map your products, fulfilment process, and customer journey before anything is built." },
+                { step: "01", title: "Discovery and Catalogue Mapping", desc: "We map your products, fulfilment process, and customer journey. You get a plan and a fixed quote within one working day." },
                 { step: "02", title: "Design and UX", desc: "Mobile-first storefront designed around conversion intent. Approved before development starts." },
-                { step: "03", title: "Build and Integrate", desc: "Full development, payment gateway, shipping integration, and technical SEO setup." },
-                { step: "04", title: "Test, Launch, and Handover", desc: "Full QA across devices and browsers. Launch day support and a walkthrough so you can manage it yourself." }
+                { step: "03", title: "Build and Integrate", desc: "Full build, payments, shipping and technical SEO set-up. A Shopify store takes 2 to 3 weeks and a custom store 4 to 6 weeks." },
+                { step: "04", title: "Test, Launch, and Handover", desc: "Full QA across devices and browsers. Launch day support and training so you can manage the store yourself." }
               ].map((item, idx) => (
                 <motion.div
-                  key={idx}
+                  key={item.step}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -405,29 +400,25 @@ const EcommerceWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 6 — WORK SAMPLES */}
-      <section id="work-samples" className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white">
-        <div className="container mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
-          >
-            <div>
-              <span className="inline-block border border-white/30 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">OUR WORK</span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Recent Projects.</h2>
-            </div>
-            <Link href="/our-work" className="text-white hover:text-white/80 flex items-center gap-2 font-semibold transition-colors">
-              View all projects <ArrowRight size={16} />
-            </Link>
-          </motion.div>
+      {/* SECTION 6: WORK SAMPLES (Phase 5: hidden until real projects exist, D36) */}
+      {projects.length > 0 && (
+        <section id="work-samples" className="py-24 px-4 bg-gradient-to-br from-[#1044ff] to-[#0020bf] text-white">
+          <div className="container mx-auto max-w-7xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
+            >
+              <div>
+                <span className="inline-block border border-white/30 bg-white/10 rounded-full px-4 py-1.5 text-xs font-bold text-white uppercase tracking-widest mb-6">OUR WORK</span>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Recent Projects.</h2>
+              </div>
+              <Link href="/our-work" className="text-white hover:text-white/80 flex items-center gap-2 font-semibold transition-colors">
+                View all projects <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </motion.div>
 
-          {loadingProjects ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-white w-10 h-10" /></div>
-          ) : projects.length === 0 ? (
-            <div className="text-center py-20 text-white/70 border border-white/20 rounded-[2rem]">No projects found.</div>
-          ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {projects.map((project, idx) => (
                 <motion.div
@@ -443,7 +434,7 @@ const EcommerceWebsiteDesign = () => {
                       <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" alt={project.title} src={project.main_image} />
                       <div className="absolute inset-0 bg-[#1044ff]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center scale-50 group-hover:scale-100 transition-transform duration-300">
-                          <ArrowUpRight size={32} className="text-[#1044ff]" />
+                          <ArrowUpRight size={32} className="text-[#1044ff]" aria-hidden="true" />
                         </div>
                       </div>
                     </div>
@@ -455,12 +446,12 @@ const EcommerceWebsiteDesign = () => {
                 </motion.div>
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* SECTION 7 — PACKAGES */}
-      <section className="py-24 px-4 bg-gray-50">
+      {/* SECTION 7: PRICES (from Supabase, inventory section 3) */}
+      <section id="prices" className="py-24 px-4 bg-gray-50">
         <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -468,36 +459,60 @@ const EcommerceWebsiteDesign = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="badge-standard-light">ECOMMERCE PACKAGES</span>
+            <span className="badge-standard-light">ECOMMERCE PRICES</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Choose Your Starting Point.</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Fixed scope. Fixed price. No hidden costs.</p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Clear starting prices. A fixed quote before work starts.</p>
           </motion.div>
 
-          {loadingPackages ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#1044ff] w-10 h-10" /></div>
-          ) : packages.length === 0 ? (
-            <div className="text-center py-20 text-gray-500 bg-white rounded-[2rem] border border-gray-100">No packages available at the moment.</div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {packages.map((pkg, idx) => (
-                <motion.div key={pkg.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.15 }}>
-                  <PackageCard {...pkg} />
+          {prices.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto">
+              {prices.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.15 }}
+                  className="h-full"
+                >
+                  <PriceCard item={item} />
                 </motion.div>
               ))}
             </div>
           )}
 
+          <p className="text-center text-gray-700 max-w-3xl mx-auto mb-16">
+            Launching a new brand with your store? The{' '}
+            <Link href="/packages" className="text-[#1044ff] font-semibold hover:underline">
+              Scale Kit
+            </Link>{' '}
+            can include a custom online store, with brand identity, copywriting, SEO and a motion graphics ad.
+          </p>
+
           <div className="text-center bg-white border border-gray-100 p-8 md:p-12 rounded-[2rem] max-w-4xl mx-auto shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Need a large catalogue, custom integrations, or a bespoke platform?</h3>
-            <p className="text-gray-600 mb-8">For complex ecommerce builds with advanced inventory, custom checkout, or multi-channel requirements, we scope entirely bespoke projects.</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Need something custom?</h3>
+            <p className="text-gray-600 mb-8">
+              Large catalogues, custom checkouts and multi-channel selling are scoped on a free call with a fixed quote. Selling services, not products? See{' '}
+              <Link href="/services/web-development/business-website-design" className="text-[#1044ff] font-semibold hover:underline">
+                business website design
+              </Link>
+              . Need an app or a custom platform? See{' '}
+              <Link href="/services/web-development/app-and-software-development" className="text-[#1044ff] font-semibold hover:underline">
+                app and software development
+              </Link>
+              .
+            </p>
             <Button asChild size="lg" className="rounded-full h-14 px-10 text-lg bg-gray-900 hover:bg-black text-white">
-              <Link href="/contact">Get a Custom Quote</Link>
+              <Link href={bookHref} data-cta="book-a-free-call">{BOOK_LABEL}</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* SECTION 8 — FAQ */}
+      {/* REVIEWS (renders nothing without reviews) */}
+      <ServiceReviews reviews={reviews} />
+
+      {/* SECTION 8: FAQ */}
       <section className="py-24 px-4 bg-white border-y border-gray-100">
         <div className="container mx-auto max-w-3xl">
           <motion.div
@@ -512,7 +527,7 @@ const EcommerceWebsiteDesign = () => {
 
           <Accordion type="single" collapsible className="w-full space-y-4">
             {faqs.map((faq, idx) => (
-              <AccordionItem key={idx} value={`item-${idx}`} className="bg-gray-50 px-6 rounded-2xl border border-gray-100">
+              <AccordionItem key={faq.q} value={`item-${idx}`} className="bg-gray-50 px-6 rounded-2xl border border-gray-100">
                 <AccordionTrigger className="text-lg font-bold hover:no-underline hover:text-[#1044ff] text-left py-6">
                   {faq.q}
                 </AccordionTrigger>
@@ -525,14 +540,13 @@ const EcommerceWebsiteDesign = () => {
         </div>
       </section>
 
-      {/* SECTION 9 — FINAL CTA */}
+      {/* SECTION 9: FINAL CTA */}
+      {related}
+
       <CTASection
-        headline="Ready to Turn Your Store Into a Revenue Machine?"
-        subtext="Book a free 30-minute audit. We look at your current store, identify what is costing you sales, and tell you exactly what needs to change."
-        primaryCTA="Book Free Store Audit"
-        secondaryCTA="Get a Custom Quote"
-        whatsapp="https://wa.me/447375874706"
-        background="orange"
+        headline="Ready for a Store That Sells?"
+        subtext="Book a free 30-minute call. We look at your store or your plans and show you what to fix or build first."
+        service="ecommerce-website-design"
       />
     </div>
   );

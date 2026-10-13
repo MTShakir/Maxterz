@@ -1,6 +1,7 @@
+import 'server-only';
 import { unstable_cache } from 'next/cache';
 import { createPublicServerClient } from '@/lib/supabaseServer';
-import { lowestPrice, packageSaving, packageValue } from '@/lib/pricing-calc';
+import { isAddOn, lowestPrice, packageSaving, packageValue } from '@/lib/pricing-calc';
 
 /**
  * Every active price, package and package item, read on the server and cached.
@@ -35,6 +36,7 @@ export async function getPagePrices(path) {
 
 /**
  * Lowest "from" price for each service page under a category path, for category cards.
+ * Add-ons never count (pricing-calc ADD_ON_IDS).
  * @param {string} categoryPath e.g. "/services/branding-design"
  * @returns {Promise<Record<string, number | null>>} keyed by service page path
  */
@@ -42,7 +44,7 @@ export async function getFromPricesUnder(categoryPath) {
   const { items } = await getPricing();
   const byPage = {};
   for (const item of items) {
-    if (!item.service_page?.startsWith(`${categoryPath}/`)) continue;
+    if (!item.service_page?.startsWith(`${categoryPath}/`) || isAddOn(item)) continue;
     (byPage[item.service_page] ??= []).push(item);
   }
   return Object.fromEntries(Object.entries(byPage).map(([page, list]) => [page, lowestPrice(list)]));

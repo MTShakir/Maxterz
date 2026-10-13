@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { formatGBP, lowestPrice, packageSaving, packageValue } from '../src/lib/pricing-calc.js';
+import { formatGBP, isAddOn, lowestPrice, packageSaving, packageValue, priceParts } from '../src/lib/pricing-calc.js';
 
 const data = JSON.parse(readFileSync(new URL('../docs/website/data/pricing.json', import.meta.url), 'utf8'));
 const packageItems = data.packages.flatMap((pkg) =>
@@ -54,4 +54,23 @@ test('formatGBP', () => {
   assert.equal(formatGBP(1995), '£1,995');
   assert.equal(formatGBP(9995), '£9,995');
   assert.equal(formatGBP(12000), '£12,000');
+});
+
+test('priceParts: how each price model is shown', () => {
+  const item = (id) => data.price_items.find((i) => i.id === id);
+  assert.equal(priceParts(item('website-10')).label, 'from £1,995');
+  assert.equal(priceParts(item('logo-professional')).label, '£395');
+  assert.equal(priceParts(item('explainer-60'), { forceFrom: true }).label, 'from £2,495');
+  assert.equal(priceParts(item('smm-growth')).label, '£695 a month');
+  assert.equal(priceParts(item('ai-chat-agent')).label, '£795 set-up, then £149 a month');
+  assert.equal(priceParts(item('social-post')).label, '£30 per post');
+  assert.equal(priceParts(item('thumbnail-monthly')).label, 'Custom quote');
+});
+
+test('add-ons never set a from price', () => {
+  assert.equal(isAddOn({ id: 'copywriting' }), true);
+  assert.equal(isAddOn({ id: 'voiceover' }), true);
+  assert.equal(isAddOn({ id: 'website-5' }), false);
+  const page = data.price_items.filter((i) => i.service_page === '/services/web-development/business-website-design');
+  assert.equal(lowestPrice(page.filter((i) => !isAddOn(i))), 495);
 });

@@ -1,14 +1,22 @@
-import EcommerceWebsiteDesign from '@/screens/services/sub/EcommerceWebsiteDesign';
 import { buildMetadata, ROUTES } from '@/lib/routes';
 import { PageSchema } from '@/lib/schema';
+import RelatedServices from '@/components/service/RelatedServices';
+import { getServicePageData } from '@/lib/pageData';
+import { faqs } from '@/content/faq/ecommerce-website-design';
+import EcommerceWebsiteDesign from '@/screens/services/sub/EcommerceWebsiteDesign';
 
-export const metadata = buildMetadata(ROUTES.find((r) => r.path === '/services/web-development/ecommerce-website-design'));
+const PATH = '/services/web-development/ecommerce-website-design';
+const route = ROUTES.find((r) => r.path === PATH);
+export const metadata = buildMetadata(route);
+export const revalidate = 300;
 
-export default function EcommerceWebsiteDesignPage() {
+export default async function EcommerceWebsiteDesignPage() {
+  const data = await getServicePageData(PATH, { serviceSlug: 'ecommerce-website-design', reviewSlugs: [] });
+
   return (
     <>
-      <PageSchema path="/services/web-development/ecommerce-website-design" />
-      <EcommerceWebsiteDesign />
+      <PageSchema path={PATH} fromPrice={data.fromPrice} billing={data.billing} faqs={faqs} />
+      <EcommerceWebsiteDesign h1={route.h1} {...data} related={<RelatedServices path={PATH} />} />
     </>
   );
 }

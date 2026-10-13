@@ -12,7 +12,12 @@ Rewritten 12 Oct 2026 by Claude Code.
 
 ## Blocks Phase 4B
 
-- [ ] **Stripe.** Account for MAXTERZ LTD (business bank account, statement descriptor MAXTERZ, no tax). 4 Payment Links in GBP: Logo Design Essential £195, Logo Animation Essential £295, YouTube Thumbnail try one £50, Short-form Edit try one £50. On each link: collect name, email and phone, add a field "Business or channel name", require acceptance of your terms (https://maxterz.com/terms-conditions) and redirect after payment to `https://maxterz.com/thank-you?type=purchase`. Send the 4 links in chat (they are public). Vercel names: `NEXT_PUBLIC_STRIPE_LINK_LOGO_DESIGN`, `NEXT_PUBLIC_STRIPE_LINK_LOGO_ANIMATION`, `NEXT_PUBLIC_STRIPE_LINK_THUMBNAIL`, `NEXT_PUBLIC_STRIPE_LINK_SHORT_EDIT`. Buy now buttons stay hidden until set.
+- [ ] **ThumbLab is offline.** thumblab.maxterz.com does not resolve (no DNS record, checked 13 Oct). The thumbnail page links to it, and the business profile says ThumbLab is live. Tell Claude Code where ThumbLab is hosted, or add the DNS record. Must work before launch.
+- [ ] **3 quick answers for the FAQs** (the price book is silent; the FAQs avoid numbers until you answer):
+  1. Logo animation: how many revision rounds on Professional and on Premium 3D? (Essential has 2.)
+  2. Thumbnails: how many revisions per thumbnail?
+  3. Logo design Signature: does it include the AI and EPS source files and the social profile versions, like Professional?
+- [ ] **Stripe Payment Links** (account approved, 13 Oct; links not API keys for now, D41 proposed). Check the statement descriptor is MAXTERZ and tax collection is off. 4 Payment Links in GBP: Logo Design Essential £195, Logo Animation Essential £295, YouTube Thumbnail try one £50, Short-form Edit try one £50. On each link: collect name, email and phone, add a field "Business or channel name", require acceptance of your terms (https://maxterz.com/terms-conditions) and redirect after payment to `https://maxterz.com/thank-you?type=purchase`. Send the 4 links in chat (they are public). Vercel names: `NEXT_PUBLIC_STRIPE_LINK_LOGO_DESIGN`, `NEXT_PUBLIC_STRIPE_LINK_LOGO_ANIMATION`, `NEXT_PUBLIC_STRIPE_LINK_THUMBNAIL`, `NEXT_PUBLIC_STRIPE_LINK_SHORT_EDIT`. Buy now buttons stay hidden until set.
 - [ ] **Strip images, 4 new pages.** Folders `brand-identity-design` (full identity systems: logo, cards, signage, social, guidelines; never logos alone, or the page looks like the £195 logo page), `social-media-design`, `motion-graphics`, `video-editing`. Same spec as the built pages.
 - [ ] **Home hero visual.** Today it shows your Maxterz logo animation GIF, with stock photos as a fallback (stock goes). Recommended: 1 to 3 device mockups of finished client work (a website on laptop and phone, the brand on cards), because Launch Kit buyers want to see a brand and website, not a logo reveal. Folder `docs/assets/hero/home/`.
 
@@ -42,8 +47,8 @@ Rewritten 12 Oct 2026 by Claude Code.
 ## Launch day (after Phase 6 passes)
 
 - [ ] **Domains in Vercel:** maxterz.com (primary), www.maxterz.com, maxterz.co.uk, www.maxterz.co.uk, maxterzhub.co.uk and www.maxterzhub.co.uk. Change web records only (A and CNAME). Keep MX, SPF, DKIM, DMARC and the thumblab record. Send a test email to info@maxterz.com and info@maxterz.co.uk after every change.
-- [ ] **Vercel env check:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `RESEND_API_KEY`, `REVALIDATE_SECRET` (Claude Code generates it), `NEXT_PUBLIC_CLARITY_ID` and the 4 Stripe links.
-- [ ] **Price webhook.** Say "apply" and Claude Code creates it in Supabase: the pricing tables and testimonials call /api/revalidate with the secret. Test: change one price and see it on /packages within a minute.
+- [ ] **Vercel env check:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `RESEND_API_KEY`, `REVALIDATE_SECRET` (copy the value Claude Code put in `.env.local`, mark it Sensitive), `NEXT_PUBLIC_CLARITY_ID` and the 4 Stripe links.
+- [ ] **Price webhook.** Say "apply" and Claude Code creates it in Supabase: `price_items`, `packages`, `package_items`, `testimonials` and `hero_slides` call https://maxterz.com/api/revalidate with the secret (the route already accepts Supabase's webhook format). Until then, edits show within 5 minutes. Test: change one price and see it on the page within a minute.
 - [ ] **Search Console and Bing.** Submit the sitemap, inspect home and 5 key pages, then run Change of Address from maxterz.co.uk to maxterz.com. Bing Webmaster Tools: import from Search Console.
 - [ ] **GA4.** Mark `generate_lead` and `book_call` as key events, link Search Console and set data retention to 14 months (the default is 2).
 - [ ] **Supabase.** Deactivate the legacy anon and service_role keys once the new site is live (D33). Move to the Pro plan (about $25 a month) for daily backups: leads are the most valuable data the business holds.

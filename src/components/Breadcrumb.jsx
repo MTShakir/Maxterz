@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ChevronRight } from 'lucide-react';
 
 const routeLabels = {
   'services': 'Services',
-  'web-development': 'Web and App Development',
+  'web-development': 'Web Design and Development',
   'business-website-design': 'Business Website Design',
   'ecommerce-website-design': 'Ecommerce Website Design',
-  'mobile-app-development': 'Mobile App Development',
-  'app-design': 'App and UI/UX Design',
+  'app-and-software-development': 'App and Software Development',
   'branding-design': 'Branding and Design',
   'logo-design': 'Logo Design',
   'brand-identity-design': 'Brand Identity Design',
@@ -23,11 +23,7 @@ const routeLabels = {
   'video-editing': 'Video Editing',
   'social-media-management': 'Social Media Management',
   'ai-automation': 'AI and Automation',
-  'ai-receptionist': 'AI Receptionist',
-  'ai-chat-agents': 'AI Chat Agents',
   'seo-digital-marketing': 'SEO and Digital Marketing',
-  'seo-services': 'SEO Services',
-  'local-seo': 'Local SEO',
   'packages': 'Packages and Pricing',
   'launch-kit': 'Launch Kit',
   'our-work': 'Our Work',
@@ -117,7 +113,7 @@ const Breadcrumb = () => {
                 itemType="https://schema.org/ListItem"
                 className="flex items-center"
               >
-                <span className="mx-2 text-[#d1d5db]" aria-hidden="true">›</span>
+                <ChevronRight className="mx-1.5 w-3.5 h-3.5 text-[#9ca3af] shrink-0" aria-hidden="true" />
                 {last ? (
                   <span 
                     itemProp="name" 

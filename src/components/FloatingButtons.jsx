@@ -10,8 +10,9 @@ const WhatsAppIcon = ({ className, size }) => (
 );
 
 const FloatingButtons = () => {
+  // Desktop only: on phones the MobileActionBar already carries WhatsApp (no duplicate button).
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-4">
+    <div className="fixed bottom-6 right-6 z-40 hidden md:flex flex-col items-end space-y-4">
       <motion.a
         href="https://wa.me/447375874706"
         target="_blank"

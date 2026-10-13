@@ -48,6 +48,13 @@ const nextConfig = {
       ['/services/ai-tech',       '/services/ai-automation'],
       ['/shop',          '/packages'],
       ['/insights/:id',  '/insights'],
+      // Service page map v2 (D31): removed or moved pages
+      ['/services/web-development/mobile-app-development', '/services/web-development/app-and-software-development'],
+      ['/services/web-development/app-design',             '/services/web-development/app-and-software-development'],
+      ['/services/ai-automation/ai-receptionist',          '/services/ai-automation'],
+      ['/services/ai-automation/ai-chat-agents',           '/services/ai-automation'],
+      ['/services/seo-digital-marketing/seo-services',     '/services/seo-digital-marketing'],
+      ['/services/seo-digital-marketing/local-seo',        '/services/seo-digital-marketing'],
     ];
 
     // Hosts that mirror maxterz.com content — redirect every path to maxterz.com.

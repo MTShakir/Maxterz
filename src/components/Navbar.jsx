@@ -3,10 +3,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { bookHref, serviceSlugFromPath } from '@/lib/cta';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Code, Palette, Video, Users, Cpu, TrendingUp,
-  ChevronDown, Menu, X, Facebook, Instagram, Linkedin,
+  ChevronDown, Menu, X, Facebook, Instagram, Linkedin, ArrowRight,
 } from 'lucide-react';
 
 // ─── Custom SVG Icons ─────────────────────────────────────────────────────────
@@ -32,7 +33,7 @@ const socialLinks = [
 ];
 
 const serviceCategories = [
-  { to: '/services/web-development',         label: 'Web and App Development'    },
+  { to: '/services/web-development',         label: 'Web Design and Development' },
   { to: '/services/branding-design',         label: 'Branding and Design'        },
   { to: '/services/video-animation',         label: 'Video and Animation'        },
   { to: '/services/social-media-management', label: 'Social Media Management'    },
@@ -43,12 +44,11 @@ const serviceCategories = [
 const megaCols = [
   {
     Icon: Code,
-    label: 'Web and App Development',
+    label: 'Web Design and Development',
     subpages: [
-      { to: '/services/web-development/business-website-design', label: 'Business Website Design'   },
-      { to: '/services/web-development/ecommerce-website-design', label: 'Ecommerce Website Design' },
-      { to: '/services/web-development/mobile-app-development',  label: 'Mobile App Development'    },
-      { to: '/services/web-development/app-design',              label: 'App and UI/UX Design'       },
+      { to: '/services/web-development/business-website-design',      label: 'Website Design'               },
+      { to: '/services/web-development/ecommerce-website-design',      label: 'Ecommerce Website Design'     },
+      { to: '/services/web-development/app-and-software-development',  label: 'App and Software Development' },
     ],
     anchors: [],
     viewAll: { to: '/services/web-development', label: 'View all web services' },
@@ -92,29 +92,19 @@ const megaCols = [
   {
     Icon: Cpu,
     label: 'AI and Automation',
-    subpages: [
-      { to: '/services/ai-automation/ai-receptionist', label: 'AI Receptionist'                   },
-      { to: '/services/ai-automation/ai-chat-agents',  label: 'AI Chat Agents (WhatsApp and SMS)' },
-    ],
-    anchors: [
-      { href: '/services/ai-automation#workflow-automation', label: 'Workflow Automation' },
-      { href: '/services/ai-automation#ai-consulting',       label: 'AI Consulting'       },
-    ],
-    viewAll: { to: '/services/ai-automation', label: 'View all AI services' },
+    description: 'AI chat agents for your website and WhatsApp, AI receptionists and workflow automation.',
+    subpages: [],
+    anchors: [],
+    viewAll: { to: '/services/ai-automation', label: 'View AI chatbots and automation' },
     borderRight: true, borderTop: true,
   },
   {
     Icon: TrendingUp,
     label: 'SEO and Digital Marketing',
-    subpages: [
-      { to: '/services/seo-digital-marketing/seo-services', label: 'SEO Services'  },
-      { to: '/services/seo-digital-marketing/local-seo',    label: 'Local SEO'     },
-    ],
-    anchors: [
-      { href: '/services/seo-digital-marketing#paid-advertising', label: 'Paid Advertising' },
-      { href: '/services/seo-digital-marketing#technical-seo',    label: 'Technical SEO'    },
-    ],
-    viewAll: { to: '/services/seo-digital-marketing', label: 'View all marketing services' },
+    description: 'SEO, local SEO, Google Business Profile and paid ads that bring enquiries.',
+    subpages: [],
+    anchors: [],
+    viewAll: { to: '/services/seo-digital-marketing', label: 'View SEO and local SEO services' },
     borderRight: false, borderTop: true,
   },
 ];
@@ -267,7 +257,7 @@ const Navbar = () => {
             </nav>
 
             <div className="hidden lg:flex items-center gap-4">
-              <div className="flex items-center gap-2 mr-2">
+              <div className="hidden xl:flex items-center gap-2 mr-2">
                 {socialLinks.slice(0, 3).map(({ href, Icon, label }) => (
                   <a
                     key={label}
@@ -282,8 +272,8 @@ const Navbar = () => {
                 ))}
               </div>
               <Link
-                href="/book"
-                className="flex items-center gap-2 rounded-full px-6 h-12 text-[15px] font-bold
+                href={bookHref(serviceSlugFromPath(pathname))}
+                className="flex shrink-0 whitespace-nowrap items-center gap-2 rounded-full px-6 h-12 text-[15px] font-bold
                            bg-gradient-to-r from-[#eb7444] to-[#e05220] text-white
                            shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40
                            hover:scale-105 transition-all duration-300 border border-orange-400/20"
@@ -413,7 +403,7 @@ const Navbar = () => {
                                  text-[#1044ff] hover:text-[#e7581e] transition-colors duration-150"
                     >
                       {col.viewAll.label}
-                      <span className="text-[11px]">&#8594;</span>
+                      <ArrowRight className="w-3 h-3" aria-hidden="true" />
                     </Link>
                   </div>
                 </div>
@@ -510,7 +500,7 @@ const Navbar = () => {
                             className="px-12 py-2.5 mt-1 text-[17px] font-bold
                                        text-[#1044ff] hover:text-[#eb7444] transition-colors"
                           >
-                            View all services &#8594;
+                            View all services <ArrowRight className="inline w-3.5 h-3.5 ml-1" aria-hidden="true" />
                           </Link>
                         </div>
                       </div>
@@ -556,7 +546,7 @@ const Navbar = () => {
                 ))}
               </div>
               <Link
-                href="/book"
+                href={bookHref(serviceSlugFromPath(pathname))}
                 onClick={() => setMobileMenuOpen(false)}
                 className="block w-full text-center rounded-full py-4 text-[16px] font-bold text-white
                            bg-gradient-to-r from-[#eb7444] to-[#e05220]

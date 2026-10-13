@@ -4,6 +4,18 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 
 ---
 
+## 13 Oct 2026 | Phase 4A | The 13 built pages on server data, fresh review fixed (Claude Code, launch branch)
+- All 13 built pages render on the server with prices from Supabase (D29, D30), one H1 from routes.js, Book a free call to /book?service=, a hero price line, real Fiverr reviews, FAQ modules in `src/content/faq/` with FAQPage schema, a Related services block, and no inline JSON-LD. Placeholder claims, invented results and old package names removed (D36). Report: `docs/launch/phase-4a-report.md`.
+- Apps page moved to /services/web-development/app-and-software-development; app-design, ai-receptionist, ai-chat-agents, seo-services and local-seo removed. All 6 old URLs redirect in one hop (also from the old hosts). Menu, footer, breadcrumbs and services hub use the D31 names.
+- Shared: `src/lib/pageData.js`, `src/lib/cta.js`, `FromPriceLine`, `ServiceReviews`, `RelatedServices`, `TypeWriter`, slides-based `WorkImageStrip`, `<details>` accordion, end CTA with service and prefilled WhatsApp, footer legal line with ICO number, `/thank-you` by type, Calendly embed fixed (UTMs and service now reach Calendly), revalidate route accepts Supabase webhook payloads, reduced motion respected, `server-only` guards, `tools/upload-hero.mjs` for strip images.
+- Fresh review: 5 MUST FIX (lead auto-reply abuse, an unbacked BWLD claim, commented-out invented results, arrows in the menu, missing web strip) and 25 SHOULD FIX; all MUST FIX and most SHOULD FIX fixed (report section 6). Also fixed: the cookie policy's wrong company number.
+- Data: ads-management note in Supabase and pricing.json rewritten without amounts (no price changed). REVALIDATE_SECRET generated in `.env.local`.
+- D41 (Proposed): Stripe Payment Links now, API checkout later.
+- Checks: `npm run build` exit 0 (13 pages static with 5-minute ISR), `npm run lint` exit 0, `npm run test:pricing` 9 of 9, browser checks at 1024px and 375px (no horizontal scroll), server HTML checks on all 13 pages.
+- Files touched: next.config.mjs, eslint.config.mjs, package.json, src/app (13 service pages, book, thank-you, cookie-policy, api/leads, api/revalidate, services hub; 5 removed pages; 1 moved), src/screens/services (13 screens; SEOServices removed), src/components (Navbar, Footer, Breadcrumb, Layout, FloatingButtons, MobileActionBar, WorkImageStrip, TypeWriter, home/CTASection, ui/accordion, service/*), src/content (faq/*, related.js), src/lib (cta, pageData, pricing, pricing-calc, routes, schema, site, supabaseServer, customSupabaseClient), src/app/globals.css, tools (seed-pricing, seed-testimonials, pricing.test, upload-hero), docs (decisions, inventory, offers, business profile, brief, pricing.json, TODO-talha, CHANGELOG, phase-4a-report)
+
+---
+
 ## 13 Oct 2026 | Phase 4A | Data layer live, lead flow tested, D38 to D40 (Claude Code, launch branch)
 - Migrations (shown and approved): `pricing_tables_and_hero_slides` (price_items, packages, package_items, hero_slides, `set_updated_at` trigger, read-only RLS, public `hero-slides` bucket for WebP and MP4 up to 2MB) and `testimonials_is_published` (published switch; both read policies use it; nothing dropped). Security advisor: no findings.
 - Seeded 57 price items, 7 packages and 32 package links from pricing.json (`npm run seed:pricing`, safe to rerun, never overwrites Supabase edits without `--overwrite`). Unit test `npm run test:pricing`: 7 of 7 pass. 33 curated Fiverr reviews published (`npm run seed:reviews`); the 5 placeholder rows stay hidden. The old seed could never run: package.json is `"type": "module"` and the script used `require`.

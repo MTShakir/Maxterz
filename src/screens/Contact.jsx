@@ -18,7 +18,7 @@ const services = [
   'Launch Kit',
   'Scale Kit',
   'A monthly plan',
-  'Web and App Development',
+  'Web Design and Development',
   'Branding and Design',
   'Video and Animation',
   'Social Media Management',
