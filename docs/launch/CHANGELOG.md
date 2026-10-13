@@ -15,6 +15,7 @@ Newest first. Every entry: date, phase, what changed, files touched. Claude Code
 - SEO data: routes.js updatedAt 13 Oct for the 7 pages, home schema lists FAQPage, motion graphics meta description rewritten (D43, proposed).
 - D42 (Proposed): "Services from £X" cards show each category's core service price, named. D43 (Proposed): motion graphics meta description.
 - Checks: `npm run build` exit 0 (49 pages; the 7 pages static with 5-minute ISR), `npm run lint` exit 0, `npm run test:pricing` 9 of 9, server HTML checks on 9 pages, no horizontal scroll at 375px on 8 pages, prices equal to Supabase.
+- Commit 3b457c9. Vercel preview: https://maxterz-4top5lhl6-maxterz.vercel.app (Vercel login needed).
 - Files touched: src/app (page.jsx, packages/page.jsx, packages/launch-kit/page.jsx, 4 service pages), src/screens (Home, PackagesPage, LaunchKit, OurWorkPage, services/sub/BrandIdentityDesign, SocialMediaDesign, MotionGraphics, VideoEditing), src/components (ProofBar, home/Hero, FiverreProof, FeaturedServices, OneHubStatement, LaunchKitOffer, WhyChooseUs, ProcessSteps, PackagesPreview, Testimonials, FounderNote, HomeFaq, TrustStats deleted, packages/PackageCard, service/ServiceReviews), src/content (home.js, related.js, faq/packages, launch-kit, brand-identity-design, social-media-design, motion-graphics, video-editing), src/lib (pageData, reviews, routes, schema), public/images (team, hero), tools/upload-hero.mjs, docs (pricing.json, 03-decisions, TODO-talha, CHANGELOG, phase-4b-report)
 
 ---

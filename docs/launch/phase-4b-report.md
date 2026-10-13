@@ -100,5 +100,5 @@ A fresh reviewer checked the change set against the brief, the inventory, D25 to
 ## 7. Preview
 
 - 4A commit 1c1a956: https://maxterz-49otiw5f5-maxterz.vercel.app (Vercel login needed).
-- 4B: see the CHANGELOG entry for the deployment link.
+- 4B commit 3b457c9: https://maxterz-4top5lhl6-maxterz.vercel.app (Vercel login needed). Build succeeded on Vercel.
 - Latest launch branch, always current: https://maxterz-git-launch-maxterz.vercel.app (Vercel login needed).
