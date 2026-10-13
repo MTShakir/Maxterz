@@ -37,6 +37,7 @@ const FFMPEG = process.env.FFMPEG_PATH || 'ffmpeg';
 
 /** Drop-zone folder to page path. */
 const PAGES = {
+  home: '/',
   'web-development': '/services/web-development',
   'business-website-design': '/services/web-development/business-website-design',
   'ecommerce-website-design': '/services/web-development/ecommerce-website-design',

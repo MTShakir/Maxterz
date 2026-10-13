@@ -51,6 +51,8 @@ Status key: **Decided** (act on it), **Confirm** (my recommendation, needs your 
 | D39 | /packages shows packages and plans only, plus "Services from £X" cards | Decided (13 Oct, Talha) |
 | D40 | Partner Plan £2,495 a month (was £1,995) | Decided (13 Oct, Talha) |
 | D41 | Stripe Payment Links for the 4 Buy now items now; Stripe API checkout later, with a trigger | Proposed (13 Oct, Claude Code) |
+| D42 | "Services from £X" cards on /packages show each category's core service price, named, and link to its service pages | Proposed (13 Oct, Claude Code) |
+| D43 | Motion graphics meta description: drop "files for every platform" | Proposed (13 Oct, Claude Code) |
 
 ---
 
@@ -309,3 +311,12 @@ Open questions and recommendations from 12 Oct onwards live in `launch/TODO-talh
 - **Price rule:** a Buy now price changes in two places on the same day: the Supabase row and a new Stripe Payment Link at the new price (then update the env var). The amount charged must always equal the advertised price (consumer law).
 - **Trigger to build API checkout:** about 10 self-serve orders a month, or the wish to take card deposits and Care Plus subscriptions on the site. Then build Stripe Checkout Sessions created from the Supabase price, with a verified webhook that writes orders to Supabase.
 - **Why:** links need no code, no secret keys and no webhook to secure, and they work today. An API checkout costs a build, testing and a second place that holds prices, for items that have not sold yet.
+
+## D42. "Services from £X" cards name the core service and its price (Proposed by Claude Code, 13 Oct 2026)
+- **Context:** brief 7.6 item 5 (as updated by D39) says each of the 6 cards shows the category's lowest "from" price. The lowest prices are £30 (a social post), £50 (a short edit) and £495 (a landing page).
+- **Proposal:** each card names its core service and that service's starting price, read live from Supabase: "Websites from £1,295", "Logos from £195", "Logo animation from £295", "Monthly plans from" for social media, "AI chat agents from" and "SEO plans from". Each card links to its service pages (web, branding and video) and to the prices on its category page. Built this way in Phase 4B.
+- **Why:** D39's own reason. £30 and £50 next to a £4,995 package pull buyers to the cheapest option. A named core service price is honest, sets the right expectation and keeps the packages as the main choice. Every lower price stays public on its service page (D27 holds).
+
+## D43. Motion graphics meta description (Proposed by Claude Code, 13 Oct 2026)
+- **Change:** "Motion graphics for ads, product launches, social media and presentations. A storyboard you approve, licensed music and a fixed price for each length." Brief 8.3 had "Clear storyboards, fast delivery and files for every platform."
+- **Why:** the price book gives 3 aspect ratios only with the 60-second video and 2 social cut-downs with the 30-second one, so "files for every platform" overpromised on the 15-second video. "Fast delivery" was vague. The new text is 150 characters and states only what every length includes.

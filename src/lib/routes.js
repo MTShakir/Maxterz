@@ -68,8 +68,8 @@ export const ROUTES = [
     primaryKeyword: 'digital agency, web design and branding agency',
     breadcrumbLabel: 'Home',
     inSitemap: true,
-    schema: ['WebPage'],
-    updatedAt: '2026-10-02',
+    schema: ['WebPage', 'FAQPage'],
+    updatedAt: '2026-10-13',
   },
   {
     path: '/services',
@@ -171,7 +171,7 @@ export const ROUTES = [
     category: 'branding',
     inSitemap: true,
     schema: ['WebPage', 'Service', 'FAQPage'],
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-13',
   },
   {
     path: '/services/branding-design/social-media-design',
@@ -184,7 +184,7 @@ export const ROUTES = [
     category: 'branding',
     inSitemap: true,
     schema: ['WebPage', 'Service', 'FAQPage'],
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-13',
   },
   {
     path: '/services/branding-design/thumbnail-design',
@@ -228,7 +228,7 @@ export const ROUTES = [
   {
     path: '/services/video-animation/motion-graphics',
     title: 'Motion Graphics Design Services | Maxterz',
-    description: 'Motion graphics for ads, product launches, social media and presentations. Clear storyboards, fast delivery and files for every platform.',
+    description: 'Motion graphics for ads, product launches, social media and presentations. A storyboard you approve, licensed music and a fixed price for each length.',
     h1: 'Motion Graphics Design Services',
     primaryKeyword: 'motion graphics services',
     breadcrumbLabel: 'Motion Graphics',
@@ -236,7 +236,7 @@ export const ROUTES = [
     category: 'video',
     inSitemap: true,
     schema: ['WebPage', 'Service', 'FAQPage'],
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-13',
   },
   {
     path: '/services/video-animation/video-editing',
@@ -249,7 +249,7 @@ export const ROUTES = [
     category: 'video',
     inSitemap: true,
     schema: ['WebPage', 'Service', 'FAQPage'],
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-13',
   },
   {
     path: '/services/video-animation/explainer-videos',
@@ -312,7 +312,7 @@ export const ROUTES = [
     breadcrumbLabel: 'Packages and Pricing',
     inSitemap: true,
     schema: ['WebPage', 'OfferCatalog'],
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-13',
   },
   {
     path: '/packages/launch-kit',
@@ -324,7 +324,7 @@ export const ROUTES = [
     parent: '/packages',
     inSitemap: true,
     schema: ['WebPage', 'FAQPage'],
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-10-13',
   },
   {
     path: '/our-work',

@@ -1,69 +1,29 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { supabase } from '@/lib/customSupabaseClient';
+import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Star, Quote, AlertCircle, RefreshCw } from 'lucide-react';
+import { Quote, ArrowRight } from 'lucide-react';
+import { SITE } from '@/lib/site';
+import { fiverrAttribution, showPeriod } from '@/lib/reviews';
 
-const Testimonials = () => {
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+/** Initials for the avatar circle, from the reviewer's name. */
+const initials = (name) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0].toUpperCase())
+    .join('');
 
-  const fetchTestimonials = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data, error } = await supabase
-        .from('testimonials')
-        .select('*')
-        .eq('is_featured', true)
-        .order('display_order', { ascending: true });
-      
-      if (error) throw error;
-      setTestimonials(data || []);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTestimonials();
-  }, []);
-
-  if (loading) {
-    return (
-      <section className="py-24 px-4 bg-white">
-        <div className="container mx-auto">
-          <div className="animate-pulse text-center mb-16">
-            <div className="h-6 w-32 bg-gray-200 rounded mx-auto mb-4"></div>
-            <div className="h-10 w-64 bg-gray-300 rounded mx-auto"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="animate-pulse bg-gray-50 p-8 rounded-[2rem] border border-gray-100 h-64"></div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="py-24 bg-white flex flex-col items-center justify-center text-center px-4">
-        <AlertCircle className="text-red-500 mb-2" size={32} />
-        <p className="text-gray-600 mb-4">Failed to load testimonials: {error}</p>
-        <button onClick={fetchTestimonials} className="flex items-center gap-2 text-[#1044ff] font-semibold hover:underline">
-          <RefreshCw size={16} /> Retry
-        </button>
-      </section>
-    );
-  }
-
-  if (testimonials.length === 0) return null;
+/**
+ * Real Fiverr reviews (brief 7.2 item 8), read on the server and passed in. Same card design as
+ * before (D30), without star rows. Each card names the service and says "on Fiverr" (D11).
+ *
+ * @param {{ reviews: Array<{ id: string, author_name: string, location: string | null, quote: string, service_slug: string, period_label: string | null }> }} props
+ */
+const Testimonials = ({ reviews = [] }) => {
+  if (reviews.length === 0) return null;
 
   return (
     <section className="py-24 px-4 bg-white relative overflow-hidden">
@@ -75,53 +35,62 @@ const Testimonials = () => {
           className="text-center mb-16"
         >
           <span className="badge-standard-light">
-            CLIENT FEEDBACK
+            CLIENT REVIEWS
           </span>
           <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6">
-            Loved by Brands Worldwide
+            What Clients Say on Fiverr
           </h2>
+          <p className="text-lg text-gray-600">
+            {`${SITE.proof.fiverrRating} stars from ${SITE.proof.fiverrReviews} reviews on Fiverr since ${SITE.proof.fiverrSince}.`}
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="p-8 card-standard-light relative group flex flex-col"
-            >
-              <Quote size={40} className="text-[#1044ff] opacity-10 absolute top-6 right-6 group-hover:scale-110 transition-transform" />
-              
-              <div className="flex mb-6 gap-1">
-                {[...Array(testimonial.rating || 5)].map((_, i) => (
-                  <Star key={i} size={18} className="fill-[#eb7444] text-[#eb7444]" />
-                ))}
-              </div>
+          {reviews.map((review, index) => {
+            const details = [review.location, showPeriod(review.period_label) ? review.period_label : null].filter(Boolean);
+            return (
+              <motion.figure
+                key={review.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="p-8 card-standard-light relative group flex flex-col"
+              >
+                <Quote size={40} className="text-[#1044ff] opacity-10 absolute top-6 right-6 group-hover:scale-110 transition-transform" aria-hidden="true" />
 
-              <p className="text-gray-700 mb-8 leading-relaxed text-base italic flex-grow">
-                "{testimonial.quote}"
-              </p>
+                <blockquote className="text-gray-700 mb-8 leading-relaxed text-base italic flex-grow">
+                  <p>&ldquo;{review.quote}&rdquo;</p>
+                </blockquote>
 
-              <div className="flex items-center gap-4 border-t border-gray-100 pt-6">
-                {testimonial.avatar_url ? (
-                  <img src={testimonial.avatar_url} alt={testimonial.author_name} className="w-12 h-12 rounded-full object-cover" />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#1044ff] to-[#0020bf] flex items-center justify-center text-white font-bold text-sm shadow-md">
-                    {testimonial.avatar_initials}
-                  </div>
-                )}
-                <div>
-                  <p className="font-extrabold text-gray-900 tracking-tight">{testimonial.author_name}</p>
-                  <p className="text-xs text-gray-500 font-medium">
-                    {testimonial.location} {testimonial.platform ? `· via ${testimonial.platform}` : ''}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                <figcaption className="flex items-center gap-4 border-t border-gray-100 pt-6">
+                  <span
+                    className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-[#1044ff] to-[#0020bf] flex items-center justify-center text-white font-bold text-sm shadow-md"
+                    aria-hidden="true"
+                  >
+                    {initials(review.author_name)}
+                  </span>
+                  <span>
+                    <span className="block font-extrabold text-gray-900 tracking-tight">{review.author_name}</span>
+                    {details.length > 0 && (
+                      <span className="block text-sm text-gray-600 font-medium">{details.join(', ')}</span>
+                    )}
+                    <span className="block text-sm text-gray-600">{fiverrAttribution(review.service_slug)}</span>
+                  </span>
+                </figcaption>
+              </motion.figure>
+            );
+          })}
         </div>
+
+        <p className="text-center mt-12">
+          <Link
+            href="/reviews"
+            className="inline-flex min-h-[44px] items-center gap-2 font-bold text-[#1044ff] hover:text-[#0020bf] hover:underline underline-offset-4"
+          >
+            Read more client reviews <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </p>
       </div>
     </section>
   );

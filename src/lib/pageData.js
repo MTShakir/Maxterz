@@ -44,7 +44,7 @@ export const getSlides = unstable_cache(
 
 /**
  * Published Fiverr reviews: service-matched first, then general ones, cached with tag 'testimonials'.
- * @param {string[]} serviceSlugs e.g. ["logo-design"]
+ * @param {string[] | null} serviceSlugs e.g. ["logo-design"]; null takes every service, featured first (home page)
  * @param {number} limit
  */
 export const getReviews = unstable_cache(
@@ -59,8 +59,10 @@ export const getReviews = unstable_cache(
       console.error(`[reviews] ${error.message}`);
       return [];
     }
+    if (!serviceSlugs) return data.slice(0, limit);
     const matched = data.filter((review) => serviceSlugs.includes(review.service_slug));
-    const general = data.filter((review) => review.service_slug === 'general');
+    // General reviews fill the gaps, unless they were asked for already (no duplicates).
+    const general = serviceSlugs.includes('general') ? [] : data.filter((review) => review.service_slug === 'general');
     return [...matched, ...general].slice(0, limit);
   },
   ['reviews'],

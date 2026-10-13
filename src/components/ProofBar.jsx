@@ -1,29 +1,34 @@
+import { Star, CheckCircle, PlayCircle, Building2 } from 'lucide-react';
 import { SITE } from '@/lib/site';
 
+/** The 4 proof badges from brief 7.1, built from SITE.proof so the numbers live in one place. */
 const badges = [
-  { value: SITE.proof.fiverrRating, label: 'stars on Fiverr' },
-  { value: SITE.proof.fiverrReviews, label: 'reviews on Fiverr' },
-  { value: SITE.proof.projects, label: 'projects delivered' },
-  { value: `Since ${SITE.proof.fiverrSince}`, label: '' },
+  { icon: Star, text: `${SITE.proof.fiverrRating} stars from ${SITE.proof.fiverrReviews} reviews on Fiverr` },
+  { icon: CheckCircle, text: `${SITE.proof.projects} projects since ${SITE.proof.fiverrSince}` },
+  { icon: PlayCircle, text: `${SITE.proof.viralViews} views on our logo animation` },
+  { icon: Building2, text: 'UK-registered company' },
 ];
 
 /**
- * Horizontal row of 4 proof badges.
- * Renders as a server component — no JS needed.
+ * Row of 4 proof badges with SVG icons (brief 7.1). Server component, no JS needed.
+ *
+ * @param {{ align?: 'center' | 'start' }} props "start" left-aligns the row from the lg breakpoint.
  */
-export default function ProofBar() {
+export default function ProofBar({ align = 'center' }) {
   return (
-    <div className="flex flex-wrap justify-center gap-4 md:gap-6" role="list">
-      {badges.map(({ value, label }) => (
-        <div
-          key={value}
-          role="listitem"
-          className="flex items-center gap-2 bg-white rounded-full px-5 py-2.5 shadow-sm border border-gray-100 text-sm font-semibold text-gray-800 whitespace-nowrap"
+    <ul
+      className={`flex flex-wrap justify-center gap-3 md:gap-4 ${align === 'start' ? 'lg:justify-start' : ''}`}
+      aria-label="Proof"
+    >
+      {badges.map(({ icon: Icon, text }) => (
+        <li
+          key={text}
+          className="flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm border border-gray-100 text-sm font-semibold text-gray-800"
         >
-          <span className="text-[#1044ff] font-bold">{value}</span>
-          {label && <span className="text-gray-500 font-normal">{label}</span>}
-        </div>
+          <Icon className="w-4 h-4 shrink-0 text-[#1044ff]" aria-hidden="true" />
+          {text}
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

@@ -39,6 +39,16 @@ export const RELATED = {
     '/services/branding-design/social-media-design',
     '/services/video-animation/video-editing',
   ],
+  '/services/branding-design/brand-identity-design': [
+    '/services/branding-design',
+    '/services/branding-design/logo-design',
+    '/services/web-development/business-website-design',
+  ],
+  '/services/branding-design/social-media-design': [
+    '/services/branding-design',
+    '/services/branding-design/brand-identity-design',
+    '/services/social-media-management',
+  ],
 
   // Video
   '/services/video-animation': ['/services/branding-design', '/services/social-media-management'],
@@ -51,6 +61,23 @@ export const RELATED = {
     '/services/video-animation',
     '/services/video-animation/motion-graphics',
     '/services/video-animation/video-editing',
+  ],
+  '/services/video-animation/motion-graphics': [
+    '/services/video-animation',
+    '/services/video-animation/explainer-videos',
+    '/services/video-animation/logo-animation',
+  ],
+  '/services/video-animation/video-editing': [
+    '/services/video-animation',
+    '/services/branding-design/thumbnail-design',
+    '/services/social-media-management',
+  ],
+
+  // Packages
+  '/packages/launch-kit': [
+    '/packages',
+    '/services/branding-design/brand-identity-design',
+    '/services/web-development/business-website-design',
   ],
 
   // Single category pages

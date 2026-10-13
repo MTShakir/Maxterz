@@ -1,25 +1,31 @@
 # Waiting on Talha
 
-Ordered by what blocks the next phase. Next phase: **4A** (pricing tables, `hero_slides`, the 13 built pages). Done items are at the bottom. Tick an item and note where the file is. Never paste secret keys in chat.
+Ordered by what blocks the next phase. Phase 4 is built (4A and 4B). Next: hero slide images, then **Phase 5** (portfolio, case studies and trust pages). Done items are at the bottom. Tick an item and note where the file is. Never paste secret keys in chat.
 
-Rewritten 12 Oct 2026 by Claude Code.
+Rewritten 12 Oct 2026, updated 13 Oct 2026 by Claude Code.
 
 ---
 
-## Blocks Phase 4A (next)
+## Next (you planned these for 13 Oct)
 
-- [ ] **Strip images, 11 built pages.** All old strips were placeholders (D36), so every page needs its own set. Folders in `docs/assets/hero/`: web-development, business-website-design, ecommerce-website-design (optional), app-and-software-development, branding-design, logo-design, thumbnail-design, video-animation, logo-animation, explainer-videos, social-media-management. Any format and size (PNG, JPG, WebP, or SVG with text outlined). 3:2 landscape is best; other shapes are cropped from the centre. Animations: MP4 only (no YouTube for strips). 6 to 10 per page, named 01, 02, 03 in display order. A strip stays hidden until its page has images.
+- [ ] **Home hero visual.** Today the home hero shows your Maxterz logo animation, converted from the old GIF to a lighter animated WebP (no GIFs on the site); the stock photos are gone. Recommended: 3 to 6 slides of finished client work (a website on laptop and phone, the brand on cards), because Launch Kit buyers want to see a brand and a website, not a logo reveal. Folder `docs/assets/hero/home/`. The hero rotates them, with a pause button.
+- [ ] **Strip images, 15 service pages.** All old strips were placeholders (D36), so every page needs its own set. Folders in `docs/assets/hero/`: web-development, business-website-design, ecommerce-website-design (optional), app-and-software-development, branding-design, logo-design, brand-identity-design (full identity systems: logo, cards, signage, social, guidelines; never logos alone, or the page looks like the £195 logo page), social-media-design, thumbnail-design, video-animation, logo-animation, motion-graphics, explainer-videos, video-editing, social-media-management. Any format and size (PNG, JPG, WebP, or SVG with text outlined). 3:2 landscape is best; other shapes are cropped from the centre. Animations: MP4 only (no YouTube for strips). 6 to 10 per page, named 01, 02, 03 in display order. A strip stays hidden until its page has at least 3 images.
 
-## Blocks Phase 4B
+## Open from Phase 4 (needed before launch, not blocking Phase 5)
 
 - [ ] **ThumbLab is offline.** thumblab.maxterz.com does not resolve (no DNS record, checked 13 Oct). The thumbnail page links to it, and the business profile says ThumbLab is live. Tell Claude Code where ThumbLab is hosted, or add the DNS record. Must work before launch.
-- [ ] **3 quick answers for the FAQs** (the price book is silent; the FAQs avoid numbers until you answer):
+- [ ] **7 quick answers for the FAQs** (the price book is silent; the FAQs avoid numbers until you answer):
   1. Logo animation: how many revision rounds on Professional and on Premium 3D? (Essential has 2.)
   2. Thumbnails: how many revisions per thumbnail?
   3. Logo design Signature: does it include the AI and EPS source files and the social profile versions, like Professional?
+  4. Brand identity: does Complete include everything in Core (colours and typography, email signature, social profile kit)? If yes, its list starts "Everything in Core, plus", which makes Complete easier to sell.
+  5. Social media design: how many revision rounds on a single post and on the templates pack, and which editor do the templates use (for example Canva)?
+  6. Video editing: how many revision rounds on a short-form edit and on a long-form edit?
+  7. Motion graphics: does the 60-second video also include the 2 social cut-downs of the 30-second one? The page lists only its 3 aspect ratios until you answer.
+- [ ] **Founder note on the home page.** 3 short lines in your voice, drafted from your profile, in `src/content/home.js` (FOUNDER_NOTE). Reply "approved" or send your own 3 lines.
+- [ ] **3 proposed decisions to confirm** (reply yes or no to each): D41 Stripe Payment Links now, API checkout later; D42 the "Services from £X" cards on /packages show each category's core service price ("Websites from £1,295"), not its cheapest item (£30, £50); D43 the motion graphics meta description no longer promises "files for every platform".
+- [ ] **Home section order.** Recommended: move the 5-vs-1 section straight under the hero (as in brief 7.2) and drop the blue stats block, which repeats the proof bar (4.9 and 7,000+ appear up to 5 times on the page). D30 kept the old order, so this needs your yes.
 - [ ] **Stripe Payment Links** (account approved, 13 Oct; links not API keys for now, D41 proposed). Check the statement descriptor is MAXTERZ and tax collection is off. 4 Payment Links in GBP: Logo Design Essential £195, Logo Animation Essential £295, YouTube Thumbnail try one £50, Short-form Edit try one £50. On each link: collect name, email and phone, add a field "Business or channel name", require acceptance of your terms (https://maxterz.com/terms-conditions) and redirect after payment to `https://maxterz.com/thank-you?type=purchase`. Send the 4 links in chat (they are public). Vercel names: `NEXT_PUBLIC_STRIPE_LINK_LOGO_DESIGN`, `NEXT_PUBLIC_STRIPE_LINK_LOGO_ANIMATION`, `NEXT_PUBLIC_STRIPE_LINK_THUMBNAIL`, `NEXT_PUBLIC_STRIPE_LINK_SHORT_EDIT`. Buy now buttons stay hidden until set.
-- [ ] **Strip images, 4 new pages.** Folders `brand-identity-design` (full identity systems: logo, cards, signage, social, guidelines; never logos alone, or the page looks like the £195 logo page), `social-media-design`, `motion-graphics`, `video-editing`. Same spec as the built pages.
-- [ ] **Home hero visual.** Today it shows your Maxterz logo animation GIF, with stock photos as a fallback (stock goes). Recommended: 1 to 3 device mockups of finished client work (a website on laptop and phone, the brand on cards), because Launch Kit buyers want to see a brand and website, not a logo reveal. Folder `docs/assets/hero/home/`.
 
 ## Blocks Phase 5 (proof and trust pages)
 
@@ -32,7 +38,7 @@ Rewritten 12 Oct 2026 by Claude Code.
 - [ ] **Logo animation showreel.** The original MP4 of the 1.2M-view animation plus 5 to 8 of your best logo animations (originals, only work you may show publicly) in `docs/assets/portfolio/logo-animation-showreel/`. Claude Code makes the web loop (under 2MB) and the poster. Used on home and the logo animation page.
 - [ ] **Example audit video.** One real 2 to 4 minute audit (Loom link or MP4) of a public UK service business website, no private data, in `docs/assets/portfolio/example-audit/`. It is the proof on the free audit page.
 - [ ] **Video testimonials (optional for launch).** For each of the 5 clients: `testimonial.mp4` plus their written OK (email screenshot or PDF) in that client's portfolio folder. None show on the live site without the OK.
-- [ ] **Review drafts.** About story, founder note (3 lines) and case study copy. Claude Code drafts them from the docs; you approve before Phase 5 closes.
+- [ ] **Review drafts.** About story and case study copy. Claude Code drafts them from the docs; you approve before Phase 5 closes.
 
 ## Blocks Phase 6 (QA and launch readiness)
 
@@ -89,7 +95,7 @@ Rewritten 12 Oct 2026 by Claude Code.
 - [x] Domains: all owned (1 Oct)
 - [x] Doovor: live at doovor.com with beta users (1 Oct)
 - [x] BWLD = Black and White Leaflets Distribution (1 Oct)
-- [x] Headshot: `docs/assets/founder/` (1 Oct). Claude Code copies it to `public/images/team/` in Phase 5 (a Claude Code task, not yours)
+- [x] Headshot: `docs/assets/founder/` (1 Oct). Copied to `public/images/team/` and used in the home founder note (13 Oct)
 - [x] Fiverr reviews: `docs/website/data/fiverr-reviews.json`, 33 curated (1 Oct). Claude Code seeds them in 4A
 - [x] LinkedIn: https://www.linkedin.com/in/mtshakir (1 Oct)
 - [x] Portfolio list with links: `02-business-profile.md`, section 3a (1 Oct)

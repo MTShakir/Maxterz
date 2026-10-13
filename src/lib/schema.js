@@ -52,7 +52,8 @@ export function buildPageSchema(path, { fromPrice, billing, setupFee, faqs } = {
   const route = ROUTES.find(r => r.path === path);
   if (!route) return null;
 
-  const url = `${SITE.url}${path}`;
+  // Same form as the canonical: the home page has no trailing slash.
+  const url = path === '/' ? SITE.url : `${SITE.url}${path}`;
   const graph = [];
 
   const pageType = route.schema.includes('AboutPage') ? 'AboutPage'

@@ -7,6 +7,7 @@ import { ArrowUpRight, Loader2, CheckCircle, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/customSupabaseClient';
 import { caseStudies } from '@/case-studies';
+import { SITE } from '@/lib/site';
 
 const INITIAL_COUNT = 6;
 
@@ -64,23 +65,23 @@ const OurWorkPage = () => {
             className="flex flex-col md:flex-row md:items-end justify-between gap-6"
           >
             <div>
-              <span className="badge-standard-light">OUR WORK</span>
-              <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight">
+              <h1 className="badge-standard-light">Our Work</h1>
+              <p className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight">
                 Selected{' '}
                 <span className="bg-gradient-to-r from-[#1044ff] to-[#0020bf] bg-clip-text text-transparent">
-                  Masterpieces
+                  Projects
                 </span>
-              </h1>
+              </p>
               <p className="text-lg text-gray-500 font-light mt-4 max-w-xl">
                 Creative vision meeting technical precision, delivered for clients across the UK and worldwide.
               </p>
             </div>
             <div className="flex flex-col gap-2 text-sm font-semibold text-gray-800">
               <span className="flex items-center gap-2">
-                <CheckCircle className="text-[#1044ff] w-4 h-4" /> 11,600+ Projects Delivered
+                <CheckCircle className="text-[#1044ff] w-4 h-4" aria-hidden="true" /> {`${SITE.proof.projects} projects since ${SITE.proof.fiverrSince}`}
               </span>
               <span className="flex items-center gap-2">
-                <Star className="text-[#eb7444] w-4 h-4 fill-current" /> 4.9 Stars from 7,100+ Reviews
+                <Star className="text-[#c2410c] w-4 h-4 fill-current" aria-hidden="true" /> {`${SITE.proof.fiverrRating} stars from ${SITE.proof.fiverrReviews} reviews on Fiverr`}
               </span>
             </div>
           </motion.div>
@@ -91,7 +92,7 @@ const OurWorkPage = () => {
       <section className="pb-14 px-4">
         <div className="container mx-auto">
           <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-5">
-            Case Studies · Real Projects. Real Results.
+            Case studies
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {caseStudies.map((study, index) => (

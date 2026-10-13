@@ -1,17 +1,12 @@
 import Link from 'next/link';
 import { SITE } from '@/lib/site';
-
-/**
- * Shows a period label only when it is a month and year (fiverr-reviews.json rules).
- * @param {string | null} label
- */
-const showPeriod = (label) => Boolean(label) && /^[A-Z][a-z]+ \d{4}$/.test(label);
+import { fiverrAttribution, showPeriod } from '@/lib/reviews';
 
 /**
  * Up to 3 real Fiverr reviews for a service page (brief 7.5 item 8). Server-rendered from
  * props. Every review says "on Fiverr" (D11: no review schema). Renders nothing when empty.
  *
- * @param {{ reviews: Array<{ id: string, author_name: string, location: string | null, quote: string, period_label: string | null }>, heading?: string, className?: string }} props
+ * @param {{ reviews: Array<{ id: string, author_name: string, location: string | null, quote: string, period_label: string | null, service_slug?: string }>, heading?: string, className?: string }} props
  */
 export default function ServiceReviews({ reviews, heading = 'What clients say on Fiverr', className = 'bg-white' }) {
   if (!reviews?.length) return null;
@@ -44,7 +39,7 @@ export default function ServiceReviews({ reviews, heading = 'What clients say on
                   {review.location ? `, ${review.location}` : ''}
                   {showPeriod(review.period_label) ? `, ${review.period_label}` : ''}
                 </span>
-                <span className="block text-gray-400 mt-1">Review on Fiverr</span>
+                <span className="block text-gray-600 mt-1">{fiverrAttribution(review.service_slug)}</span>
               </figcaption>
             </figure>
           ))}
